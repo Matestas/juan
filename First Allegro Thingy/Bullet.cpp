@@ -1,53 +1,79 @@
 #include "Bullet.h"
-#include "Utils.h"
-#include "imageLoader.h"
+#include "Loaders.h"
+
+
 Bullet::Bullet(int x, int y) {
-	if (juan == NULL) {
-		this->juan = load_image("juan.jpg", "Ship");
+	if (common_bullet == NULL) {
+		this->common_bullet = load_image("juan.jpg", "Ship");
 	};
-	this->common_bullet = al_create_sub_bitmap(juan, 0, 0, 39, 11);
+	if (juan_effect == NULL) {
+
+		juan_effect = load_sample("juanito.wav", "juanito.wav");
+
+		int err = al_get_errno();
+		std::cout << "no juan" << std::endl;
+		std::cout << err << std::endl;
+	}
 	this->x = x;
 	this->y = y;
+	this->speed = 60;
 }
 Bullet::Bullet() {
-	if (juan == NULL) {
-		this->juan = load_image("juan.jpg", "Ship");
+	if (common_bullet == NULL) {
+		this->common_bullet = load_image("juan.jpg", "Ship");
 	};
-	this->common_bullet = al_create_sub_bitmap(juan, 0, 0, 39, 11);
+	
+}
+Bullet::~Bullet() {
+	
 }
 
-void update(std::vector<Bullet>bullets) {
+void update(std::vector<Bullet>&bullets) {
 
 	for (int bullet = bullets.size() - 1; bullet >= 0; bullet--) {
 
 		bullets[bullet].draw();
 
 	}
+
 }
-void moveall(std::vector<Bullet>bullets) {							//friend function of Bullet
+void moveall(std::vector<Bullet>&bullets) {							//friend function of Bullet
 	for (int bullet = bullets.size() - 1; bullet >= 0; bullet--) {
 		bullets[bullet].move(1, 0);									// for normal bullets only 
-		bullets[bullet].limit();
+		
 	}
-
+	
 }
+
+
+void Bullet::move(const int dirX, const int dirY) {
+	this->x += (dirX * speed);
+	this->y += (dirY * speed);
+}
+
+
 void Bullet::draw() {
 
-	this->common_bullet = al_create_sub_bitmap(common_bullet, 143, 135, 39, 11);
+	al_draw_scaled_bitmap(common_bullet, 0, 0, 1083, 1060, x, y, 30, 30, 0);
 }
 void Bullet::ignite() {
 	// charge animation here ( 10 frames maybe) 
-
-
+	
+	al_play_sample(juan_effect,1,0,1,ALLEGRO_PLAYMODE_ONCE,0);
+	
 }
+
 int Bullet::getspeed() {
 	return speed;
 }
-void Bullet::limit() {
-	if (this->x > 1920) {
-		delete this;
+void limit(std::vector <Bullet>&  bullets) {
+	for (int bullet = bullets.size() - 1; bullet >= 0; bullet--) {
+		if (bullets[bullet].x > 1280) {
+			bullets.erase(bullets.begin() + bullet);
+			
+		}
 	}
-
+	
 }
 void Bullet::hit() {
 	if (checkhit()) {

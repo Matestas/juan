@@ -24,6 +24,7 @@
     <ProjectGuid>{d0a0d8dc-2286-463d-903f-5ad7dd29d4f3}</ProjectGuid>
     <RootNamespace>FirstAllegroThingy</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <ProjectName>Trabalho CPC</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -136,6 +137,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -152,6 +154,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -163,13 +166,20 @@
     <ClCompile Include="Player.cpp" />
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="EventManager.h" />
-    <ClInclude Include="imageLoader.h" />
+    <ClInclude Include="Loaders.cpp" />
     <ClCompile Include="main.cpp" />
     <ClInclude Include="Player.h" />
-    <ClInclude Include="Utils.h" />
+    <ClInclude Include="Loaders.h" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Entities.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="juan.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Media Include="juan.mp3" />
+    <Media Include="juanito.wav" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

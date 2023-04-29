@@ -3,15 +3,13 @@
 #include "EventManager.h"
 
 
-
-
 bool key_left= false;
 bool key_right= false;
 bool key_up= false;
 bool key_down= false;
-
-#define SCREEN_WIDTH 1920
-#define SCREEN_HEIGHT 1080
+ALLEGRO_SAMPLE* juann = NULL;
+#define SCREEN_WIDTH 1280
+#define SCREEN_HEIGHT 720
 typedef struct ALLEGRO_MOUSE_STATE ALLEGRO_MOUSE_STATE;
 int delta;
 bool running;
@@ -25,10 +23,12 @@ int main() {
     al_init_primitives_addon();
     al_install_keyboard();
     al_install_mouse();
-    
+    al_install_audio();
+    al_init_acodec_addon();
+    al_reserve_samples(1);
+   
     //Create Objects
-    
-    Player Player;
+    Player player;
 
     //Create Display
     ALLEGRO_DISPLAY* display = al_create_display(SCREEN_WIDTH, SCREEN_HEIGHT);
@@ -46,34 +46,38 @@ int main() {
     al_register_event_source(event_queue, al_get_keyboard_event_source());
     al_hide_mouse_cursor(display);
     al_start_timer(timer);
+    //runtime variables
     running = true;     // loop variable to keep the window running
     ALLEGRO_EVENT event;  // create event that can be modified
-
+    al_reserve_samples(5);
     
+    
+    //al_play_sample(juan_loop, 1, 0, 1, ALLEGRO_PLAYMODE_LOOP,0);
 
     while (running) {
-        
-       
-                                           
         al_wait_for_event(event_queue, &event);
-        al_clear_to_color(al_map_rgb(0, 0, 0));
-        Player.update();             // updates the player sprite
-        check_closeTab(event);      
         readmovementkeys(event);    // registers pressed keys and passes it to movePlayer
-        check_PlayerShoot(event,Player);  //checks if the mouse is pressed and makes the player shoot
-        movePlayer(Player);        // moves player according to pressed keys
-        
-        moveall(Player.getbullets());  // bullets
-        
-        update(Player.getbullets());
-        al_flip_display();
-                     
+        check_PlayerShoot(event, player);  //checks if the mouse is pressed and makes the player shoot
+        check_closeTab(event);
+        if (al_get_timer_count(timer) > 0) {
+            al_set_timer_count(timer, 0);
+            if (al_is_event_queue_empty(event_queue)) {
+                al_clear_to_color(al_map_rgb(0, 0, 0));
+                player.update();             // updates the player sprite
+                movePlayer(player);        // moves player according to pressed keys
+                moveall(player.getbullets());  // bullets
+                update(player.getbullets());
+                al_flip_display();
+            }
+        }
     }
+    
 
     al_destroy_font(font);
     al_destroy_display(display);
     al_destroy_event_queue(event_queue);
-   
+    al_destroy_bitmap(player.Ship);
+    
     
     return 0;
 }

@@ -7,6 +7,7 @@ extern bool key_right;
 extern bool key_up;
 extern bool key_down;
 extern bool running;
+extern ALLEGRO_SAMPLE* juann;
 void readmovementkeys(ALLEGRO_EVENT& event) {
     if (event.type == ALLEGRO_EVENT_KEY_DOWN) {
         switch (event.keyboard.keycode) {
@@ -67,10 +68,16 @@ void movePlayer(Player& Player) {
     }
     
 }
-
+void play_juan() {
+    if (!juann) {
+        juann = load_sample("juanito.wav", "juanito.wav");
+        std::cout << "fuck you" << std::endl;
+    }
+    al_play_sample(juann, 2, 0,1, ALLEGRO_PLAYMODE_ONCE, 0);
+}
 void check_PlayerShoot(ALLEGRO_EVENT& event, Player& Player) {
     if (event.type == ALLEGRO_EVENT_MOUSE_BUTTON_DOWN) {
         Player.fire_bullet();
-
+        play_juan();
     }
 }

@@ -1,0 +1,3 @@
+﻿E:\Visual Studio 2022\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(517,5): warning MSB8028: The intermediate directory (x64\Debug\) contains files shared from another project (First Allegro Thingy.vcxproj).  This can lead to incorrect clean and rebuild behavior.
+  Player.cpp
+  First Allegro Thingy.vcxproj -> E:\Visual Studio Projects\First Allegro Thingy\x64\Debug\Trabalho CPC.exe
