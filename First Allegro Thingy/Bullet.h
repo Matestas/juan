@@ -14,28 +14,37 @@ ALLEGRO_BITMAP* load_image(const char* filename, const char* image_ID);
 ALLEGRO_SAMPLE* load_sample(const char* filename, const char* sample_ID);
 
 class Bullet : public BaseEntity {
-	friend void moveall(std::vector<Bullet>&bullets);
-	friend void update(std::vector<Bullet>&bullets);
-	friend void limit(std::vector<Bullet>& bullets);   // screen limiter
+	
 public:
 	Bullet();
+	Bullet(Bullet& old);
 	~Bullet();
 	Bullet(int, int);
 	int getspeed();
-	  
-	void hit();
-	void move(const int, const int);
-	// hits the enemy
+	void setBulletImage(Bullet ID,ALLEGRO_BITMAP* image);
+	void setBulletSound(Bullet ID,ALLEGRO_SAMPLE* sound);
+	void hit();// hits the enemy
+	void move(const int, const int);  // moves when isMoving
+	
+	ALLEGRO_BITMAP** getBulletImage();
+	ALLEGRO_SAMPLE** getBulletSound();
 	void ignite();    // firing
 	bool checkhit(); // check if hits enemy
-	ALLEGRO_BITMAP* common_bullet = NULL;
-	ALLEGRO_SAMPLE* juan_effect = NULL;
+	void setspeed(int);
+	void setDamage(int);
+	void setDimensions(int,int);
+	void setPenetration(int);
+	
 	private:
 	int damage = 1;
 	int health = 1;   // used for perfuration mechanics used in buffs
 	int speed = 2;
-	void setspeed();
+	int dimx = 1;
+	int dimy = 1;
+	ALLEGRO_BITMAP* bulletImage = NULL;
+	ALLEGRO_SAMPLE* bulletSound = NULL;
 	void draw();
+	bool isMoving = false;
 	
 	
 };

@@ -163,19 +163,28 @@
   <ItemGroup>
     <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="Entities.cpp" />
+    <ClCompile Include="Gun.cpp" />
+    <ClCompile Include="MachineGun.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="RocketLauncher.cpp" />
+    <ClCompile Include="Shotgun.cpp" />
+    <ClInclude Include="assetLoader.h" />
     <ClInclude Include="Bullet.h" />
-    <ClInclude Include="EventManager.h" />
-    <ClInclude Include="Loaders.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClInclude Include="EventManager.h" />
+    <ClInclude Include="Gun.h" />
+    <ClInclude Include="MachineGun.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Loaders.h" />
+    <ClInclude Include="RocketLauncher.h" />
+    <ClInclude Include="Shotgun.h" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Entities.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="juan.jpg" />
+    <Image Include="Main_Ship.png" />
   </ItemGroup>
   <ItemGroup>
     <Media Include="juan.mp3" />

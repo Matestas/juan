@@ -1,17 +1,18 @@
 
 #include "Player.h"
 #include "EventManager.h"
-
+#include "assetLoader.h"
 
 bool key_left= false;
 bool key_right= false;
 bool key_up= false;
 bool key_down= false;
 ALLEGRO_SAMPLE* juann = NULL;
+ALLEGRO_BITMAP* ship = NULL;
 #define SCREEN_WIDTH 1280
 #define SCREEN_HEIGHT 720
 typedef struct ALLEGRO_MOUSE_STATE ALLEGRO_MOUSE_STATE;
-int delta;
+
 bool running;
 
 int main() {
@@ -29,6 +30,11 @@ int main() {
    
     //Create Objects
     Player player;
+    Gun gun;
+    MachineGun MGun;
+    RocketLauncher RLauncher;
+    Shotgun shotgun;
+
 
     //Create Display
     ALLEGRO_DISPLAY* display = al_create_display(SCREEN_WIDTH, SCREEN_HEIGHT);
@@ -50,11 +56,11 @@ int main() {
     running = true;     // loop variable to keep the window running
     ALLEGRO_EVENT event;  // create event that can be modified
     al_reserve_samples(5);
-    
-    
-    //al_play_sample(juan_loop, 1, 0, 1, ALLEGRO_PLAYMODE_LOOP,0);
-
-    while (running) {
+    ALLEGRO_SAMPLE* theme = load_sample("Shinji theme.mp3", "theme");
+    al_play_sample(theme,0.3, 0, 1.5, ALLEGRO_PLAYMODE_LOOP, 0);
+    //(&player.Ship, player.getBulletImage(0), player.getBulletSound(0), NULL, NULL, NULL);
+    loadTest(player,gun,RLauncher,shotgun,MGun );
+    while (running){
         al_wait_for_event(event_queue, &event);
         readmovementkeys(event);    // registers pressed keys and passes it to movePlayer
         check_PlayerShoot(event, player);  //checks if the mouse is pressed and makes the player shoot
@@ -65,8 +71,7 @@ int main() {
                 al_clear_to_color(al_map_rgb(0, 0, 0));
                 player.update();             // updates the player sprite
                 movePlayer(player);        // moves player according to pressed keys
-                moveall(player.getbullets());  // bullets
-                update(player.getbullets());
+                
                 al_flip_display();
             }
         }

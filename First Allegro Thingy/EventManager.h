@@ -1,13 +1,14 @@
+
 #pragma once
 #include <allegro5/allegro.h>
 
-#include "Entities.h"
+#include "Player.h"
 extern bool key_left;
 extern bool key_right;
 extern bool key_up;
 extern bool key_down;
 extern bool running;
-extern ALLEGRO_SAMPLE* juann;
+
 void readmovementkeys(ALLEGRO_EVENT& event) {
     if (event.type == ALLEGRO_EVENT_KEY_DOWN) {
         switch (event.keyboard.keycode) {
@@ -43,41 +44,46 @@ void readmovementkeys(ALLEGRO_EVENT& event) {
     }
 };
 void check_closeTab(ALLEGRO_EVENT& event) {
-    
-     if (event.type == ALLEGRO_EVENT_DISPLAY_CLOSE) {
-         running = false;
-         
-      }
+
+    if (event.type == ALLEGRO_EVENT_DISPLAY_CLOSE) {
+        running = false;
+
+    }
 }
 void movePlayer(Player& Player) {
-    if (key_left) {
+    if (key_left && key_up) {
+        Player.move(-0.7071, -0.7071);
+    }
+    else if (key_left && key_down) {
+        Player.move(-0.7071, 0.7071);
+    }
+    else if (key_right && key_down) {
+        Player.move(0.7071, 0.7071);
+    }
+    else if (key_right && key_up) {
+        Player.move(0.7071, -0.7071);
+    }
+    else if (key_left) {
         Player.move(-1, 0);
-        
+
     }
-    if (key_right) {
+    else if (key_right) {
         Player.move(1, 0);
-        
+
     }
-    if (key_up) {
+    else if (key_up) {
         Player.move(0, -1);
-        
+
     }
-    if (key_down) {
+    else if (key_down) {
         Player.move(0, 1);
-        
+
     }
-    
+
 }
-void play_juan() {
-    if (!juann) {
-        juann = load_sample("juanito.wav", "juanito.wav");
-        std::cout << "fuck you" << std::endl;
-    }
-    al_play_sample(juann, 2, 0,1, ALLEGRO_PLAYMODE_ONCE, 0);
-}
+
 void check_PlayerShoot(ALLEGRO_EVENT& event, Player& Player) {
     if (event.type == ALLEGRO_EVENT_MOUSE_BUTTON_DOWN) {
-        Player.fire_bullet();
-        play_juan();
+
     }
 }

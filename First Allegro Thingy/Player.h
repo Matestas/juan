@@ -8,6 +8,7 @@
 #include <allegro5/allegro_acodec.h>
 #include <vector>
 #include "Bullet.h"
+#include "MachineGun.h"
 
 #ifndef LOADERS_H
 #define LOADERS_H
@@ -16,19 +17,20 @@
 
 
 class Player : public BaseEntity {
+	
+
 public:
 	Player();
 	~Player();
-	//void spawn();
-	void fire_bullet();
+
 	void update();
-	void move(const int, const int);
-	std::vector<Bullet>& getbullets();
 	ALLEGRO_BITMAP* Ship = NULL;
-
+	void setShipImage(ALLEGRO_BITMAP* image);
+	void move(const float, const float);
+	void changeweapon();
+	Gun* weapon;
 private:
-	std::vector<Bullet> bullets;
-
+	
 	int health = 10;
 	bool speedBoost = false;
 	void draw();

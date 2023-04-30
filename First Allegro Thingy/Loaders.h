@@ -22,7 +22,7 @@
 
 		if (!sound) {
 			std::cerr << "Failed to load " << sample_ID << std::endl;
-
+			
 		}
 		return sound;
 	}
