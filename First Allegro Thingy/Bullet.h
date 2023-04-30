@@ -13,9 +13,6 @@ ALLEGRO_BITMAP* load_image(const char* filename, const char* image_ID);
 
 ALLEGRO_SAMPLE* load_sample(const char* filename, const char* sample_ID);
 
-
-
-
 class Bullet : public BaseEntity {
 	friend void moveall(std::vector<Bullet>&bullets);
 	friend void update(std::vector<Bullet>&bullets);

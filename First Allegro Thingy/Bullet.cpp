@@ -27,25 +27,6 @@ Bullet::Bullet() {
 Bullet::~Bullet() {
 	
 }
-
-void update(std::vector<Bullet>&bullets) {
-
-	for (int bullet = bullets.size() - 1; bullet >= 0; bullet--) {
-
-		bullets[bullet].draw();
-
-	}
-
-}
-void moveall(std::vector<Bullet>&bullets) {							//friend function of Bullet
-	for (int bullet = bullets.size() - 1; bullet >= 0; bullet--) {
-		bullets[bullet].move(1, 0);									// for normal bullets only 
-		
-	}
-	
-}
-
-
 void Bullet::move(const int dirX, const int dirY) {
 	this->x += (dirX * speed);
 	this->y += (dirY * speed);

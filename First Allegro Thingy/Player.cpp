@@ -3,17 +3,10 @@
 
 
 Player::Player() : BaseEntity(0, 0) {
-	if (Ship == NULL) {
-		this->Ship = load_image("juan.jpg", "Ship");
-	};
 
 	speed = 20;
 }
 void Player::fire_bullet() {
-	Bullet newbullet(x + 30, y+33);
-	newbullet.ignite();
-	
-	bullets.push_back(newbullet);
 	
 }
 void Player::move(const int dirX, const int dirY) {
@@ -24,8 +17,6 @@ void Player::move(const int dirX, const int dirY) {
 		this->y -= (dirY * speed);
 	};
 	
-	
-
 }
 void Player::draw() {
 	
