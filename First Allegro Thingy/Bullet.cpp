@@ -9,7 +9,7 @@ Bullet::Bullet(int x, int y) {
 	this->speed = 60;
 	isMoving = false;
 }
-Bullet::Bullet():BaseEntity(-1,-1) {
+Bullet::Bullet():BaseEntity(-dimX-1,-dimY-1) {
 	isMoving = false;
 	
 }
@@ -26,11 +26,11 @@ void Bullet::move(const int dirX, const int dirY) {
 
 void Bullet::draw() {
 
-	al_draw_scaled_bitmap(bulletImage, 0, 0, 1083, 1060, x, y, 30, 30, 0);
+	al_draw_scaled_bitmap(bulletImage, 0, 0, 1083, 1060, x, y, dimX, dimY, 0);
 }
 void Bullet::ignite() {
 	// charge animation here ( 10 frames maybe) 
-	
+	hitbox.move(gunPosX, gunPosY);
 	al_play_sample(bulletSound,1,0,1,ALLEGRO_PLAYMODE_ONCE,0);
 	
 }
@@ -67,11 +67,21 @@ void Bullet::setDamage(int damage){
 	this->damage = damage;
 }
 void Bullet::setDimensions(int x,int y){
-	dimx = x;
-	dimy = y;
+	dimY = x;
+	dimX = y;
 }
 void Bullet::setPenetration(int hp){
 	health = hp;
+}
+
+int Bullet::getdimX()
+{
+	return dimX;
+}
+
+int Bullet::getdimY()
+{
+	return dimY;
 }
 
 

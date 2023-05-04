@@ -30,6 +30,7 @@ int main() {
    
     //Create Objects
     Player player;
+    
     Gun gun;
     MachineGun MGun;
     RocketLauncher RLauncher;

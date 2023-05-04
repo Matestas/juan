@@ -1,14 +1,5 @@
 ﻿C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(517,5): warning MSB8028: The intermediate directory (x64\Debug\) contains files shared from another project (First Allegro Thingy.vcxproj).  This can lead to incorrect clean and rebuild behavior.
-  Bullet.cpp
-  Collision.cpp
-  Enemy.cpp
-  Entities.cpp
-  Gun.cpp
-  MachineGun.cpp
-  Map.cpp
   Player.cpp
-  RocketLauncher.cpp
-  Shotgun.cpp
   main.cpp
   Generating Code...
   First Allegro Thingy.vcxproj -> C:\Users\David Coelho Silva\source\repos\Trabalho\x64\Debug\Trabalho CPC.exe

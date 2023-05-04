@@ -7,7 +7,10 @@ Player::Player() : BaseEntity(0, 0), hitbox(0,dimX,0, dimY) {
 	
 	
 }
-
+void Player::passXYBullet() {
+	weapon->gunPosX = this->x + dimX - weapon->bullets->getdimY() / 2;
+	weapon->gunPosY = this->y + dimY/2 - weapon->bullets->getdimY()/2;
+}
 void Player::move(const float dirX, const float dirY) {
 	this->x += (dirX * speed);
 	this->y += (dirY * speed);

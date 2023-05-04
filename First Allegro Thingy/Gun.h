@@ -9,10 +9,16 @@ public:
 	ALLEGRO_SAMPLE** getBulletSound();
 	void setBulletSound(ALLEGRO_SAMPLE* sound);
 	void setBulletImage(ALLEGRO_BITMAP* image);
+	Bullet getBullets(int i);
+	int getGunPosX();
+	int getGunPosY();
 	virtual void fire_bullet();
 	ALLEGRO_BITMAP** getBulletImage(int i);
 	ALLEGRO_SAMPLE** getBulletSound(int i);
 	void moveBullets(Bullet bullets[]);
+	Bullet bullets[MAX_BULLETS];
+	int gunPosX;
+	int gunPosY;
 private:
 	float fireRate; // SHOTS FIRED
 	int bulletAngle ;
@@ -21,7 +27,7 @@ private:
 	int bulletsFired ;
 	ALLEGRO_SAMPLE* bulletSound;
 	ALLEGRO_BITMAP* bulletImage;
-	Bullet bullets[MAX_BULLETS];
+	
 	int damage;
 };
 

@@ -11,6 +11,8 @@ public:
 	int getTopLeftY();
 	int getBottomRightX();
 	int getBottomRightY();
+	int getdimX();
+	int getdimY();
 	Collision(int topLeftX, int bottomRightX, int topLeftY, int bottomRightY);
 	void move(int xcoord, int ycoord);
 	
