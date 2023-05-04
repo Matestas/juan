@@ -4,8 +4,8 @@
 Player::Player() : BaseEntity(0, 0), hitbox(0,dimX,0, dimY) {
 	
 	speed = 20;
-
-
+	
+	
 }
 
 void Player::move(const float dirX, const float dirY) {

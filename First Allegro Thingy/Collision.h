@@ -13,7 +13,7 @@ public:
 	int getBottomRightY();
 	Collision(int topLeftX, int bottomRightX, int topLeftY, int bottomRightY);
 	void move(int xcoord, int ycoord);
-
+	
 private:
 	int topLeftX;
 	int bottomRightX;

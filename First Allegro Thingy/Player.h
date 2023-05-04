@@ -33,11 +33,13 @@ public:
 	
 	Gun* weapon;
 private:
-	Collision hitbox;
-	int health = 10;
 	int dimX = 120;
 	int dimY = 83;
+
+	Collision hitbox;
+	int health = 10;
 	
+
 	bool speedBoost = false;
 	void draw();
 

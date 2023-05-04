@@ -1,3 +1,4 @@
+#include <iostream>
 #include "Collision.h"
 
 bool Collision::operator==(Collision &t)
@@ -12,18 +13,20 @@ bool Collision::operator==(Collision &t)
 void Collision::move(int xcoord, int ycoord) {
 	this->topLeftX = xcoord;
 	this->topLeftY = ycoord;
-	bottomRightX = xcoord + 120;
-	bottomRightY = ycoord + 83;
+    
+	bottomRightX = xcoord + dimX;     
+	bottomRightY = ycoord + dimY;
 }
 
 Collision::Collision(int topLeftX, int bottomRightX, int topLeftY, int bottomRightY)
 {
+	
 	this->bottomRightX = bottomRightX;
 	this->topLeftY = topLeftY;
 	this->bottomRightY = bottomRightY;
 	this->topLeftX = topLeftX;
-	this->dimX =  bottomRightX;
-	this->dimY = bottomRightY;
+	this->dimX = bottomRightX - topLeftX;
+	this->dimY = bottomRightY - topLeftY;
 }
 
 int Collision::getTopLeftX() {
