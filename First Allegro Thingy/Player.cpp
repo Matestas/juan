@@ -1,20 +1,33 @@
 
 #include "Player.h"
 
-
-Player::Player() : BaseEntity(0, 0) {
+Player::Player() : BaseEntity(0, 0), hitbox(0,dimX,0, dimY) {
+	
 	speed = 20;
+
+
 }
 
 void Player::move(const float dirX, const float dirY) {
 	this->x += (dirX * speed);
 	this->y += (dirY * speed);
-	if (x > 1180 || x < 0 || y < 0 || y > 620) {
+	
+	hitbox.move(x, y);
+	if (!(map == hitbox)) {    
+	
 		this->x -= (dirX * speed);
 		this->y -= (dirY * speed);
+		hitbox.move(this->x, this->y);
 	};
 
 }
+
+Collision Player::getHitBox()
+{
+	return hitbox;
+}
+
+
 
 
 void  Player::setShipImage(ALLEGRO_BITMAP* image) {
@@ -23,7 +36,7 @@ void  Player::setShipImage(ALLEGRO_BITMAP* image) {
 // frame update
 void Player::draw() {
 	
-	al_draw_scaled_bitmap(Ship, 0, 0, 32, 32, x, y, 120, 120, 0);
+	al_draw_scaled_bitmap(Ship, 0,10, 32, 22, x, y, 120, 83, 0);
 	
 }
 

@@ -7,7 +7,7 @@
 #include <allegro5/allegro_audio.h>
 #include <allegro5/allegro_acodec.h>
 #include <vector>
-
+#include "Map.h"
 
 
 
@@ -18,6 +18,7 @@ protected:
 	int y = 0;
 	int speed;
 	void draw();
+	Map map;
 	
 public:
 	BaseEntity() {
@@ -26,6 +27,7 @@ public:
 	BaseEntity(int x, int y) {
 		setX(x);
 		setY(y);
+		
 		
 	}
 	void setX(int x) {

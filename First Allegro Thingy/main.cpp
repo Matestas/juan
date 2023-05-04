@@ -7,8 +7,8 @@ bool key_left= false;
 bool key_right= false;
 bool key_up= false;
 bool key_down= false;
-ALLEGRO_SAMPLE* juann = NULL;
-ALLEGRO_BITMAP* ship = NULL;
+
+
 #define SCREEN_WIDTH 1280
 #define SCREEN_HEIGHT 720
 typedef struct ALLEGRO_MOUSE_STATE ALLEGRO_MOUSE_STATE;
@@ -34,11 +34,11 @@ int main() {
     MachineGun MGun;
     RocketLauncher RLauncher;
     Shotgun shotgun;
-
+   
 
     //Create Display
     ALLEGRO_DISPLAY* display = al_create_display(SCREEN_WIDTH, SCREEN_HEIGHT);
-    al_set_window_position(display, 0, 0);
+    al_set_window_position(display, 250, 250);
     
     // Create font,timer and queue of events
     ALLEGRO_FONT* font = al_create_builtin_font();
@@ -56,6 +56,7 @@ int main() {
     running = true;     // loop variable to keep the window running
     ALLEGRO_EVENT event;  // create event that can be modified
     al_reserve_samples(5);
+    Collision fuckyou = player.getHitBox();
     ALLEGRO_SAMPLE* theme = load_sample("Shinji theme.mp3", "theme");
     al_play_sample(theme,0.3, 0, 1.5, ALLEGRO_PLAYMODE_LOOP, 0);
     //(&player.Ship, player.getBulletImage(0), player.getBulletSound(0), NULL, NULL, NULL);
@@ -65,6 +66,8 @@ int main() {
         readmovementkeys(event);    // registers pressed keys and passes it to movePlayer
         check_PlayerShoot(event, player);  //checks if the mouse is pressed and makes the player shoot
         check_closeTab(event);
+        fuckyou = player.getHitBox();
+        std::cout << "Top Left(" << fuckyou.getTopLeftX() << "," << fuckyou.getTopLeftY() << ") Bottom Right(" << fuckyou.getBottomRightX() << "," << fuckyou.getBottomRightY() << std::endl;
         if (al_get_timer_count(timer) > 0) {
             al_set_timer_count(timer, 0);
             if (al_is_event_queue_empty(event_queue)) {
