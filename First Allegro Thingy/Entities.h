@@ -7,6 +7,7 @@
 #include <allegro5/allegro_audio.h>
 #include <allegro5/allegro_acodec.h>
 #include <vector>
+#include <cstdlib>
 #include "Map.h"
 
 
@@ -18,6 +19,7 @@ protected:
 	int y = 0;
 	int speed;
 	void draw();
+
 	Map map;
 	
 public:
@@ -44,7 +46,7 @@ public:
 	int getY() {
 		return y;
 	}
-	void move(const int dirX, const int dirY){}
+	
 	
 };
 

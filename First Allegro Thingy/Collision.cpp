@@ -42,13 +42,3 @@ int Collision::getBottomRightX() {
 int Collision::getBottomRightY() {
 	return bottomRightY;
 }
-
-int Collision::getdimX()
-{
-	return dimX;
-}
-
-int Collision::getdimY()
-{
-	return dimY;
-}

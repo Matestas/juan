@@ -29,15 +29,16 @@ public:
 	void setShipImage(ALLEGRO_BITMAP* image);
 	void move(const float, const float);
 	//void changeweapon();
-	void passXYBullet();
 	Collision getHitBox();
 	
 	Gun* weapon;
 private:
 	int dimX = 120;
 	int dimY = 83;
-	Collision hitbox;    // having hitbox declared before dimX and dimY got me in trouble
+
+	Collision hitbox;
 	int health = 10;
+	
 
 	bool speedBoost = false;
 	void draw();

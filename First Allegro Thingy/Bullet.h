@@ -34,19 +34,13 @@ public:
 	void setDamage(int);
 	void setDimensions(int,int);
 	void setPenetration(int);
-	int getdimX();
-	int getdimY();
-	int gunPosX;
-	int gunPosY;
-	private:
 	
+	private:
 	int damage = 1;
 	int health = 1;   // used for perfuration mechanics used in buffs
 	int speed = 2;
-	int dimX = 20;
-	int dimY = 40;
-	
-	Collision hitbox;
+	int dimx = 1;
+	int dimy = 1;
 	ALLEGRO_BITMAP* bulletImage = NULL;
 	ALLEGRO_SAMPLE* bulletSound = NULL;
 	void draw();

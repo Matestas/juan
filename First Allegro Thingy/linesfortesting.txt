@@ -1,0 +1,9 @@
+// Check hitbox
+
+
+std::cout <<"bottom: ("<< hitbox.getBottomRightX() <<","<< hitbox.getBottomRightY()<<" Top: ("<< hitbox.getTopLeftX() <<", "<< hitbox.getTopLeftY()<<") " <<std::endl;
+
+
+// Check direction
+
+std::cout << dx << "," << dy << std::endl;

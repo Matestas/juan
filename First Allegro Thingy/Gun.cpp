@@ -1,6 +1,5 @@
 #include "Gun.h"
 
-
 Gun::Gun(float fireRate,int angle,int fired,int damage, ALLEGRO_SAMPLE* bulletSound , ALLEGRO_BITMAP* bulletImage ){
 	this->fireRate = fireRate;
 	bulletAngle = angle;
@@ -17,15 +16,6 @@ ALLEGRO_BITMAP** Gun::getBulletImage(int i) {
 ALLEGRO_SAMPLE** Gun::getBulletSound(int i) {
 	return bullets[i].getBulletSound();
 }
-void Gun::passXYBullet() {
-	gun.gunPosX = this->x + dimX - gun.bullets->getdimY() / 2;
-	gun.gunPosY = this->y + dimY / 2 - gun.bullets->getdimY() / 2;
-}
-
-int Gun::getGunPosY()
-{
-	return gunPosY;
-}
 void Gun::fire_bullet() {
 	al_play_sample(*getBulletSound(0), 1, 0, 1, ALLEGRO_PLAYMODE_ONCE, 0);
 }
@@ -40,20 +30,11 @@ void Gun::moveBullets(Bullet bullets[]) {
 	}
 }
 
-
 void Gun::setBulletSound(ALLEGRO_SAMPLE* sound) {
 	bulletSound = sound;
 }
 void Gun::setBulletImage(ALLEGRO_BITMAP* image) {
 	bulletImage = image;
-}
-Bullet Gun::getBullets(int i)
-{
-	return *(bullets+i);
-}
-int Gun::*getGunPosX()
-{
-	return gunPosX;
 }
 ALLEGRO_BITMAP** Gun::getBulletImage() {
 	return &bulletImage;
@@ -61,4 +42,3 @@ ALLEGRO_BITMAP** Gun::getBulletImage() {
 ALLEGRO_SAMPLE** Gun::getBulletSound() {
 	return &bulletSound;
 }
-

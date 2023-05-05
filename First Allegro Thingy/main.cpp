@@ -2,7 +2,7 @@
 #include "Player.h"
 #include "EventManager.h"
 #include "assetLoader.h"
-
+#include "Enemy.h"
 bool key_left= false;
 bool key_right= false;
 bool key_up= false;
@@ -30,12 +30,11 @@ int main() {
    
     //Create Objects
     Player player;
-    
     Gun gun;
     MachineGun MGun;
     RocketLauncher RLauncher;
     Shotgun shotgun;
-   
+    Enemy enemyTest;
 
     //Create Display
     ALLEGRO_DISPLAY* display = al_create_display(SCREEN_WIDTH, SCREEN_HEIGHT);
@@ -57,7 +56,7 @@ int main() {
     running = true;     // loop variable to keep the window running
     ALLEGRO_EVENT event;  // create event that can be modified
     al_reserve_samples(5);
-   
+    srand((unsigned)time(NULL));
     ALLEGRO_SAMPLE* theme = load_sample("Shinji theme.mp3", "theme");
     al_play_sample(theme,0.3, 0, 1.5, ALLEGRO_PLAYMODE_LOOP, 0);
     //(&player.Ship, player.getBulletImage(0), player.getBulletSound(0), NULL, NULL, NULL);
@@ -71,11 +70,13 @@ int main() {
      
         if (al_get_timer_count(timer) > 0) {
             al_set_timer_count(timer, 0);
+            
             if (al_is_event_queue_empty(event_queue)) {
                 al_clear_to_color(al_map_rgb(0, 0, 0));
                 player.update();             // updates the player sprite
                 movePlayer(player);        // moves player according to pressed keys
-                
+                enemyTest.automatedMover();
+                enemyTest.draw();
                 al_flip_display();
             }
         }
