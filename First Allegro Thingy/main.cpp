@@ -3,6 +3,7 @@
 #include "EventManager.h"
 #include "assetLoader.h"
 #include "Enemy.h"
+#include "Mover.h"
 bool key_left= false;
 bool key_right= false;
 bool key_up= false;
@@ -16,7 +17,7 @@ typedef struct ALLEGRO_MOUSE_STATE ALLEGRO_MOUSE_STATE;
 bool running;
 
 int main() {
-    
+
     // Initialize Allegro
     al_init();
     al_init_font_addon();
@@ -27,14 +28,17 @@ int main() {
     al_install_audio();
     al_init_acodec_addon();
     al_reserve_samples(1);
-   
+
     //Create Objects
+    Map map;
     Player player;
     Gun gun;
     MachineGun MGun;
     RocketLauncher RLauncher;
     Shotgun shotgun;
     Enemy enemyTest;
+    Mover mover(0);
+    std::vector <Enemy*> currentEnemies;
 
     //Create Display
     ALLEGRO_DISPLAY* display = al_create_display(SCREEN_WIDTH, SCREEN_HEIGHT);
@@ -52,6 +56,7 @@ int main() {
     al_register_event_source(event_queue, al_get_keyboard_event_source());
     al_hide_mouse_cursor(display);
     al_start_timer(timer);
+    int cycles = 0;
     //runtime variables
     running = true;     // loop variable to keep the window running
     ALLEGRO_EVENT event;  // create event that can be modified
@@ -60,7 +65,9 @@ int main() {
     ALLEGRO_SAMPLE* theme = load_sample("Shinji theme.mp3", "theme");
     al_play_sample(theme,0.3, 0, 1.5, ALLEGRO_PLAYMODE_LOOP, 0);
     //(&player.Ship, player.getBulletImage(0), player.getBulletSound(0), NULL, NULL, NULL);
+    
     loadTest(player,gun,RLauncher,shotgun,MGun );
+    
     while (running){
         al_wait_for_event(event_queue, &event);
         readmovementkeys(event);    // registers pressed keys and passes it to movePlayer
@@ -70,13 +77,34 @@ int main() {
      
         if (al_get_timer_count(timer) > 0) {
             al_set_timer_count(timer, 0);
-            
+           
             if (al_is_event_queue_empty(event_queue)) {
                 al_clear_to_color(al_map_rgb(0, 0, 0));
                 player.update();             // updates the player sprite
                 movePlayer(player);        // moves player according to pressed keys
-                enemyTest.automatedMover();
-                enemyTest.draw();
+                mover.ticker();
+                mover.checkTick();
+                if (mover.getTick() == 64) {
+                    cycles += 1;
+
+                    if (cycles == 1) {
+                        int enemy_spawn_count = rand() % 5 + 1;
+                        for (int i = 0; i < enemy_spawn_count; i++) {
+                            Enemy* newenemy = new Enemy(1250, rand() % 700, 5 + rand() % 2);
+                            currentEnemies.push_back(newenemy);
+                        }
+                        cycles = 0;
+                    }
+                    
+                }
+                for (int i = 0; i < currentEnemies.size(); i++) {
+                    mover.randomMover(*currentEnemies[i], -1, 55, 125);
+                    currentEnemies[i]->draw();
+                }
+                
+                
+
+                
                 al_flip_display();
             }
         }

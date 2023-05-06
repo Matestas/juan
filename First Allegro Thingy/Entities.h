@@ -19,10 +19,11 @@ protected:
 	int y = 0;
 	int speed;
 	void draw();
-
-	Map map;
+	
+	Map map;      
 	
 public:
+	Map getMap();
 	BaseEntity() {
 		speed = 0;
 	}

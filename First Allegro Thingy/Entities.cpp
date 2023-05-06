@@ -6,6 +6,11 @@ void BaseEntity::draw() {
 	//NULL
 }
 
+Map BaseEntity::getMap()
+{
+	return map;
+}
+
 
 
 

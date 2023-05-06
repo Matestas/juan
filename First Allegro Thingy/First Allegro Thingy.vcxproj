@@ -168,6 +168,7 @@
     <ClCompile Include="Gun.cpp" />
     <ClCompile Include="MachineGun.cpp" />
     <ClCompile Include="Map.cpp" />
+    <ClCompile Include="Mover.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="RocketLauncher.cpp" />
     <ClCompile Include="Shotgun.cpp" />
@@ -180,6 +181,7 @@
     <ClInclude Include="Gun.h" />
     <ClInclude Include="MachineGun.h" />
     <ClInclude Include="Map.h" />
+    <ClInclude Include="Mover.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Loaders.h" />
     <ClInclude Include="RocketLauncher.h" />
