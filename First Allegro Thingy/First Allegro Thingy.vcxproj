@@ -172,6 +172,7 @@
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="RocketLauncher.cpp" />
     <ClCompile Include="Shotgun.cpp" />
+    <ClCompile Include="Spawner.cpp" />
     <ClInclude Include="assetLoader.h" />
     <ClInclude Include="Bullet.h" />
     <ClCompile Include="main.cpp" />
@@ -186,6 +187,7 @@
     <ClInclude Include="Loaders.h" />
     <ClInclude Include="RocketLauncher.h" />
     <ClInclude Include="Shotgun.h" />
+    <ClInclude Include="Spawner.h" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Entities.h" />

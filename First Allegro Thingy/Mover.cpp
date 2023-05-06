@@ -32,7 +32,7 @@ void Mover::randomMover(Enemy& enemy,int dirX, int angleMinRange, int angleMaxRa
 	
 	enemy.move(enemy.getdx(), enemy.getdy());
 
-	if (tick % TICK_INTERVAL_64 == 0 ){
+	if (tick % TICK_INTERVAL_16 == 0 ){
 		float degrees = (angleMinRange + rand() % (angleMaxRange-angleMinRange));       // give a random angle in degrees between the angles given
 		float radians = degrees * DEGREE_TO_PI_RATIO;  // since math.h uses radians, convert the random angle to radians
 		enemy.setdy(cos(radians));

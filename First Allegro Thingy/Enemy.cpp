@@ -15,8 +15,10 @@ void Enemy::move(const float dirX, const float dirY) {
 	if (!(map == hitbox)) {
 
 		this->x -= (dirX * speed*1);
-		this->y -= (dirY * speed);
+	    this->y -= (dirY * speed);
 		hitbox.move(this->x, this->y);
+		
+
 	};
 }
 
@@ -48,6 +50,13 @@ void Enemy::setdy(float dy)
 void Enemy::setdx(float dx)
 {
 	this->dx = dx;
+}
+
+bool Enemy::limit()
+{
+	if (!(map == hitbox)) {
+		return true;
+	}
 }
 
 Enemy::Enemy(): BaseEntity(1250,360), hitbox(1250,1250 + dimX, 360,360 + dimY)

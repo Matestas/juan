@@ -15,7 +15,8 @@ public:
 	Collision getHitbox();
 	void setdy(float dy);
 	void setdx(float dx);
-	
+	bool limit();
+	int signal;
 private:
 	float dx = 0.00f;
 	float dy = 0.00f;
@@ -25,6 +26,7 @@ private:
 	int dimX = 30;
 	int dimY = 30;
 	int speed = 5;
+	
 	Collision hitbox;
 	
 

@@ -4,6 +4,7 @@
 #include "assetLoader.h"
 #include "Enemy.h"
 #include "Mover.h"
+#include "Collision.h"
 bool key_left= false;
 bool key_right= false;
 bool key_up= false;
@@ -84,14 +85,15 @@ int main() {
                 movePlayer(player);        // moves player according to pressed keys
                 mover.ticker();
                 mover.checkTick();
-                if (mover.getTick() == 64) {
+                if (mover.getTick() == 16) {
                     cycles += 1;
 
                     if (cycles == 1) {
-                        int enemy_spawn_count = rand() % 5 + 1;
+                        int enemy_spawn_count = rand() % 10 + 5;
                         for (int i = 0; i < enemy_spawn_count; i++) {
                             Enemy* newenemy = new Enemy(1250, rand() % 700, 5 + rand() % 2);
                             currentEnemies.push_back(newenemy);
+                            
                         }
                         cycles = 0;
                     }
@@ -100,6 +102,7 @@ int main() {
                 for (int i = 0; i < currentEnemies.size(); i++) {
                     mover.randomMover(*currentEnemies[i], -1, 55, 125);
                     currentEnemies[i]->draw();
+                    
                 }
                 
                 
