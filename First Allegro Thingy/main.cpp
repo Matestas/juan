@@ -74,7 +74,9 @@ int main() {
         readmovementkeys(event);    // registers pressed keys and passes it to movePlayer
         check_PlayerShoot(event, player);  //checks if the mouse is pressed and makes the player shoot
         check_closeTab(event);
-        
+
+        std::cout << "bottom: (" << player.getHitbox().getBottomRightX() << "," << player.getHitbox().getBottomRightY() << " Top: (" << player.getHitbox().getTopLeftX() << ", " << player.getHitbox().getTopLeftY() << ") " << std::endl;
+
      
         if (al_get_timer_count(timer) > 0) {
             al_set_timer_count(timer, 0);
@@ -91,7 +93,7 @@ int main() {
                     if (cycles == 1) {
                         int enemy_spawn_count = rand() % 10 + 5;
                         for (int i = 0; i < enemy_spawn_count; i++) {
-                            Enemy* newenemy = new Enemy(1250, rand() % 700, 5 + rand() % 2);
+                            Enemy* newenemy = new Enemy(1250, rand() % 700, 5 + rand() % 2, 5 + rand() % 2);
                             currentEnemies.push_back(newenemy);
                             
                         }

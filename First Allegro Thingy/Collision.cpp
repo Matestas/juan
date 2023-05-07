@@ -1,7 +1,7 @@
 #include <iostream>
 #include "Collision.h"
 
-bool Collision::operator==(Collision &t)
+bool Hitbox::operator==(Hitbox &t)
 {
 	if (topLeftX < t.bottomRightX) return false;   // rect1 is to the left of rect2
 	if (bottomRightX > t.topLeftX) return false;   // rect1 is to the right of rect2
@@ -10,7 +10,7 @@ bool Collision::operator==(Collision &t)
 	return true;
 }
 
-void Collision::move(int xcoord, int ycoord) {
+void Hitbox::move(int xcoord, int ycoord) {
 	this->topLeftX = xcoord;
 	this->topLeftY = ycoord;
     
@@ -18,27 +18,27 @@ void Collision::move(int xcoord, int ycoord) {
 	bottomRightY = ycoord + dimY;
 }
 
-Collision::Collision(int topLeftX, int bottomRightX, int topLeftY, int bottomRightY)
+Hitbox::Hitbox(int topLeftX, int dimX, int topLeftY, int dimY)
 {
 	
-	this->bottomRightX = bottomRightX;
+	this->bottomRightX = topLeftX+dimX;
 	this->topLeftY = topLeftY;
-	this->bottomRightY = bottomRightY;
+	this->bottomRightY = topLeftY+dimY;
 	this->topLeftX = topLeftX;
-	this->dimX = bottomRightX - topLeftX;
-	this->dimY = bottomRightY - topLeftY;
+	this->dimX = dimX;
+	this->dimY = dimY;
 }
 
-int Collision::getTopLeftX() {
+int Hitbox::getTopLeftX() {
 	return topLeftX;
 }
-int Collision::getTopLeftY() {
+int Hitbox::getTopLeftY() {
 	return topLeftY;
 }
-int Collision::getBottomRightX() {
+int Hitbox::getBottomRightX() {
 	return bottomRightX;
 }
 
-int Collision::getBottomRightY() {
+int Hitbox::getBottomRightY() {
 	return bottomRightY;
 }

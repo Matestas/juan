@@ -6,17 +6,14 @@ class Enemy: public BaseEntity
 public:
 	
 	Enemy();
-	Enemy(int x, int y, int speed);
+	Enemy(int x, int y, int speedX,int speedY);
 	void automatedMover();
-	void move(const float dirX, const float dirY);
 	void draw();
 	float getdx();
 	float getdy();
-	Collision getHitbox();
 	void setdy(float dy);
 	void setdx(float dx);
 	bool limit();
-	int signal;
 private:
 	float dx = 0.00f;
 	float dy = 0.00f;
@@ -25,9 +22,6 @@ private:
 	int timer = 0;// can be removed
 	int dimX = 30;
 	int dimY = 30;
-	int speed = 5;
-	
-	Collision hitbox;
 	
 
 };

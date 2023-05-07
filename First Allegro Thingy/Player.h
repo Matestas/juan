@@ -21,22 +21,17 @@ class Player : public BaseEntity {
 	
 
 public:
-	Player();
+	Player(int dimX=68,int dimY=20);
 	~Player();
 	
 	void update();
 	ALLEGRO_BITMAP* Ship = NULL;
 	void setShipImage(ALLEGRO_BITMAP* image);
-	void move(const float, const float);
 	//void changeweapon();
-	Collision getHitBox();
-	
-	Gun* weapon;
+	Gun* weapon=new Gun();
 private:
-	int dimX = 120;
-	int dimY = 83;
-
-	Collision hitbox;
+	int dimX;
+	int dimY;
 	int health = 10;
 	
 

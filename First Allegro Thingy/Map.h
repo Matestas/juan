@@ -6,8 +6,8 @@ class Map
 public:
 	Map();
 	~Map();
-	bool operator==(Collision& t);
-	Collision limit;
+	bool operator==(Hitbox& t);
+	Hitbox limit;
 private:
 	
 

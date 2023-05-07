@@ -11,7 +11,24 @@ Map BaseEntity::getMap()
 	return map;
 }
 
+void BaseEntity::move(const float dirX, const float dirY) {
+	this->x += (dirX * speedX);
+	this->y += (dirY * speedY);
 
+	hitbox.move(x, y);
+	if (!(map == hitbox)) {
+
+		this->x -= (dirX * speedX);
+		this->y -= (dirY * speedY);
+		hitbox.move(this->x, this->y);
+
+
+	};
+}
+Hitbox BaseEntity::getHitbox()
+{
+	return hitbox;
+}
 
 
 

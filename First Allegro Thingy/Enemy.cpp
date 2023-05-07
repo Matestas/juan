@@ -7,20 +7,7 @@
 
 
 
-void Enemy::move(const float dirX, const float dirY) {
-	this->x += (dirX * speed*1);
-	this->y += (dirY * speed);
 
-	hitbox.move(x, y);
-	if (!(map == hitbox)) {
-
-		this->x -= (dirX * speed*1);
-	    this->y -= (dirY * speed);
-		hitbox.move(this->x, this->y);
-		
-
-	};
-}
 
 void Enemy::draw()
 {
@@ -37,10 +24,7 @@ float Enemy::getdy()
 	return dy;
 }
 
-Collision Enemy::getHitbox()
-{
-	return hitbox;
-}
+
 
 void Enemy::setdy(float dy)
 {
@@ -59,13 +43,12 @@ bool Enemy::limit()
 	}
 }
 
-Enemy::Enemy(): BaseEntity(1250,360), hitbox(1250,1250 + dimX, 360,360 + dimY)
+Enemy::Enemy(): BaseEntity(1250,360)
 {
 
 }
-Enemy::Enemy(int x, int y, int speed) : BaseEntity(x, y), hitbox(x, x + dimX, y, y + dimY)
+Enemy::Enemy(int x, int y, int speedX,int speedY) : BaseEntity(x, y,dimX,dimY,speedX,speedY)
 {
-	this-> speed = speed;
 
 }
 

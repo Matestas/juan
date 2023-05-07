@@ -8,7 +8,7 @@ Map::Map():limit(0,SCREEN_WIDTH,0,SCREEN_HEIGHT) {
 Map::~Map(){
         
 }
-bool Map::operator==(Collision& t)
+bool Map::operator==(Hitbox& t)
 {
     if (t.getTopLeftX() >= limit.getTopLeftX() && t.getBottomRightX() <= limit.getBottomRightX() && t.getTopLeftY() >= limit.getTopLeftY() && t.getBottomRightY() <= limit.getBottomRightY()) {
         return true; // the hitbox is completely inside the map's limit
