@@ -161,6 +161,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Bot.cpp" />
     <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="Collision.cpp" />
     <ClCompile Include="Enemy.cpp" />
@@ -173,7 +174,9 @@
     <ClCompile Include="RocketLauncher.cpp" />
     <ClCompile Include="Shotgun.cpp" />
     <ClCompile Include="Spawner.cpp" />
+    <ClCompile Include="Ticker.cpp" />
     <ClInclude Include="assetLoader.h" />
+    <ClInclude Include="Bot.h" />
     <ClInclude Include="Bullet.h" />
     <ClCompile Include="main.cpp" />
     <ClInclude Include="Collision.h" />
@@ -188,6 +191,7 @@
     <ClInclude Include="RocketLauncher.h" />
     <ClInclude Include="Shotgun.h" />
     <ClInclude Include="Spawner.h" />
+    <ClInclude Include="Ticker.h" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Entities.h" />

@@ -1,7 +1,8 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\First Allegro Thingy"
   ],
-  "SelectedNode": "\\First Allegro Thingy.sln",
+  "SelectedNode": "\\First Allegro Thingy\\Mover.cpp",
   "PreviewInSolutionExplorer": false
 }

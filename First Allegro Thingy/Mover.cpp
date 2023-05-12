@@ -1,6 +1,5 @@
 #include "Mover.h"
-#include "Map.h"
-#include "Collision.h"
+
 #include <math.h>
 #define DEGREE_TO_PI_RATIO 0.0174532925
 #define PI 3.14159265359
@@ -11,28 +10,16 @@
 #define TICK_INTERVAL_128 128
 
 Mover::Mover(int tick) {
-	this->tick = tick;
+	this->ticker.setTick(tick);
 }
 
-void Mover::ticker()
-{
-	if (tick <= 128) {
-		tick += 1;
-	}
-	else tick = 0;
-}
-
-int Mover::getTick()
-{
-	return tick;
-}
 
 void Mover::randomMover(Enemy& enemy,int dirX, int angleMinRange, int angleMaxRange)  // Need to change to BaseEntity as argument, still dont know, if I dont figure it out I will just copy for each class
 {
 	
 	enemy.move(enemy.getdx(), enemy.getdy());
 
-	if (tick % TICK_INTERVAL_16 == 0 ){
+	if (ticker.getTick() % TICK_INTERVAL_16 == 0) {
 		float degrees = (angleMinRange + rand() % (angleMaxRange-angleMinRange));       // give a random angle in degrees between the angles given
 		float radians = degrees * DEGREE_TO_PI_RATIO;  // since math.h uses radians, convert the random angle to radians
 		enemy.setdy(cos(radians));

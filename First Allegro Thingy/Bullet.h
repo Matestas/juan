@@ -20,17 +20,19 @@ public:
 	Bullet(Bullet& old);
 	~Bullet();
 	Bullet(int, int);
-	int getspeed();
+	int getspeedX();
+	int getspeedY();
 	void setBulletImage(Bullet ID,ALLEGRO_BITMAP* image);
 	void setBulletSound(Bullet ID,ALLEGRO_SAMPLE* sound);
 	void hit();// hits the enemy
 	void move(const int, const int);  // moves when isMoving
+	void moveto(const int, const int);
 	
 	ALLEGRO_BITMAP** getBulletImage();
 	ALLEGRO_SAMPLE** getBulletSound();
 	void ignite();    // firing
 	bool checkhit(); // check if hits enemy
-	void setspeed(int);
+	void setspeed(int,int);
 	void setDamage(int);
 	void setDimensions(int,int);
 	void setPenetration(int);
@@ -38,7 +40,8 @@ public:
 	private:
 	int damage = 1;
 	int health = 1;   // used for perfuration mechanics used in buffs
-	int speed = 2;
+	int speedX;
+	int speedY;
 	int dimx = 1;
 	int dimy = 1;
 	ALLEGRO_BITMAP* bulletImage = NULL;

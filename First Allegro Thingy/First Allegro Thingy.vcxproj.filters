@@ -57,6 +57,12 @@
     <ClCompile Include="Spawner.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Ticker.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Bot.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Entities.h">
@@ -102,6 +108,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Spawner.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Ticker.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Bot.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

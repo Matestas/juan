@@ -5,5 +5,6 @@ public Gun
 {
 public:
 	RocketLauncher();
+    void fire_bullet() override;
 };
 

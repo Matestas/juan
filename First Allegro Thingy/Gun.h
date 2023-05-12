@@ -13,15 +13,13 @@ public:
 	ALLEGRO_BITMAP** getBulletImage(int i);
 	ALLEGRO_SAMPLE** getBulletSound(int i);
 	void moveBullets(Bullet bullets[]);
+    Bullet bullets[MAX_BULLETS];
 private:
 	float fireRate; // SHOTS FIRED
 	int bulletAngle ;
 	void loadBullets();
-	
-	int bulletsFired ;
 	ALLEGRO_SAMPLE* bulletSound;
 	ALLEGRO_BITMAP* bulletImage;
-	Bullet bullets[MAX_BULLETS];
 	int damage;
 };
 

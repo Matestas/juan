@@ -6,7 +6,8 @@ Bullet::Bullet(int x, int y) {
 	
 	this->x = x;
 	this->y = y;
-	this->speed = 60;
+	this->speedX =0;
+	this->speedY = 0;
 	isMoving = false;
 }
 Bullet::Bullet():BaseEntity(-1,-1) {
@@ -18,11 +19,14 @@ Bullet::~Bullet() {
 }
 void Bullet::move(const int dirX, const int dirY) {
 	if (isMoving) {
-		this->x += (dirX * speed);
-		this->y += (dirY * speed);
+		this->x += (dirX * speedX);
+		this->y += (dirY * speedY);
 	}
 }
-
+void Bullet::moveto(const int dirX, const int dirY) {
+	this->x += (dirX);
+    this->y += (dirY);
+}
 
 void Bullet::draw() {
 
@@ -38,15 +42,18 @@ Bullet::Bullet(Bullet& old) {
 	this->x = old.x;
 	this->y = old.y;
 	this->isMoving = old.isMoving;
-	this->speed = old.speed;
+	this->speedX = old.speedX;
+    this->speedY = old.speedY;
 	this->bulletImage = old.bulletImage;
 	this->bulletSound = old.bulletSound;
 }
 
-int Bullet::getspeed() {
-	return speed;
+int Bullet::getspeedX() {
+	return speedX;
 }
-
+int Bullet::getspeedY() {
+    return speedY;
+}
 void Bullet::hit() {
 	if (checkhit()) {
 		this->health -= 1;
@@ -54,8 +61,9 @@ void Bullet::hit() {
 
 	// hit animation function here
 }
-void Bullet::setspeed(int speed) {
-	this->speed = speed;
+void Bullet::setspeed(int speedX,int speedY) {
+	this->speedX = speedX;
+	this->speedY = speedY;
 }
 bool Bullet::checkhit() {
 

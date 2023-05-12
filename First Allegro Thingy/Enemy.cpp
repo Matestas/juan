@@ -41,33 +41,14 @@ bool Enemy::limit()
 	if (!(map == hitbox)) {
 		return true;
 	}
+	return false;
 }
 
-Enemy::Enemy(): BaseEntity(1250,360)
+Enemy::Enemy(): Bot(1250,360)
 {
 
 }
-Enemy::Enemy(int x, int y, int speedX,int speedY) : BaseEntity(x, y,dimX,dimY,speedX,speedY)
+Enemy::Enemy(int x, int y, int speedX,int speedY) : Bot(x, y,dimX,dimY,speedX,speedY,0,0)
 {
 
-}
-
-void Enemy::automatedMover()  // just a prototype, can be removed
-{
-	timer += 1;
-	move(dx, dy);
-
-	if (timer >= 20) {
-		float degree = (55 + rand() % 70);   
-		angle = degree * DEGREE_TO_PI_RATIO;  // 0 to pi
-		dy = cos(angle);
-		
-		dx = -(sqrt(1 - pow(dy, 2)));
-		move(dx, dy);
-		timer = 0;
-		std::cout << degree << std::endl;
-	}
-	
-	//std::cout << dx << "," << dy << std::endl;
-	//std::cout <<"bottom: ("<< hitbox.getBottomRightX() <<","<< hitbox.getBottomRightY()<<" Top: ("<< hitbox.getTopLeftX() <<", "<< hitbox.getTopLeftY()<<") " <<std::endl;
 }

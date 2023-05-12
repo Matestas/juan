@@ -1,13 +1,13 @@
 #pragma once
-
+#include "Bot.h"
 #include "Bullet.h"
-class Enemy: public BaseEntity
+class Enemy: public Bot
 {
 public:
 	
 	Enemy();
 	Enemy(int x, int y, int speedX,int speedY);
-	void automatedMover();
+	
 	void draw();
 	float getdx();
 	float getdy();
@@ -17,9 +17,6 @@ public:
 private:
 	float dx = 0.00f;
 	float dy = 0.00f;
-
-	float angle; // can be removed
-	int timer = 0;// can be removed
 	int dimX = 30;
 	int dimY = 30;
 	

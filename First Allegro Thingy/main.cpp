@@ -5,6 +5,7 @@
 #include "Enemy.h"
 #include "Mover.h"
 #include "Collision.h"
+#include "Ticker.h"
 bool key_left= false;
 bool key_right= false;
 bool key_up= false;
@@ -38,7 +39,7 @@ int main() {
     RocketLauncher RLauncher;
     Shotgun shotgun;
     Enemy enemyTest;
-    Mover mover(0);
+    Ticker universalTicker;
     std::vector <Enemy*> currentEnemies;
 
     //Create Display
@@ -85,9 +86,9 @@ int main() {
                 al_clear_to_color(al_map_rgb(0, 0, 0));
                 player.update();             // updates the player sprite
                 movePlayer(player);        // moves player according to pressed keys
-                mover.ticker();
-                mover.checkTick();
-                if (mover.getTick() == 16) {
+                universalTicker.ticker();
+                universalTicker.checkTick();
+                if (universalTicker.getTick() == 16) {
                     cycles += 1;
 
                     if (cycles == 1) {
@@ -101,11 +102,7 @@ int main() {
                     }
                     
                 }
-                for (int i = 0; i < currentEnemies.size(); i++) {
-                    mover.randomMover(*currentEnemies[i], -1, 55, 125);
-                    currentEnemies[i]->draw();
-                    
-                }
+                
                 
                 
 

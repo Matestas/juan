@@ -5,5 +5,10 @@ class MachineGun :
 {
 public:
 	MachineGun();
+	void fire_bullet() override;
+protected:
+	int bulletFired;
 };
+
+
 

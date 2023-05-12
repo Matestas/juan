@@ -4,20 +4,15 @@ Gun::Gun(float fireRate,int angle,int fired,int damage, ALLEGRO_SAMPLE* bulletSo
 	this->fireRate = fireRate;
 	bulletAngle = angle;
 	this->damage = damage;
-	bulletsFired = fired;
 	this->bulletSound = bulletSound;
 	this->bulletImage = bulletImage;
 }
-
 
 ALLEGRO_BITMAP** Gun::getBulletImage(int i) {
 	return bullets[i].getBulletImage();
 }
 ALLEGRO_SAMPLE** Gun::getBulletSound(int i) {
 	return bullets[i].getBulletSound();
-}
-void Gun::fire_bullet() {
-	al_play_sample(*getBulletSound(0), 1, 0, 1, ALLEGRO_PLAYMODE_ONCE, 0);
 }
 void Gun::loadBullets() {
 	for (int i = 1; i <= 8; i++) {
@@ -29,7 +24,10 @@ void Gun::moveBullets(Bullet bullets[]) {
 		bullets[i].move(1, 0);
 	}
 }
+void Gun::fire_bullet() {
+	al_play_sample(*getBulletSound(0), 1, 0, 1, ALLEGRO_PLAYMODE_ONCE, 0);
 
+}
 void Gun::setBulletSound(ALLEGRO_SAMPLE* sound) {
 	bulletSound = sound;
 }

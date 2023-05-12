@@ -5,7 +5,7 @@ public Gun
 {
 public:
 	Shotgun();
-	//void fire_bullet();
+    void fire_bullet() override;
 private:
 	//void moveBullets(Bullet bullets[]);
 };
