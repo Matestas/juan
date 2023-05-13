@@ -6,21 +6,22 @@ Bullet::Bullet(int x, int y) {
 	
 	this->x = x;
 	this->y = y;
-	this->speedX =0;
+	this->speedX = 1;
 	this->speedY = 0;
 	isMoving = false;
 }
 Bullet::Bullet():BaseEntity(-1,-1) {
 	isMoving = false;
-	
+	speedX = 1;
+	speedY = 0;
 }
 Bullet::~Bullet() {
 	
 }
-void Bullet::move(const int dirX, const int dirY) {
+void Bullet::move() {
 	if (isMoving) {
-		this->x += (dirX * speedX);
-		this->y += (dirY * speedY);
+		this->x += speedX;
+		this->y += speedY;
 	}
 }
 void Bullet::moveto(const int dirX, const int dirY) {
@@ -29,8 +30,8 @@ void Bullet::moveto(const int dirX, const int dirY) {
 }
 
 void Bullet::draw() {
-
-	al_draw_scaled_bitmap(bulletImage, 0, 0, 1083, 1060, x, y, 30, 30, 0);
+	al_draw_rectangle(x, y, x + 3, y + 2, al_map_rgb(250, 250, 25), 2);
+	//al_draw_scaled_bitmap(bulletImage, 0, 0, 1083, 1060, x, y, 30, 30, 0);
 }
 void Bullet::ignite() {
 	// charge animation here ( 10 frames maybe) 
@@ -69,7 +70,7 @@ bool Bullet::checkhit() {
 
 	// check which enemy hit and call beenhit function on the enemy hit, check if the enemy hit with a bullet is not hit again with the same bullet
 	// , which can cause bugs with the perfuration mechanic
-	return true;
+	return false;
 }
 void Bullet::setDamage(int damage){
 	this->damage = damage;

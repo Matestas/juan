@@ -167,6 +167,7 @@
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="Entities.cpp" />
     <ClCompile Include="Gun.cpp" />
+    <ClCompile Include="laser.cpp" />
     <ClCompile Include="MachineGun.cpp" />
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="Mover.cpp" />
@@ -183,6 +184,7 @@
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="EventManager.h" />
     <ClInclude Include="Gun.h" />
+    <ClInclude Include="laser.h" />
     <ClInclude Include="MachineGun.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="Mover.h" />

@@ -25,7 +25,7 @@ public:
 	void setBulletImage(Bullet ID,ALLEGRO_BITMAP* image);
 	void setBulletSound(Bullet ID,ALLEGRO_SAMPLE* sound);
 	void hit();// hits the enemy
-	void move(const int, const int);  // moves when isMoving
+	void move();  // moves when isMoving
 	void moveto(const int, const int);
 	
 	ALLEGRO_BITMAP** getBulletImage();
@@ -36,7 +36,8 @@ public:
 	void setDamage(int);
 	void setDimensions(int,int);
 	void setPenetration(int);
-	
+	bool isMoving;
+	void draw();
 	private:
 	int damage = 1;
 	int health = 1;   // used for perfuration mechanics used in buffs
@@ -46,8 +47,8 @@ public:
 	int dimy = 1;
 	ALLEGRO_BITMAP* bulletImage = NULL;
 	ALLEGRO_SAMPLE* bulletSound = NULL;
-	void draw();
-	bool isMoving = false;
+	
+	
 	
 	
 };

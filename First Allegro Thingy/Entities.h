@@ -54,7 +54,7 @@ public:
 	}
 	void move(const float dirX, const float dirY);
 	Hitbox getHitbox();
-	
+	bool checkiMap();
 };
 
 

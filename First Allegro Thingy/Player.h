@@ -28,7 +28,7 @@ public:
 	ALLEGRO_BITMAP* Ship = NULL;
 	void setShipImage(ALLEGRO_BITMAP* image);
 	//void changeweapon();
-	Gun* weapon=new Gun();
+	Gun* weapon;
 private:
 	int dimX;
 	int dimY;

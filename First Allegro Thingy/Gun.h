@@ -4,22 +4,24 @@
 class Gun
 {
 public:
-	Gun(float fireRate = 10, int angle = 0, int fired = 1, int damage = 10, ALLEGRO_SAMPLE* bulletSound = NULL, ALLEGRO_BITMAP* bulletImage = NULL); // fuck you
+	Gun(float fireRate = 10, int damage = 10, ALLEGRO_SAMPLE* bulletSound = NULL, ALLEGRO_BITMAP* bulletImage = NULL); // fuck you
 	ALLEGRO_BITMAP** getBulletImage();
 	ALLEGRO_SAMPLE** getBulletSound();
 	void setBulletSound(ALLEGRO_SAMPLE* sound);
 	void setBulletImage(ALLEGRO_BITMAP* image);
-	virtual void fire_bullet();
+	virtual void fire_bullet(int x, int y, int tick);
 	ALLEGRO_BITMAP** getBulletImage(int i);
 	ALLEGRO_SAMPLE** getBulletSound(int i);
-	void moveBullets(Bullet bullets[]);
+	void moveBullets();
     Bullet bullets[MAX_BULLETS];
-private:
+	void resetbullets();
+	void nextTick();
+protected:
 	float fireRate; // SHOTS FIRED
-	int bulletAngle ;
 	void loadBullets();
 	ALLEGRO_SAMPLE* bulletSound;
 	ALLEGRO_BITMAP* bulletImage;
 	int damage;
+	int bulletsFired, tickFired,tickToFire;
 };
 

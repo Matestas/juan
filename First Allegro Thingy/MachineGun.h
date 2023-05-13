@@ -5,9 +5,7 @@ class MachineGun :
 {
 public:
 	MachineGun();
-	void fire_bullet() override;
-protected:
-	int bulletFired;
+	void fire_bullet(int x,int y,int tick) override;
 };
 
 

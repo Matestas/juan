@@ -6,6 +6,7 @@
 #include "Mover.h"
 #include "Collision.h"
 #include "Ticker.h"
+#include "laser.h"
 bool key_left= false;
 bool key_right= false;
 bool key_up= false;
@@ -35,9 +36,10 @@ int main() {
     Map map;
     Player player;
     Gun gun;
-    MachineGun MGun;
-    RocketLauncher RLauncher;
-    Shotgun shotgun;
+    MachineGun* mGun = new MachineGun();
+    RocketLauncher* RLauncher= new RocketLauncher();
+    Shotgun* shotgun=new Shotgun();
+    
     Enemy enemyTest;
     Ticker universalTicker;
     std::vector <Enemy*> currentEnemies;
@@ -67,15 +69,14 @@ int main() {
     ALLEGRO_SAMPLE* theme = load_sample("Shinji theme.mp3", "theme");
     al_play_sample(theme,0.3, 0, 1.5, ALLEGRO_PLAYMODE_LOOP, 0);
     //(&player.Ship, player.getBulletImage(0), player.getBulletSound(0), NULL, NULL, NULL);
-    
-    loadTest(player,gun,RLauncher,shotgun,MGun );
+    player.weapon = mGun;
+    loadTest(player,gun,*RLauncher,*shotgun,*mGun );
     
     while (running){
         al_wait_for_event(event_queue, &event);
         readmovementkeys(event);    // registers pressed keys and passes it to movePlayer
-        check_PlayerShoot(event, player);  //checks if the mouse is pressed and makes the player shoot
+        check_PlayerShoot(event, player,universalTicker.getTick());  //checks if the mouse is pressed and makes the player shoot
         check_closeTab(event);
-
         std::cout << "bottom: (" << player.getHitbox().getBottomRightX() << "," << player.getHitbox().getBottomRightY() << " Top: (" << player.getHitbox().getTopLeftX() << ", " << player.getHitbox().getTopLeftY() << ") " << std::endl;
 
      
@@ -88,6 +89,8 @@ int main() {
                 movePlayer(player);        // moves player according to pressed keys
                 universalTicker.ticker();
                 universalTicker.checkTick();
+                player.weapon->moveBullets();
+                player.weapon->resetbullets();
                 if (universalTicker.getTick() == 16) {
                     cycles += 1;
 
