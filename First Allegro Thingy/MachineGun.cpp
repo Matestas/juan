@@ -1,13 +1,14 @@
 #include "MachineGun.h"
 #include<iostream>
+#include "Ticker.h"
 using namespace std;
 #define FIRERATE 1
 #define DAMAGE 5
 MachineGun::MachineGun():Gun(FIRERATE,DAMAGE) {
 }
-void MachineGun::fire_bullet(int x,int y,int tick){
+void MachineGun::fire_bullet(int x,int y,Ticker tick){
     //al_play_sample(*getBulletSound(0), 1, 0, 1, ALLEGRO_PLAYMODE_ONCE, 0);
-    if (tickToFire < tick)
+    if (FIRERATE < tick.getTick())
     {       
         bullets[bulletsFired].moveto(x, y);
         bullets[bulletsFired].isMoving = true;
@@ -17,8 +18,8 @@ void MachineGun::fire_bullet(int x,int y,int tick){
         else {
             bulletsFired++;
         }
-        tickFired = tick;
-        nextTick();
+        tick.setTick(0);
+        std::cout << bulletsFired << std::endl;
     }
     
 }

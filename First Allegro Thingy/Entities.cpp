@@ -16,7 +16,7 @@ void BaseEntity::move(const float dirX, const float dirY) {
 	this->y += (dirY * speedY);
 
 	hitbox.move(x, y);
-	if (checkiMap()) {
+	if (!checkiMap()) {
 
 		this->x -= (dirX * speedX);
 		this->y -= (dirY * speedY);
@@ -31,8 +31,8 @@ Hitbox BaseEntity::getHitbox()
 }
 bool BaseEntity::checkiMap() {
 	if (map == hitbox) {
-		return false;
-	}return true;
+		return true;
+	}return false;
 }
 
 

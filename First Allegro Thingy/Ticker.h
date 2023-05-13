@@ -3,6 +3,9 @@
 class Ticker
 {
 public:
+	Ticker() {
+		tick = 0;
+	}
 	void ticker();
 	int getTick();
 	void checkTick() {       
@@ -12,7 +15,7 @@ public:
 	}
 	void setTick(int tick);
 private:
-	int tick = 0;
+	int tick;
 };
 
 

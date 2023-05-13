@@ -4,9 +4,9 @@
 Laser::Laser() :Gun(FIRERATE, DAMAGE) {
 
 }
-void Laser::fire_bullet(int x, int y, int tick) {
+void Laser::fire_bullet(int x, int y, Ticker tick) {
     //al_play_sample(*getBulletSound(0), 1, 0, 1, ALLEGRO_PLAYMODE_ONCE, 0);
-    if (tickToFire < tick)
+    if (fireRate < tick.getTick())
     {
         bullets[bulletsFired].moveto(x, y);
         bullets[bulletsFired].isMoving = true;
@@ -16,7 +16,7 @@ void Laser::fire_bullet(int x, int y, int tick) {
         else {
             bulletsFired++;
         }
-        tickFired = tick;
-        nextTick();
+        tick.setTick(0);
+        std::cout << bulletsFired << std::endl;
     }
 }

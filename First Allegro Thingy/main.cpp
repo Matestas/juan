@@ -11,7 +11,7 @@ bool key_left= false;
 bool key_right= false;
 bool key_up= false;
 bool key_down= false;
-
+using namespace std;
 
 #define SCREEN_WIDTH 1280
 #define SCREEN_HEIGHT 720
@@ -39,9 +39,11 @@ int main() {
     MachineGun* mGun = new MachineGun();
     RocketLauncher* RLauncher= new RocketLauncher();
     Shotgun* shotgun=new Shotgun();
+    Laser* laser = new Laser();
     
     Enemy enemyTest;
     Ticker universalTicker;
+    Ticker gunTicker;
     std::vector <Enemy*> currentEnemies;
 
     //Create Display
@@ -71,13 +73,13 @@ int main() {
     //(&player.Ship, player.getBulletImage(0), player.getBulletSound(0), NULL, NULL, NULL);
     player.weapon = mGun;
     loadTest(player,gun,*RLauncher,*shotgun,*mGun );
-    
+    int sw=0;
     while (running){
         al_wait_for_event(event_queue, &event);
         readmovementkeys(event);    // registers pressed keys and passes it to movePlayer
-        check_PlayerShoot(event, player,universalTicker.getTick());  //checks if the mouse is pressed and makes the player shoot
+        check_PlayerShoot(event, player,gunTicker);  //checks if the mouse is pressed and makes the player shoot
         check_closeTab(event);
-        std::cout << "bottom: (" << player.getHitbox().getBottomRightX() << "," << player.getHitbox().getBottomRightY() << " Top: (" << player.getHitbox().getTopLeftX() << ", " << player.getHitbox().getTopLeftY() << ") " << std::endl;
+        //std::cout << "bottom: (" << player.getHitbox().getBottomRightX() << "," << player.getHitbox().getBottomRightY() << " Top: (" << player.getHitbox().getTopLeftX() << ", " << player.getHitbox().getTopLeftY() << ") " << std::endl;
 
      
         if (al_get_timer_count(timer) > 0) {
@@ -89,8 +91,8 @@ int main() {
                 movePlayer(player);        // moves player according to pressed keys
                 universalTicker.ticker();
                 universalTicker.checkTick();
+                gunTicker.ticker();
                 player.weapon->moveBullets();
-                player.weapon->resetbullets();
                 if (universalTicker.getTick() == 16) {
                     cycles += 1;
 
@@ -104,6 +106,33 @@ int main() {
                         cycles = 0;
                     }
                     
+                };
+                if (universalTicker.getTick() == 128) {
+                    
+                    switch (sw)
+                    {
+                    case 0:
+                        player.weapon = laser;
+                        sw++;
+                        cout << "laser";
+                        break;
+                    case 1:
+                        player.weapon = mGun;
+                        sw++;
+                        cout << "mgun";
+                        break;
+                    case 2:
+                        player.weapon = shotgun;
+                        sw++;
+                        cout << "shotgun";
+                        break;
+                    case 3:
+                        player.weapon = RLauncher;
+                        sw=0;
+                        cout << "Rlauncher";
+                        break;
+                    }
+
                 }
                 
                 

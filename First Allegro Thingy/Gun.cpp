@@ -1,12 +1,10 @@
 #include "Gun.h"
-
 Gun::Gun(float fireRate,int damage, ALLEGRO_SAMPLE* bulletSound , ALLEGRO_BITMAP* bulletImage ){
 	this->fireRate = fireRate;
 	this->damage = damage;
 	this->bulletSound = bulletSound;
 	this->bulletImage = bulletImage;
 	bulletsFired = 0;
-	tickFired = 0;
 }
 
 ALLEGRO_BITMAP** Gun::getBulletImage(int i) {
@@ -26,7 +24,7 @@ void Gun::moveBullets() {
 		bullets[i].draw();
 	}
 }
-void Gun::fire_bullet(int x, int y, int tick) {
+void Gun::fire_bullet(int x, int y, Ticker tick) {
 	al_play_sample(*getBulletSound(0), 1, 0, 1, ALLEGRO_PLAYMODE_ONCE, 0);
 
 }
@@ -42,19 +40,15 @@ ALLEGRO_BITMAP** Gun::getBulletImage() {
 ALLEGRO_SAMPLE** Gun::getBulletSound() {
 	return &bulletSound;
 }
-void Gun::resetbullets() {
+void Gun::resetbullets(bool hit) {
 	for (int i = 0; i < MAX_BULLETS; i++) {
-		if (bullets[i].checkhit() || !(bullets[i].checkiMap())) {
+		if (!bullets[i].checkiMap()) {
 			bullets[i].isMoving = false;
 			bullets[i].moveto(2000, 2000);
 		}
-	}
-}
-void Gun::nextTick() {
-	if (tickFired + fireRate >= 128) {
-		tickToFire = tickFired + fireRate - 128;
-	}
-	else {
-		tickToFire = tickFired + fireRate;
+		if (hit) {
+			bullets[i].isMoving = false;
+			bullets[i].moveto(2000, 2000);
+		}
 	}
 }

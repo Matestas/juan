@@ -24,14 +24,13 @@ public:
 	int getspeedY();
 	void setBulletImage(Bullet ID,ALLEGRO_BITMAP* image);
 	void setBulletSound(Bullet ID,ALLEGRO_SAMPLE* sound);
-	void hit();// hits the enemy
 	void move();  // moves when isMoving
 	void moveto(const int, const int);
 	
 	ALLEGRO_BITMAP** getBulletImage();
 	ALLEGRO_SAMPLE** getBulletSound();
 	void ignite();    // firing
-	bool checkhit(); // check if hits enemy
+	bool checkhit(Hitbox x); // check if hits enemy
 	void setspeed(int,int);
 	void setDamage(int);
 	void setDimensions(int,int);

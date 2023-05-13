@@ -44,11 +44,11 @@ bool Enemy::limit()
 	return false;
 }
 
-Enemy::Enemy(): Bot(1250,360)
+Enemy::Enemy(): BaseEntity(1250,360)
 {
 
 }
-Enemy::Enemy(int x, int y, int speedX,int speedY) : Bot(x, y,dimX,dimY,speedX,speedY,0,0)
+Enemy::Enemy(int x, int y, int speedX,int speedY) : BaseEntity(x, y,dimX,dimY,speedX,speedY)
 {
 
 }

@@ -1,7 +1,6 @@
 #pragma once
-#include "Bot.h"
 #include "Bullet.h"
-class Enemy: public Bot
+class Enemy: public BaseEntity
 {
 public:
 	

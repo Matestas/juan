@@ -6,13 +6,13 @@ Bullet::Bullet(int x, int y) {
 	
 	this->x = x;
 	this->y = y;
-	this->speedX = 1;
+	this->speedX = 10;
 	this->speedY = 0;
 	isMoving = false;
 }
 Bullet::Bullet():BaseEntity(-1,-1) {
 	isMoving = false;
-	speedX = 1;
+	speedX = 10;
 	speedY = 0;
 }
 Bullet::~Bullet() {
@@ -55,22 +55,17 @@ int Bullet::getspeedX() {
 int Bullet::getspeedY() {
     return speedY;
 }
-void Bullet::hit() {
-	if (checkhit()) {
-		this->health -= 1;
-	}
-
-	// hit animation function here
-}
 void Bullet::setspeed(int speedX,int speedY) {
 	this->speedX = speedX;
 	this->speedY = speedY;
 }
-bool Bullet::checkhit() {
-
-	// check which enemy hit and call beenhit function on the enemy hit, check if the enemy hit with a bullet is not hit again with the same bullet
-	// , which can cause bugs with the perfuration mechanic
-	return false;
+bool Bullet::checkhit(Hitbox x) {
+	if (hitbox == x) {
+		return true;
+	}
+	else {
+		return false;
+	}
 }
 void Bullet::setDamage(int damage){
 	this->damage = damage;
