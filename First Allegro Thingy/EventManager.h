@@ -84,6 +84,6 @@ void movePlayer(Player& Player) {
 
 void check_PlayerShoot(ALLEGRO_EVENT& event, Player& Player,Ticker tick) {
     if (event.type == ALLEGRO_EVENT_MOUSE_BUTTON_DOWN) {
-        Player.weapon->fire_bullet(Player.getX(), Player.getY(),tick );
+        Player.weaponInUse->fire_bullet(Player.getX(), Player.getY(),tick );
     }
 }

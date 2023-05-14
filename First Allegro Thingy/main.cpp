@@ -7,14 +7,20 @@
 #include "Collision.h"
 #include "Ticker.h"
 #include "laser.h"
+
+#define SCREEN_WIDTH 1280
+#define SCREEN_HEIGHT 720
+
+using namespace std;
+
 bool key_left= false;
 bool key_right= false;
 bool key_up= false;
 bool key_down= false;
-using namespace std;
 
-#define SCREEN_WIDTH 1280
-#define SCREEN_HEIGHT 720
+
+
+
 typedef struct ALLEGRO_MOUSE_STATE ALLEGRO_MOUSE_STATE;
 
 bool running;
@@ -35,11 +41,7 @@ int main() {
     //Create Objects
     Map map;
     Player player;
-    Gun gun;
-    MachineGun* mGun = new MachineGun();
-    RocketLauncher* RLauncher= new RocketLauncher();
-    Shotgun* shotgun=new Shotgun();
-    Laser* laser = new Laser();
+
     
     Enemy enemyTest;
     Ticker universalTicker;
@@ -71,8 +73,7 @@ int main() {
     ALLEGRO_SAMPLE* theme = load_sample("Shinji theme.mp3", "theme");
     al_play_sample(theme,0.3, 0, 1.5, ALLEGRO_PLAYMODE_LOOP, 0);
     //(&player.Ship, player.getBulletImage(0), player.getBulletSound(0), NULL, NULL, NULL);
-    player.weapon = mGun;
-    loadTest(player,gun,*RLauncher,*shotgun,*mGun );
+    loadTest(player);
     int sw=0;
     while (running){
         al_wait_for_event(event_queue, &event);
@@ -87,12 +88,11 @@ int main() {
            
             if (al_is_event_queue_empty(event_queue)) {
                 al_clear_to_color(al_map_rgb(0, 0, 0));
-                player.update();             // updates the player sprite
+                player.update(); // updates the player sprite           
                 movePlayer(player);        // moves player according to pressed keys
                 universalTicker.ticker();
                 universalTicker.checkTick();
-                gunTicker.ticker();
-                player.weapon->moveBullets();
+                gunTicker.ticker();              
                 if (universalTicker.getTick() == 16) {
                     cycles += 1;
 
@@ -109,32 +109,15 @@ int main() {
                 };
                 if (universalTicker.getTick() == 128) {
                     
-                    switch (sw)
-                    {
-                    case 0:
-                        player.weapon = laser;
+                    player.changeWeapon(sw);
                         sw++;
-                        cout << "laser";
-                        break;
-                    case 1:
-                        player.weapon = mGun;
-                        sw++;
-                        cout << "mgun";
-                        break;
-                    case 2:
-                        player.weapon = shotgun;
-                        sw++;
-                        cout << "shotgun";
-                        break;
-                    case 3:
-                        player.weapon = RLauncher;
-                        sw=0;
-                        cout << "Rlauncher";
-                        break;
-                    }
+                        sw &= 3;
 
                 }
-                
+                for (int i = 0; i < currentEnemies.size(); i++) {
+                    player.checkBullets(currentEnemies[i]->getHitbox());
+                    
+               }
                 
                 
 

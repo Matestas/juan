@@ -21,7 +21,9 @@ void Gun::loadBullets() {
 void Gun::moveBullets() {
 	for (int i = 0; i < MAX_BULLETS; i++) {
 		bullets[i].move();
-		bullets[i].draw();
+		if (bullets[i].isMoving) {
+			bullets[i].draw();
+		}		
 	}
 }
 void Gun::fire_bullet(int x, int y, Ticker tick) {
@@ -42,7 +44,7 @@ ALLEGRO_SAMPLE** Gun::getBulletSound() {
 }
 void Gun::resetbullets(bool hit) {
 	for (int i = 0; i < MAX_BULLETS; i++) {
-		if (!bullets[i].checkiMap()) {
+		if (bullets[i].checkiMap()) {
 			bullets[i].isMoving = false;
 			bullets[i].moveto(2000, 2000);
 		}

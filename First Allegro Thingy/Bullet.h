@@ -40,8 +40,6 @@ public:
 	private:
 	int damage = 1;
 	int health = 1;   // used for perfuration mechanics used in buffs
-	int speedX;
-	int speedY;
 	int dimx = 1;
 	int dimy = 1;
 	ALLEGRO_BITMAP* bulletImage = NULL;

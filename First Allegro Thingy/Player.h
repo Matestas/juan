@@ -1,4 +1,5 @@
 #pragma once
+
 #include <allegro5/allegro.h>
 #include <allegro5/allegro_font.h>
 #include <allegro5/allegro_primitives.h>
@@ -10,11 +11,16 @@
 #include "Bullet.h"
 #include "MachineGun.h"
 #include "Collision.h"
+#include "RocketLauncher.h"
+#include "Shotgun.h"
+#include"laser.h"
 
 #ifndef LOADERS_H
 #define LOADERS_H
 #include "Loaders.h"
 #endif
+
+using namespace std;
 
 
 class Player : public BaseEntity {
@@ -23,17 +29,22 @@ class Player : public BaseEntity {
 public:
 	Player(int dimX=68,int dimY=20);
 	~Player();
-	
+	void changeWeapon(int w);
 	void update();
 	ALLEGRO_BITMAP* Ship = NULL;
 	void setShipImage(ALLEGRO_BITMAP* image);
 	//void changeweapon();
-	Gun* weapon;
+	Gun* weaponInUse;
+	vector<Gun*> guns;
+	void checkBullets(Hitbox hit);
 private:
 	int dimX;
 	int dimY;
 	int health = 10;
-	
+	MachineGun* mGun;
+	RocketLauncher* RLauncher;
+	Shotgun* shotgun; 
+	Laser* laser; 
 
 	bool speedBoost = false;
 	void draw();

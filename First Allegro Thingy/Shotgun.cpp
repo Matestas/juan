@@ -8,32 +8,29 @@ void Shotgun::fire_bullet(int x, int y, Ticker tick) {
     //al_play_sample(*getBulletSound(0), 1, 0, 1, ALLEGRO_PLAYMODE_ONCE, 0);
     if (FIRERATE < tick.getTick())
     {
-        bullets[bulletsFired].moveto(x, y);
-        bullets[bulletsFired].isMoving = true;
         for (int i = 0; i < SHOTSFIRED ; i++ ) {
-            if (i == 0) {
-                bullets[bulletsFired].setspeedX(10);
-                bullets[bulletsFired].setspeedY(10);
-            }
-            if (i == 1) {
-                bullets[bulletsFired].setspeedX(10);
-                bullets[bulletsFired].setspeedY(0);
-            }
-            if (i == 2) {
-                bullets[bulletsFired].setspeedX(10);
-                bullets[bulletsFired].setspeedY(-10);
-            }
             bullets[bulletsFired].moveto(x, y);
             bullets[bulletsFired].isMoving = true;
+            if (i == 0) {
+                bullets[bulletsFired].setspeed(10,10);
+            }
+            if (i == 1) {
+                bullets[bulletsFired].setspeed(10,0);
+            }
+            if (i == 2) {
+                bullets[bulletsFired].setspeed(10,-10);
+            }
             if (bulletsFired == MAX_BULLETS - 1) {
                 bulletsFired = 0;
             }
             else {
                 bulletsFired++;
+
             }
-            tick.setTick(0);
-            std::cout << bulletsFired<<std::endl;
-       }
+        }
+        
+        tick.setTick(0);
+        std::cout << bulletsFired << std::endl;
     }
 
 }

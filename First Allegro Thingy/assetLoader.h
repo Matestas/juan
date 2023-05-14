@@ -5,7 +5,7 @@
 #include "Shotgun.h"
 #include "MachineGun.h"
 
-void loadTest(Player& player, Gun&gun,RocketLauncher& rocket,Shotgun &shotgun , MachineGun & mGun) {
+void loadTest(Player& player) {
 	player.setShipImage(load_image("Main_Ship.png", "Player Ship"));
 	//gun.setBulletSound(load_sample("juanito.wav", "bulletEffect"));
 	//gun.setBulletImage(load_image("juan.jpg", "bulletImage"));

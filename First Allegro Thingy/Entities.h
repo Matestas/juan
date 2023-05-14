@@ -24,7 +24,7 @@ protected:
 	Map map;   
 public:
 	Map getMap();
-	BaseEntity(int x=1, int y=1,int dimX=1,int dimY=1,int speedX=0,int speedY=0):hitbox(x,dimX, y,dimY) {
+	BaseEntity(int x=1, int y=1,int dimX=1,int dimY=1,int speedX=1,int speedY=1):hitbox(x,dimX, y,dimY) {
 		setX(x);
 		setY(y);
 		setspeedX(speedX);

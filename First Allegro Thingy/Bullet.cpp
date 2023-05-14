@@ -10,7 +10,7 @@ Bullet::Bullet(int x, int y) {
 	this->speedY = 0;
 	isMoving = false;
 }
-Bullet::Bullet():BaseEntity(-1,-1) {
+Bullet::Bullet():BaseEntity(2000,2000,0,0,10,0) {
 	isMoving = false;
 	speedX = 10;
 	speedY = 0;
@@ -25,12 +25,12 @@ void Bullet::move() {
 	}
 }
 void Bullet::moveto(const int dirX, const int dirY) {
-	this->x += (dirX);
-    this->y += (dirY);
+	this->x = (dirX);
+    this->y = (dirY);
 }
 
 void Bullet::draw() {
-	al_draw_rectangle(x, y, x + 3, y + 2, al_map_rgb(250, 250, 25), 2);
+	al_draw_rectangle(x, y, x + 10, y + 2, al_map_rgb(250, 250, 25), 2);
 	//al_draw_scaled_bitmap(bulletImage, 0, 0, 1083, 1060, x, y, 30, 30, 0);
 }
 void Bullet::ignite() {
