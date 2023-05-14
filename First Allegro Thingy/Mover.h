@@ -1,18 +1,27 @@
-#pragma once
-#include "Enemy.h"
 #include "Ticker.h"
-class Mover
+#include "Entities.h"
+#include <math.h>
+
+#define DEGREE_TO_PI_RATIO 0.0174532925
+#define PI 3.14159265359
+#define PI_OVER_TWO 3.14159265359/2
+#define TICK_INTERVAL_16 16
+#define TICK_INTERVAL_32 32
+#define TICK_INTERVAL_64 64
+#define TICK_INTERVAL_128 128
+
+using namespace std;
+
+class Mover : private BaseEntity
 {
 public:
-	Mover() {}
-	~Mover() {}
-	Mover(int timer);
-	void randomMover(Enemy& enemy, int dirX, int angleMinRange, int angleMaxRange);
-	//void linearMover();
-	//void curvedMover();
-	//void trackedMover(Enemy& enemy, Player& player);
-private:
-	Ticker ticker;
-	
-};
+    Mover();
+    ~Mover() {}
 
+
+    int randomMover(Ticker tick);
+    //void linearMover();
+    //void curvedMover();
+    //void trackedMover(Enemy& enemy, Player& player);
+private:
+};

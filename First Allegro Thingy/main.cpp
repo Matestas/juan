@@ -25,7 +25,7 @@ typedef struct ALLEGRO_MOUSE_STATE ALLEGRO_MOUSE_STATE;
 
 bool running;
 
-int main() {
+int main(){
 
     // Initialize Allegro
     al_init();
@@ -41,7 +41,7 @@ int main() {
     //Create Objects
     Map map;
     Player player;
-
+    Mover move;
     
     Enemy enemyTest;
     Ticker universalTicker;
@@ -64,17 +64,25 @@ int main() {
     al_register_event_source(event_queue, al_get_keyboard_event_source());
     al_hide_mouse_cursor(display);
     al_start_timer(timer);
-    int cycles = 0;
+
     //runtime variables
     running = true;     // loop variable to keep the window running
     ALLEGRO_EVENT event;  // create event that can be modified
+	int sw = 0;
+	int cycles = 0;
+    int inMenu = 1;
+    //Initialize Random
+	srand((unsigned)time(NULL));
+   
+    //Reserve Sample Capacity
     al_reserve_samples(5);
-    srand((unsigned)time(NULL));
+    
+    //Load Assets
     ALLEGRO_SAMPLE* theme = load_sample("Shinji theme.mp3", "theme");
     al_play_sample(theme,0.3, 0, 1.5, ALLEGRO_PLAYMODE_LOOP, 0);
     //(&player.Ship, player.getBulletImage(0), player.getBulletSound(0), NULL, NULL, NULL);
     loadTest(player);
-    int sw=0;
+
     while (running){
         al_wait_for_event(event_queue, &event);
         readmovementkeys(event);    // registers pressed keys and passes it to movePlayer
@@ -85,47 +93,59 @@ int main() {
      
         if (al_get_timer_count(timer) > 0) {
             al_set_timer_count(timer, 0);
-           
+
             if (al_is_event_queue_empty(event_queue)) {
+
+
                 al_clear_to_color(al_map_rgb(0, 0, 0));
                 player.update(); // updates the player sprite           
                 movePlayer(player);        // moves player according to pressed keys
                 universalTicker.ticker();
                 universalTicker.checkTick();
-                gunTicker.ticker();              
+                gunTicker.ticker();
+
+
+
                 if (universalTicker.getTick() == 16) {
                     cycles += 1;
 
                     if (cycles == 1) {
-                        int enemy_spawn_count = rand() % 10 + 5;
+                        int enemy_spawn_count = rand() % 5 + 5;
                         for (int i = 0; i < enemy_spawn_count; i++) {
                             Enemy* newenemy = new Enemy(1250, rand() % 700, 5 + rand() % 2, 5 + rand() % 2);
                             currentEnemies.push_back(newenemy);
-                            
+
                         }
                         cycles = 0;
                     }
-                    
-                };
-                if (universalTicker.getTick() == 128) {
-                    
-                    player.changeWeapon(sw);
-                        sw++;
-                        sw &= 3;
 
                 }
-                for (int i = 0; i < currentEnemies.size(); i++) {
-                    player.checkBullets(currentEnemies[i]->getHitbox());
-                    
-               }
-                
-                
+                for (int i = 0; i < currentEnemies.size(); i++)
+                {
+                    currentEnemies[i]->draw();
+                    currentEnemies[i]->move(move.randomMover(universalTicker) - 3, move.randomMover(universalTicker));
+                }
+                if (universalTicker.getTick() == 128) {
 
-                
-                al_flip_display();
+                    player.changeWeapon(sw);
+                    sw++;
+                    sw &= 3;
+                }
+
+                for (auto it = currentEnemies.begin(); it != currentEnemies.end(); ++it) {
+                    Enemy* enemy = *it;
+                    player.checkBullets(enemy->getHitbox());
+                    if (player.weaponInUse->bullets->checkhit(enemy->getHitbox())) {
+                        currentEnemies.erase(it);
+                        delete enemy; // delete the enemy object
+                        break; // stop the loop after erasing one enemy
+                    }
+
+                }
             }
         }
-    }
+			al_flip_display();
+        }
     
 
     al_destroy_font(font);

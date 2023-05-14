@@ -3,10 +3,10 @@
 
 bool Hitbox::operator==(Hitbox &t)
 {
-	if (topLeftX < t.bottomRightX) return false;   // rect1 is to the left of rect2
-	if (bottomRightX > t.topLeftX) return false;   // rect1 is to the right of rect2
-    if (topLeftY < t.bottomRightY) return false;   // rect1 is above rect2
-	if (bottomRightY > t.topLeftY) return false; 
+	if (topLeftX <= t.bottomRightX) return false;   // rect1 is to the left of rect2
+	if (bottomRightX >= t.topLeftX) return false;   // rect1 is to the right of rect2
+    if (topLeftY <= t.bottomRightY) return false;   // rect1 is above rect2
+	if (bottomRightY >= t.topLeftY) return false; 
 	return true;
 }
 

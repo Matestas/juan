@@ -14,27 +14,9 @@ void Enemy::draw()
 	al_draw_rectangle(x, y, x + dimX, y + dimY, al_map_rgb(255, 255, 255), 5);
 }
 
-float Enemy::getdx()
-{
-	return dx;
-}
-
-float Enemy::getdy()
-{
-	return dy;
-}
 
 
 
-void Enemy::setdy(float dy)
-{
-	this->dy = dy;
-}
-
-void Enemy::setdx(float dx)
-{
-	this->dx = dx;
-}
 
 bool Enemy::limit()
 {
@@ -44,11 +26,11 @@ bool Enemy::limit()
 	return false;
 }
 
-Enemy::Enemy(): BaseEntity(1250,360)
+Enemy::Enemy(): BaseEntity(1250,360,20,20)
 {
 
 }
-Enemy::Enemy(int x, int y, int speedX,int speedY) : BaseEntity(x, y,dimX,dimY,speedX,speedY)
+Enemy::Enemy(int x, int y, int speedX,int speedY) : BaseEntity(x, y,dimX=20,dimY=20,speedX,speedY)
 {
 
 }

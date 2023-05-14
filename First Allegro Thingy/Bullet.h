@@ -32,16 +32,10 @@ public:
 	void ignite();    // firing
 	bool checkhit(Hitbox x); // check if hits enemy
 	void setspeed(int,int);
-	void setDamage(int);
 	void setDimensions(int,int);
-	void setPenetration(int);
 	bool isMoving;
 	void draw();
 	private:
-	int damage = 1;
-	int health = 1;   // used for perfuration mechanics used in buffs
-	int dimx = 1;
-	int dimy = 1;
 	ALLEGRO_BITMAP* bulletImage = NULL;
 	ALLEGRO_SAMPLE* bulletSound = NULL;
 	

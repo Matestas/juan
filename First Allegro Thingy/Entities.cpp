@@ -21,8 +21,6 @@ void BaseEntity::move(const float dirX, const float dirY) {
 		this->x -= (dirX * speedX);
 		this->y -= (dirY * speedY);
 		hitbox.move(this->x, this->y);
-
-
 	};
 }
 Hitbox BaseEntity::getHitbox()

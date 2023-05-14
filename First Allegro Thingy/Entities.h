@@ -19,6 +19,8 @@ protected:
 	int speedY;
 	int x;
 	int y;
+	int dimX;
+	int dimY;
 	void draw();
 	Hitbox hitbox;
 	Map map;   
@@ -29,6 +31,8 @@ public:
 		setY(y);
 		setspeedX(speedX);
 		setspeedY(speedY);
+		this->dimX = dimX;
+		this->dimY = dimY;
 	}
 	void setX(int x) {
 		this->x = x;
