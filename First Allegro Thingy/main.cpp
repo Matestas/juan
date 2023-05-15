@@ -49,7 +49,7 @@ int main(){
     Enemy enemyTest;
     Ticker universalTicker;
     Ticker gunTicker;
-    EventHandler handler;
+    EventHandler handler(1,0);
     std::vector <Enemy*> currentEnemies;
     bool isLoading = true;
 
@@ -73,7 +73,7 @@ int main(){
     al_start_timer(timer);
 
     //runtime variables
-    running = true;     // loop variable to keep the window running
+    handler.isRunning = true;     // loop variable to keep the window running
     ALLEGRO_EVENT event;  // create event that can be modified
 	int sw = 0;
 	int cycles = 0;
@@ -86,24 +86,35 @@ int main(){
     
     //Load Assets
     ALLEGRO_SAMPLE* theme = load_sample("Shinji theme.mp3", "theme");
-    ALLEGRO_FONT* menuFont = al_load_font("Freedom-10eM.ttf", 24, 0);
-    al_play_sample(theme,0.3, 0, 1.5, ALLEGRO_PLAYMODE_LOOP, 0);
+    ALLEGRO_SAMPLE* juan = load_sample("juan.mp3", "juantheme");
+    vector <ALLEGRO_SAMPLE*> soundtrack;
+    soundtrack.push_back(theme);
+    soundtrack.push_back(juan);
+    ALLEGRO_SAMPLE_ID BGMid;
+    ALLEGRO_SAMPLE_ID juanId;
+    vector <ALLEGRO_SAMPLE_ID> soundIDs;
+    soundIDs.push_back(BGMid);
+    soundIDs.push_back(juanId);
+
+    //al_play_sample(theme, 0.1, 0, 1, ALLEGRO_PLAYMODE_LOOP, &BGMid);
+    ALLEGRO_FONT* menuFont = al_load_font("Freedom-10eM.ttf", 50, 0);
     //(&player.Ship, player.getBulletImage(0), player.getBulletSound(0), NULL, NULL, NULL);
     loadTest(player);
-    Menu* resume = new Menu(490, 100, 300, 100, "Resume", menuFont);
-    Menu* exit = new Menu(490, 300, 300, 100, "Exit", menuFont);
+    Menu* play = new Menu(490, 100, 500, 200, "Play", menuFont);
+    Menu* exit = new Menu(490, 300, 500, 200, "Exit", menuFont);
     std::vector <Menu*> menuButtons;
-    menuButtons.push_back(resume);
+    menuButtons.push_back(play);
     menuButtons.push_back(exit);
 
 
-    while (running){
+    while (handler.isRunning){
         //std::cout << "bottom: (" << player.getHitbox().getBottomRightX() << "," << player.getHitbox().getBottomRightY() << " Top: (" << player.getHitbox().getTopLeftX() << ", " << player.getHitbox().getTopLeftY() << ") " << std::endl;
         
      
 
             if (handler.inMenu) {
                 al_wait_for_event(event_queue, &event);
+                //handler.changeMusic(soundtrack, soundIDs);
                 handler.changeMenuButton(menuButtons, event);
                 handler.checkCloseTab(event);
                 handler.chooseMenuButton(menuButtons[handler.getCurrentHover()], event);
@@ -112,18 +123,30 @@ int main(){
                     al_set_timer_count(timer, 0);
                     if (al_is_event_queue_empty(event_queue)) {
                         al_clear_to_color(al_map_rgb(20, 20, 20));
-
+                        cout << handler.getCurrentHover() << endl;
                         handler.changeMenuButton(menuButtons, event);
                         handler.chooseMenuButton(menuButtons[handler.getCurrentHover()], event);
                         handler.switchScreen(menuButtons);
-                        resume->draw();
+                        play->draw();
                         exit->draw();
+                        
+                        if (!handler.isFirstBoot) {
+                            player.update();
+                            for (int i = 0; i < currentEnemies.size(); i++) {
+                                currentEnemies[i]->draw();
+                            }
 
+                        }
+                        
                     }
                 }
             }
-            else {
+            else if(handler.inEndless) {
                 al_wait_for_event(event_queue, &event);
+                //handler.changeMusic(soundtrack, soundIDs);
+                
+
+                
                 handler.readMovementKeys(event);    // registers pressed keys and passes it to movePlayer
                 handler.checkPlayerShoot(event, player, gunTicker);  //checks if the mouse is pressed and makes the player shoot
                 handler.checkCloseTab(event);

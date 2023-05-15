@@ -6,9 +6,19 @@ extern bool key_left;
 extern bool key_right;
 extern bool key_up;
 extern bool key_down;
-extern bool running;
+
 int EventHandler::getCurrentHover() {
     return currentHover;
+}
+void EventHandler::backToMenu(ALLEGRO_EVENT event)
+{
+    if (event.type == ALLEGRO_EVENT_KEY_DOWN) {
+        if (event.keyboard.keycode == ALLEGRO_KEY_ESCAPE) {
+            inMenu = true;
+            inEndless = false;
+
+        }
+    }
 }
 void EventHandler::test(Menu* menuButton, ALLEGRO_EVENT& event) {
     if (event.type == ALLEGRO_EVENT_KEY_DOWN) {
@@ -22,15 +32,17 @@ void EventHandler::changeMenuButton(std::vector <Menu*> menuButtons,ALLEGRO_EVEN
         if (event.keyboard.keycode == ALLEGRO_KEY_S) {
             menuButtons[currentHover]->isHovered = false;
             menuButtons[currentHover+1]->isHovered = true;
+            currentHover += 1;
         }
-        currentHover += 1;
+        
     }
     if (event.type == ALLEGRO_EVENT_KEY_DOWN) {
         if (event.keyboard.keycode == ALLEGRO_KEY_W && currentHover > 0) {
             menuButtons[currentHover]->isHovered = false;
             menuButtons[currentHover - 1]->isHovered = true;
+            currentHover -= 1;
         }
-        currentHover -= 1;
+        
     }
    
 }
@@ -46,10 +58,13 @@ void EventHandler::chooseMenuButton(Menu* menuButton, ALLEGRO_EVENT& event) {
 void EventHandler::switchScreen(std::vector <Menu*> menuButtons) {
     for (int i = 0; i < menuButtons.size(); i++) {
         if (i == menuButtons.size()-1 && menuButtons[i]->isChoosen == true) {   // Lets assume the exit button will be always the last in the vector
-            running = false;
+            isRunning = false;
+            menuButtons[i]->isChoosen = false;
         }
+        
         else if (i == 0 && menuButtons[i]->isChoosen == true) {
             inMenu = false;
+            inEndless = true;
             menuButtons[i]->isChoosen = false;
         }
     }
@@ -95,7 +110,7 @@ void EventHandler::readMovementKeys(ALLEGRO_EVENT& event) {
 void EventHandler::checkCloseTab(ALLEGRO_EVENT& event) {
 
     if (event.type == ALLEGRO_EVENT_DISPLAY_CLOSE) {
-        running = false;
+        isRunning = false;
 
     }
 }
@@ -131,7 +146,7 @@ void EventHandler::movePlayer(Player& Player) {
 
 }
 
-EventHandler::EventHandler(bool inMenu, int currentHover): inMenu(inMenu), currentHover(currentHover)
+EventHandler::EventHandler(bool inMenu, int currentHover): inMenu(inMenu), currentHover(currentHover),inEndless(false)
 {
     
 }
@@ -139,5 +154,30 @@ EventHandler::EventHandler(bool inMenu, int currentHover): inMenu(inMenu), curre
 void EventHandler::checkPlayerShoot(ALLEGRO_EVENT& event, Player& Player, Ticker tick) {
     if (event.type == ALLEGRO_EVENT_MOUSE_BUTTON_DOWN) {
         Player.weaponInUse->fire_bullet(Player.getX(), Player.getY(), tick);
+    }
+}
+
+void EventHandler::changeMusic(std::vector <ALLEGRO_SAMPLE*> soundtrack, std::vector <ALLEGRO_SAMPLE_ID> soundIDs){
+    if (inMenu) {
+        if (juanIsPlaying && !isFirstBoot) {
+            al_stop_sample(&soundIDs[1]);
+            juanIsPlaying = false;
+            
+        }
+        if (!bgmIsPlaying) {
+            al_play_sample(soundtrack[0], 0.1, 0, 1.5, ALLEGRO_PLAYMODE_LOOP, &soundIDs[0]);
+            bgmIsPlaying = true;
+        }
+    }
+    if (inEndless) {
+        if (!juanIsPlaying) {
+            
+            al_play_sample(soundtrack[1], 0.1, 0, 1, ALLEGRO_PLAYMODE_LOOP, &soundIDs[1]);
+            juanIsPlaying = true;
+        }
+        if (bgmIsPlaying) {
+            al_stop_sample(&soundIDs[0]);
+            bgmIsPlaying = false;
+        }
     }
 }
