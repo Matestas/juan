@@ -17,7 +17,7 @@ public:
 	void switchScreen(std::vector <Menu*> menuButtons);
 	int getCurrentHover();
 	void backToMenu(ALLEGRO_EVENT);
-	void changeMusic(std::vector <ALLEGRO_SAMPLE*> soundtrack, std::vector <ALLEGRO_SAMPLE_ID> soundIDs);
+
 	void test(Menu* menuButton, ALLEGRO_EVENT& event);
 	bool inMenu;
 	bool inEndless;

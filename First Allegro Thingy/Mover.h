@@ -12,16 +12,18 @@
 
 using namespace std;
 
-class Mover : private BaseEntity
+class Mover 
 {
 public:
     Mover();
     ~Mover() {}
+    float dx;
+    float dy;
 
-
-    int randomMover(Ticker tick);
+    void randomMover(Ticker tick);
     //void linearMover();
     //void curvedMover();
     //void trackedMover(Enemy& enemy, Player& player);
 private:
+
 };

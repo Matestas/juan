@@ -16,6 +16,7 @@ private:
 	int dimY;
 	int x;
 	int y;
+	
 	const char* text;
 
 	ALLEGRO_FONT* font;

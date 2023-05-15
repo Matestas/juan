@@ -157,27 +157,3 @@ void EventHandler::checkPlayerShoot(ALLEGRO_EVENT& event, Player& Player, Ticker
     }
 }
 
-void EventHandler::changeMusic(std::vector <ALLEGRO_SAMPLE*> soundtrack, std::vector <ALLEGRO_SAMPLE_ID> soundIDs){
-    if (inMenu) {
-        if (juanIsPlaying && !isFirstBoot) {
-            al_stop_sample(&soundIDs[1]);
-            juanIsPlaying = false;
-            
-        }
-        if (!bgmIsPlaying) {
-            al_play_sample(soundtrack[0], 0.1, 0, 1.5, ALLEGRO_PLAYMODE_LOOP, &soundIDs[0]);
-            bgmIsPlaying = true;
-        }
-    }
-    if (inEndless) {
-        if (!juanIsPlaying) {
-            
-            al_play_sample(soundtrack[1], 0.1, 0, 1, ALLEGRO_PLAYMODE_LOOP, &soundIDs[1]);
-            juanIsPlaying = true;
-        }
-        if (bgmIsPlaying) {
-            al_stop_sample(&soundIDs[0]);
-            bgmIsPlaying = false;
-        }
-    }
-}

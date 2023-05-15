@@ -114,7 +114,7 @@ int main(){
 
             if (handler.inMenu) {
                 al_wait_for_event(event_queue, &event);
-                //handler.changeMusic(soundtrack, soundIDs);
+                
                 handler.changeMenuButton(menuButtons, event);
                 handler.checkCloseTab(event);
                 handler.chooseMenuButton(menuButtons[handler.getCurrentHover()], event);
@@ -143,7 +143,7 @@ int main(){
             }
             else if(handler.inEndless) {
                 al_wait_for_event(event_queue, &event);
-                //handler.changeMusic(soundtrack, soundIDs);
+               
                 
 
                 
@@ -173,9 +173,11 @@ int main(){
                         }
 
                         }
+                        move.randomMover(universalTicker);
                         for (int i = 0; i < currentEnemies.size(); i++) {
                             currentEnemies[i]->draw();
-                            currentEnemies[i]->move(move.randomMover(universalTicker) - 3, move.randomMover(universalTicker));
+                            
+                            currentEnemies[i]->move(move.dx, move.dy);
                         }
                         if (universalTicker.getTick() == 128) {
 
