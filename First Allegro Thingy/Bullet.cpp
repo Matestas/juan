@@ -10,7 +10,7 @@ Bullet::Bullet(int x, int y) {
 	this->speedY = 0;
 	isMoving = false;
 }
-Bullet::Bullet():BaseEntity(2000,2000,5,3,10,0) {
+Bullet::Bullet():BaseEntity(2000,2000,10,5,10,0) {
 	isMoving = false;
 	speedX = 10;
 	speedY = 0;

@@ -30,7 +30,7 @@ Enemy::Enemy(): BaseEntity(1250,360,20,20)
 {
 
 }
-Enemy::Enemy(int x, int y, int speedX,int speedY) : BaseEntity(x, y,dimX=20,dimY=20,speedX,speedY)
+Enemy::Enemy(int x, int y, int speedX,int speedY) : BaseEntity(x, y,dimX=30,dimY=30,speedX,speedY)
 {
 
 }

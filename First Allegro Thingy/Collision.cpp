@@ -3,11 +3,13 @@
 
 bool Hitbox::operator==(Hitbox &t)
 {
-	if (topLeftX <= t.bottomRightX) return false;   // rect1 is to the left of rect2
-	if (bottomRightX >= t.topLeftX) return false;   // rect1 is to the right of rect2
-    if (topLeftY <= t.bottomRightY) return false;   // rect1 is above rect2
-	if (bottomRightY >= t.topLeftY) return false; 
-	return true;
+	bool x_colliding = (topLeftX <= t.bottomRightX) && (bottomRightX >= t.topLeftX);
+
+	// Check if the boxes are colliding along the y-axis
+	bool y_colliding = (topLeftY <= t.bottomRightY) && (bottomRightY >= t.topLeftY);
+
+	// Return true if the boxes are colliding in both axes
+	return (x_colliding && y_colliding);
 }
 
 void Hitbox::move(int xcoord, int ycoord) {
