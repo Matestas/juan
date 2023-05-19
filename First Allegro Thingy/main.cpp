@@ -46,7 +46,7 @@ int main(){
     
     //Create Objects
     Map map;
-    Player player;
+    Player* player= new Player();
     Mover move;
     
     Enemy enemyTest;
@@ -108,12 +108,12 @@ int main(){
     //al_play_sample(theme, 0.1, 0, 1, ALLEGRO_PLAYMODE_LOOP, &BGMid);
     ALLEGRO_FONT* menuFont = al_load_font("Freedom-10eM.ttf", 50, 0);
     //(&player.Ship, player.getBulletImage(0), player.getBulletSound(0), NULL, NULL, NULL);
-    loadTest(player);
-    MenuButton* play = new MenuButton(490,50, 200, 50, "Play", menuFont);
-    MenuButton* hallOfFame = new MenuButton(490, 125, 200, 50, "Hall of Fame", menuFont);
-    MenuButton* exit = new MenuButton(490, 200, 200, 50, "Exit", menuFont);
-    MenuButton* resume = new MenuButton(490, 50, 200, 50, "Resume", menuFont);
-    MenuButton* backToMenu = new MenuButton(490, 200, 200, 50, "Menu", menuFont);
+    loadTest(*player);
+    MenuButton* play = new MenuButton(490,50, 243, 150, "Play", menuFont);
+    MenuButton* hallOfFame = new MenuButton(490, 300, 243, 150, "Hall", menuFont);
+    MenuButton* exit = new MenuButton(490,550, 243, 150, "Exit", menuFont);
+    MenuButton* resume = new MenuButton(490, 50, 243, 150, "Resume", menuFont);
+    MenuButton* backToMenu = new MenuButton(490, 200, 243, 150, "Menu", menuFont);
     std::vector <MenuButton*> mainMenuButtons;
     std::vector <MenuButton*> menuButtons;
     mainMenuButtons.push_back(play);
@@ -163,7 +163,7 @@ int main(){
                         al_clear_to_color(al_map_rgb(20, 20, 20));
 
                         if (!menuHandler.isFirstBoot) {
-                            player.update();
+                            player->draw();
                             for (int i = 0; i < currentEnemies.size(); i++) {
                                 currentEnemies[i]->draw();
                             }
@@ -198,7 +198,7 @@ int main(){
                 al_wait_for_event(event_queue, &event);
                 
                 handler.readMovementKeys(event);    // registers pressed keys and passes it to movePlayer
-                handler.checkPlayerShoot(event, player, gunTicker);  //checks if the mouse is pressed and makes the player shoot
+                handler.checkPlayerShoot(event, *player, gunTicker);  //checks if the mouse is pressed and makes the player shoot
                 handler.checkCloseTab(event, menuHandler);
                 menuHandler.backToMenu(event);
                 score.display();
@@ -206,23 +206,36 @@ int main(){
                     al_set_timer_count(timer, 0);
                     if (al_is_event_queue_empty(event_queue)) {
                         al_clear_to_color(al_map_rgb(20, 20, 20));
-                        //score.display();          
-                        handler.movePlayer(player);        // moves player according to pressed keys
+                        score.display();          
+                        handler.movePlayer(*player);        // moves player according to pressed keys
                         universalTicker.ticker();
                         universalTicker.checkTick();    
                         gunTicker.ticker();
-                        player.update();
+                        player->update();
                         for (auto it = currentEnemies.begin(); it != currentEnemies.end() ;) {
                             Enemy* enemyt = *it;
-                            
-                            if (player.checkGunHit(*enemyt->getHitbox())) {
-                                player.checkBullets(*enemyt->getHitbox());
+                            if (player->checkCollision(*enemyt->getHitbox())) {
                                 delete enemyt; // Delete the enemy object
                                 it = currentEnemies.erase(it); // Erase and get the iterator to the next element
-
+                                score.addScore(10);
                             }
                             else {
-                                ++it;
+                                if (player->checkGunHit(*enemyt->getHitbox())) {
+                                    player->checkBullets(*enemyt->getHitbox());
+                                    delete enemyt; // Delete the enemy object
+                                    it = currentEnemies.erase(it); // Erase and get the iterator to the next element
+                                    score.addScore(10);
+                                }
+                                else {
+                                    if (enemyt->getHitbox()->getBottomRightX() < 100) {
+                                        delete enemyt; // Delete the enemy object
+                                        it = currentEnemies.erase(it); // Erase and get the iterator to the next element
+                                        player->getDamaged();
+                                    }
+                                    else {
+                                        ++it;
+                                    }
+                                }
                             }
                         }
                         if (universalTicker.getTick() == 16) {
@@ -233,9 +246,15 @@ int main(){
                             int enemy_spawn_count = ((rand() % (int) round(score.difficultyRatio)*2) + 1);
                            
                             for (int i = 0; i < enemy_spawn_count; i++) {
-                                Enemy* newenemy = new Enemy(1250, rand() % 700, score.difficultyRatio * 4, score.difficultyRatio * 4);
+                                Enemy* newenemy = new Enemy(1250, rand() % 700, score.difficultyRatio * 4, score.difficultyRatio * 4, std::time(nullptr) % 3 + 1);
                                 currentEnemies.push_back(newenemy);
-
+                                if ((score.score % 250 == 0)&&score.score!=0) {
+                                    for (int e = 0; e < 10; e++) {
+                                        Enemy* newenemy = new Enemy(1250, rand() % 700, score.difficultyRatio * 4, score.difficultyRatio * 4, std::time(nullptr) % 3 + 1, 30, 30);
+                                        currentEnemies.push_back(newenemy);
+                                    }
+                                    
+                                }
                             }
                             cycles = 0;
                         }
@@ -244,19 +263,28 @@ int main(){
                         
                         for (int i = 0; i < currentEnemies.size(); i++) {
                             currentEnemies[i]->draw();
-                            currentEnemies[i]->setspeedX(score.difficultyRatio * 1);
-                            currentEnemies[i]->setspeedY(score.difficultyRatio * 1);
-                            move.randomMover(*currentEnemies[i],universalTicker);
-                            currentEnemies[i]->move(currentEnemies[i]->dx, currentEnemies[i]->dy);
+                            move.toMove(*currentEnemies[i], universalTicker);
+                            
+                            currentEnemies[i]->move(currentEnemies[i]->dx, currentEnemies[i]->dy);                          
                         }
                         if (universalTicker.getTick() == 128) {
 
-                            player.changeWeapon(sw);
+                            player->changeWeapon(sw);
                             sw++;
                             sw &= 3;
                         }
-
-                        
+                        if (player->health <= 0) {
+                            menuHandler.inMainMenu = true;
+                            menuHandler.inEndless = false;
+                            if (!mainMenu.restartGame()) {
+                                delete player;
+                                player = new Player();
+                                currentEnemies.clear();
+                                loadTest(*player);
+                                score.score = 0;  
+                            }
+                        }
+           
                         
 
 
@@ -272,7 +300,7 @@ int main(){
     al_destroy_font(font);
     al_destroy_display(display);
     al_destroy_event_queue(event_queue);
-    al_destroy_bitmap(player.Ship);
+    al_destroy_bitmap(player->Ship);
     
     
     return 0;

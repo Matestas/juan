@@ -32,15 +32,17 @@ Enemy::Enemy(): BaseEntity(1250,360,20,20)
 {
 
 }
-Enemy::Enemy(int x, int y, int speedX,int speedY) : BaseEntity(x, y,dimX=30,dimY=30,speedX,speedY), dx(0), dy(0)
+Enemy::Enemy(int x, int y, int speedX,int speedY, int moveType,int dimX,int dimY) : BaseEntity(x, y,dimX,dimY,speedX,speedY), moveType(moveType)
 {
-	int randomTo2 = rand() % 2;
+	dx = 0;
+	dy = 0;
+	int randomTo2 = rand() % 2 + 1;
 	if (randomTo2 == 1) {
-		dy = -cos(MIN_RANGE);
+		dy = cos(MIN_RANGE * DEGREE_TO_PI_RATIO);
 		dx = (-1 * (sqrt(1 - pow(dy, 2))));
 	}
 	else if (randomTo2 == 2) {
-		dy = cos(MAX_RANGE);
+		dy = cos(MAX_RANGE * DEGREE_TO_PI_RATIO);
 		dx = (-1 * (sqrt(1 - pow(dy, 2))));
 	}
 }

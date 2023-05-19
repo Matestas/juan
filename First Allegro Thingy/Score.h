@@ -18,7 +18,6 @@ private:
 public:
 	Score(ALLEGRO_FONT* font);
 	int score;
-	const char* str_score;
 	double difficultyRatio;
 	void addScore(int points);
 	void display();

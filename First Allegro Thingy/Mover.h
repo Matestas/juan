@@ -13,20 +13,20 @@
 
 using namespace std;
 
-class Mover 
+class Mover
 {
 public:
-    Mover();
-    ~Mover() {}
-    float dx;
-    float dy;
+	Mover();
+	~Mover() {}
+	float dx;
+	float dy;
+	void toMove(Enemy& enemy, Ticker tick);
+	void randomMover(Enemy& enemy, Ticker tick);
+	void linearMover(Enemy& enemy, Ticker tick);
 
-    void randomMover( Enemy&enemy,Ticker tick);
-    void linearMover(Enemy& enemy, Ticker tick);
-   
-    //void linearMover();
-    //void curvedMover();
-    //void trackedMover(Enemy& enemy, Player& player);
+	//void linearMover();
+	//void curvedMover();
+	//void trackedMover(Enemy& enemy, Player& player);
 private:
 
 };

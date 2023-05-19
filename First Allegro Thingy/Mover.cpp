@@ -1,9 +1,24 @@
 #include "Mover.h"
-#define MIN_RANGE 55
-#define MAX_RANGE 125
+#define MIN_RANGE 45
+#define MAX_RANGE 135
 
 Mover::Mover() : dx(dx), dy(dy) {
 
+}
+void Mover::toMove(Enemy& enemy, Ticker tick)
+{
+    std::cout << enemy.moveType << std::endl;
+    if (enemy.moveType == 1){
+        randomMover(enemy, tick);
+    }
+    else if (enemy.moveType == 2) {
+        
+        linearMover(enemy, tick);
+    }
+    else if (enemy.moveType == 3) {
+
+        linearMover(enemy, tick);
+    }
 }
 void Mover::randomMover(Enemy& enemy,Ticker tick)  // Need to change to BaseEntity as argument, still dont know, if I dont figure it out I will just copy for each class
 {
@@ -11,10 +26,12 @@ void Mover::randomMover(Enemy& enemy,Ticker tick)  // Need to change to BaseEnti
 
     
         if (tick.getTick() % TICK_INTERVAL_16 == 0) {
-            float degrees = (MIN_RANGE + rand() % (MAX_RANGE - MIN_RANGE));       // give a random angle in degrees between the angles given
+            float degrees = (MIN_RANGE + rand() % (MAX_RANGE - MIN_RANGE + 1));       // give a random angle in degrees between the angles given
             float radians = degrees * DEGREE_TO_PI_RATIO;  // since math.h uses radians, convert the random angle to radians
+            
             enemy.dy = (cos(radians));
             enemy.dx = (-1 * (sqrt(1 - pow(enemy.dy, 2))));
+            //cout << enemy.dy << endl;
         }
     //if (tick.getTick() % TICK_INTERVAL_64 == 0) {
        // return ((rand() % 7) - 3);
@@ -31,6 +48,13 @@ void Mover::randomMover(Enemy& enemy,Ticker tick)  // Need to change to BaseEnti
 
 void Mover::linearMover(Enemy& enemy, Ticker tick) {
     if (tick.getTick() % TICK_INTERVAL_64 == 0) {
-        enemy.dy *= -1;
+        if (enemy.moveType == 3) {
+            enemy.dy = 0;
+            enemy.dx = -1.2;
+            
+        }
+        else {
+            enemy.dy *= -1;
+        }
     }
 }

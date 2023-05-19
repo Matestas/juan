@@ -47,11 +47,11 @@ void Gun::resetbullets(Hitbox hit) {
 		if (bullets[i].isMoving) {
 			if (!bullets[i].checkiMap()) {
 				bullets[i].isMoving = false;
-				bullets[i].moveto(-1, -1);
+				bullets[i].moveto(2000, 2000);
 			}
 			if (bullets[i].checkhit(hit)) {
 				bullets[i].isMoving = false;
-				bullets[i].moveto(-1, -1);
+				bullets[i].moveto(2000, 2000);
 			}
 		}
 	}
@@ -67,4 +67,13 @@ bool Gun::checkhit(Hitbox &x)
 		}
 	}
 	return false;
+}
+
+void Gun::drawBullets()
+{
+	for (int i = 0; i < MAX_BULLETS; i++) {
+		if (bullets[i].isMoving) {
+			bullets[i].draw();
+		}	
+	}
 }

@@ -19,6 +19,7 @@ public:
     Bullet bullets[MAX_BULLETS];
 	void resetbullets(Hitbox hit);
 	bool checkhit(Hitbox &x);
+	void drawBullets();
 protected:
 	float fireRate; // SHOTS FIRED
 	void loadBullets();

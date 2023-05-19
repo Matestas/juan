@@ -12,13 +12,13 @@ void Shotgun::fire_bullet(int x, int y, Ticker tick) {
             bullets[bulletsFired].moveto(x, y);
             bullets[bulletsFired].isMoving = true;
             if (i == 0) {
-                bullets[bulletsFired].setspeed(10,10);
+                bullets[bulletsFired].setspeed(10,4);
             }
             if (i == 1) {
                 bullets[bulletsFired].setspeed(10,0);
             }
             if (i == 2) {
-                bullets[bulletsFired].setspeed(10,-10);
+                bullets[bulletsFired].setspeed(10,-4);
             }
             if (bulletsFired == MAX_BULLETS - 1) {
                 bulletsFired = 0;

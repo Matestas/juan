@@ -37,17 +37,23 @@ public:
 	vector<Gun*> guns;
 	void checkBullets(Hitbox &hit);
 	bool checkGunHit(Hitbox &x);
+	void draw();
+	bool checkCollision(Hitbox& x);
+	void getDamaged() {
+		health--;
+	}
+	int health = 10;
 private:
 	int dimX;
 	int dimY;
-	int health = 10;
+	
 	MachineGun* mGun;
 	RocketLauncher* RLauncher;
 	Shotgun* shotgun; 
 	Laser* laser; 
 
 	bool speedBoost = false;
-	void draw();
+	
 
 
 };

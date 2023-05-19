@@ -27,7 +27,7 @@ void Bullet::move() {
 	
 }
 void Bullet::moveto(const int dirX, const int dirY) {
-	this->x = (dirX);
+	this->x = (dirX+60);
     this->y = (dirY);
 }
 

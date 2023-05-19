@@ -3,8 +3,8 @@
 
 Player::Player(int dimX,int dimY) : BaseEntity(0, 0, dimX, dimY){
 	
-	speedX = 20;
-	speedY = 20;
+	speedX = 15;
+	speedY = 15;
 	this->dimX = dimX;
 	this->dimY = dimY;
 	mGun = new MachineGun();
@@ -44,6 +44,22 @@ void Player::draw() {
 	
 	al_draw_scaled_bitmap(Ship, 3,11, 27, 9, x, y, dimX, dimY, 0);
 	al_draw_rectangle(x, y, x + dimX, y + dimY, al_map_rgb(250, 250, 25), 2);
+	for (auto gun : guns) {
+		gun->drawBullets();
+	}
+}
+
+bool Player::checkCollision(Hitbox& x)
+{
+	if (hitbox == x)
+	{
+		getDamaged();
+		return true;
+	}if (checkInside(x)) {
+		getDamaged();
+		return true;
+	}
+	return false;
 }
 
 Player::~Player() {

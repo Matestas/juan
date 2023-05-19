@@ -137,5 +137,7 @@ bool MainMenu::restartGame() {
     if (!isFirstBoot) {
         return true;
     }
-    else return false;
+    else {
+        return false;
+    }
 }
