@@ -18,9 +18,9 @@ void Gun::loadBullets() {
 		this->bullets[i] = Bullet(bullets[0]);
 	}
 }
-void Gun::moveBullets() {
+void Gun::moveBullets(std::vector<Enemy*> enemy) {
 	for (int i = 0; i < MAX_BULLETS; i++) {
-		bullets[i].move();
+		bullets[i].move(enemy);
 		if (bullets[i].isMoving) {
 			bullets[i].draw();
 		}		

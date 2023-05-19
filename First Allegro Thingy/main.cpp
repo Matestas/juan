@@ -163,7 +163,7 @@ int main(){
                         al_clear_to_color(al_map_rgb(20, 20, 20));
 
                         if (!menuHandler.isFirstBoot) {
-                            player.update();
+                            player.update(currentEnemies);
                             for (int i = 0; i < currentEnemies.size(); i++) {
                                 currentEnemies[i]->draw();
                             }
@@ -201,16 +201,17 @@ int main(){
                 handler.checkPlayerShoot(event, player, gunTicker);  //checks if the mouse is pressed and makes the player shoot
                 handler.checkCloseTab(event, menuHandler);
                 menuHandler.backToMenu(event);
+                score.display();
                 if (al_get_timer_count(timer) > 0) {
                     al_set_timer_count(timer, 0);
                     if (al_is_event_queue_empty(event_queue)) {
                         al_clear_to_color(al_map_rgb(20, 20, 20));
-                        //score.display();
-                        player.update(); // updates the player sprite           
-                        movePlayer(player);        // moves player according to pressed keys
+                        //score.display();          
+                        handler.movePlayer(player);        // moves player according to pressed keys
                         universalTicker.ticker();
                         universalTicker.checkTick();    
                         gunTicker.ticker();
+                        
                         if (universalTicker.getTick() == 16) {
                             cycles += 1;
 
@@ -230,6 +231,8 @@ int main(){
                         
                         for (int i = 0; i < currentEnemies.size(); i++) {
                             currentEnemies[i]->draw();
+                            currentEnemies[i]->setspeedX(score.difficultyRatio * 1);
+                            currentEnemies[i]->setspeedY(score.difficultyRatio * 1);
                             move.randomMover(*currentEnemies[i],universalTicker);
                             currentEnemies[i]->move(currentEnemies[i]->dx, currentEnemies[i]->dy);
                         }
@@ -240,16 +243,8 @@ int main(){
                             sw &= 3;
                         }
 
-                        for (auto it = currentEnemies.begin(); it != currentEnemies.end(); ++it) {
-                            Enemy* enemy = *it;
-                            player.checkBullets(enemy->getHitbox());
-                            if (player.weaponInUse->bullets->checkhit(enemy->getHitbox())) {
-                                currentEnemies.erase(it);
-                                delete enemy; // delete the enemy object
-                                break; // stop the loop after erasing one enemy
-                            }
-                        }
-
+                        
+                        
 
 
                 }

@@ -8,6 +8,7 @@
 #include <allegro5/allegro_audio.h>
 #include <allegro5/allegro_acodec.h>
 #include <vector>
+#include "Enemy.h"
 
 ALLEGRO_BITMAP* load_image(const char* filename, const char* image_ID);
 
@@ -24,7 +25,7 @@ public:
 	int getspeedY();
 	void setBulletImage(Bullet ID,ALLEGRO_BITMAP* image);
 	void setBulletSound(Bullet ID,ALLEGRO_SAMPLE* sound);
-	void move();  // moves when isMoving
+	void move(std::vector<Enemy*> enemy);  // moves when isMoving
 	void moveto(const int, const int);
 	
 	ALLEGRO_BITMAP** getBulletImage();

@@ -10,6 +10,7 @@ public:
 	float dx;
 	void draw();
 	bool limit();
+	
 private:
 	
 

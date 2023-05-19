@@ -62,10 +62,10 @@ void Player::changeWeapon(int w)
 		break;
 	}
 }
-void Player::update() {
+void Player::update(vector<Enemy*> enemy) {
 	draw();
 	for (auto gun : guns) {
-		gun->moveBullets();
+		gun->moveBullets(enemy);
 	}
 
 }

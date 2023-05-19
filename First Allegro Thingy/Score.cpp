@@ -1,13 +1,16 @@
 #include "Score.h"
 
 
-Score::Score(ALLEGRO_FONT *font): score(0), difficultyRatio(1), font(font)
+Score::Score(ALLEGRO_FONT *font): score(0), difficultyRatio(1), font(font), str_score("")
 {
 }
 
 void Score::addScore(int points)
 {
 	score += points;
+	std::string intToConvert = std::to_string(score);
+	str_score = intToConvert.c_str();
+
 	// need to pass score to const char*
 }
 

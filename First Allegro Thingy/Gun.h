@@ -1,6 +1,8 @@
 #pragma once
+#include <vector>
 #include "Ticker.h"
 #include "Bullet.h"
+#include "Enemy.h"
 #define MAX_BULLETS 30
 class Gun
 {
@@ -13,7 +15,7 @@ public:
 	virtual void fire_bullet(int x, int y, Ticker tick);
 	ALLEGRO_BITMAP** getBulletImage(int i);
 	ALLEGRO_SAMPLE** getBulletSound(int i);
-	void moveBullets();
+	void moveBullets(std::vector<Enemy*> enemy);
     Bullet bullets[MAX_BULLETS];
 	void resetbullets(bool hit);
 protected:

@@ -18,12 +18,25 @@ Bullet::Bullet():BaseEntity(2000,2000,10,5,10,0) {
 Bullet::~Bullet() {
 	
 }
-void Bullet::move() {
-	if (isMoving) {
-		this->x += speedX;
-		this->y += speedY;
+void Bullet::move(std::vector<Enemy*> enemies) {
+	for (int tx = 0; tx < speedX; tx++) {
+		for(int ty=0;ty<speedY;ty++){
+			this->x += speedX;
+		}
+		if (isMoving) {	
+			this->y += speedY;
+		}
 		hitbox.move(x, y);
+		for (auto it = enemies.begin(); it != enemies.end(); ++it) {
+			Enemy* enemy = *it;
+
+			if (checkhit(enemy->getHitbox())) {
+				enemies.erase(it);
+				delete enemy; // delete the enemy object
+			}
+		}
 	}
+	
 }
 void Bullet::moveto(const int dirX, const int dirY) {
 	this->x = (dirX);

@@ -14,7 +14,7 @@
 #include "RocketLauncher.h"
 #include "Shotgun.h"
 #include"laser.h"
-
+#include"Enemy.h"
 #ifndef LOADERS_H
 #define LOADERS_H
 #include "Loaders.h"
@@ -30,10 +30,9 @@ public:
 	Player(int dimX=68,int dimY=20);
 	~Player();
 	void changeWeapon(int w);
-	void update();
+	void update(vector<Enemy*> enemy);
 	ALLEGRO_BITMAP* Ship = NULL;
 	void setShipImage(ALLEGRO_BITMAP* image);
-	//void changeweapon();
 	Gun* weaponInUse;
 	vector<Gun*> guns;
 	void checkBullets(Hitbox hit);

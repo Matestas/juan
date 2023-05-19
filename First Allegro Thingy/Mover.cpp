@@ -1,11 +1,10 @@
 #include "Mover.h"
-
 #define MIN_RANGE 55
 #define MAX_RANGE 125
-Mover::Mover() {
+
+Mover::Mover() : dx(dx), dy(dy) {
 
 }
-
 void Mover::randomMover(Enemy& enemy,Ticker tick)  // Need to change to BaseEntity as argument, still dont know, if I dont figure it out I will just copy for each class
 {
  
@@ -28,4 +27,10 @@ void Mover::randomMover(Enemy& enemy,Ticker tick)  // Need to change to BaseEnti
 
     //std::cout << enemy.getdx() << "," << enemy.getdy() << std::endl;
     //std::cout <<"bottom: ("<< enemy.hitbox.getBottomRightX() << "," << enemy.hitbox.getBottomRightY() << " Top: (" << enemy.hitbox.getTopLeftX() << ", " << enemy.hitbox.getTopLeftY() << ") " << std::endl;
+}
+
+void Mover::linearMover(Enemy& enemy, Ticker tick) {
+    if (tick.getTick() % TICK_INTERVAL_64 == 0) {
+        enemy.dy *= -1;
+    }
 }
