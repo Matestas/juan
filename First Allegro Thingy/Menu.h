@@ -9,7 +9,7 @@
 #include <allegro5/allegro_acodec.h>
 #include <allegro5/allegro_font.h>
 #include <allegro5/allegro_ttf.h>
-class Menu
+class MenuButton
 {
 private:
 	int dimX;
@@ -21,10 +21,11 @@ private:
 
 	ALLEGRO_FONT* font;
 public:
-	Menu(int, int, int, int, const char*, ALLEGRO_FONT*);
+	MenuButton(int x, int y, int dimX, int dimY, const char* text, ALLEGRO_FONT* font,bool isHovered = false);
 	void draw();
 	bool choose();
 	bool isChoosen;
 	bool isHovered;
 	ALLEGRO_FONT* getFont();
 };
+

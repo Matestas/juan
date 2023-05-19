@@ -1,5 +1,6 @@
 #include "Ticker.h"
 #include "Entities.h"
+#include"Enemy.h"
 #include <math.h>
 
 #define DEGREE_TO_PI_RATIO 0.0174532925
@@ -20,7 +21,7 @@ public:
     float dx;
     float dy;
 
-    void randomMover(Ticker tick);
+    void randomMover( Enemy&enemy,Ticker tick);
     //void linearMover();
     //void curvedMover();
     //void trackedMover(Enemy& enemy, Player& player);

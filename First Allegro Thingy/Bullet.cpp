@@ -6,13 +6,13 @@ Bullet::Bullet(int x, int y) {
 	
 	this->x = x;
 	this->y = y;
-	this->speedX = 10;
+	this->speedX = 20;
 	this->speedY = 0;
 	isMoving = false;
 }
 Bullet::Bullet():BaseEntity(2000,2000,10,5,10,0) {
 	isMoving = false;
-	speedX = 10;
+	speedX = 20;
 	speedY = 0;
 }
 Bullet::~Bullet() {

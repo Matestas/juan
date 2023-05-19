@@ -8,7 +8,10 @@
 #include "Ticker.h"
 #include "laser.h"
 #include "Menu.h"
+#include "MenuHandler.h"
 #include "EventHandler.h"
+#include "Score.h"
+#include <cmath>
 
 #define SCREEN_WIDTH 1280
 #define SCREEN_HEIGHT 720
@@ -49,7 +52,10 @@ int main(){
     Enemy enemyTest;
     Ticker universalTicker;
     Ticker gunTicker;
-    EventHandler handler(1,0);
+    EventHandler handler;
+
+    MenuHandler menuHandler;
+    MainMenu mainMenu;
     std::vector <Enemy*> currentEnemies;
     bool isLoading = true;
 
@@ -63,6 +69,8 @@ int main(){
     ALLEGRO_FONT* font = al_create_builtin_font();
     ALLEGRO_TIMER* timer = al_create_timer(0.01666);
     ALLEGRO_EVENT_QUEUE* event_queue = al_create_event_queue();
+    //Create Score object now since it needed the font to load
+    Score score(font);
     
     //Register possible events
     al_register_event_source(event_queue, al_get_display_event_source(display));
@@ -75,6 +83,7 @@ int main(){
     //runtime variables
     handler.isRunning = true;     // loop variable to keep the window running
     ALLEGRO_EVENT event;  // create event that can be modified
+    
 	int sw = 0;
 	int cycles = 0;
     
@@ -100,72 +109,117 @@ int main(){
     ALLEGRO_FONT* menuFont = al_load_font("Freedom-10eM.ttf", 50, 0);
     //(&player.Ship, player.getBulletImage(0), player.getBulletSound(0), NULL, NULL, NULL);
     loadTest(player);
-    Menu* play = new Menu(490, 100, 500, 200, "Play", menuFont);
-    Menu* exit = new Menu(490, 300, 500, 200, "Exit", menuFont);
-    std::vector <Menu*> menuButtons;
-    menuButtons.push_back(play);
-    menuButtons.push_back(exit);
+    MenuButton* play = new MenuButton(490,50, 200, 50, "Play", menuFont);
+    MenuButton* hallOfFame = new MenuButton(490, 125, 200, 50, "Hall of Fame", menuFont);
+    MenuButton* exit = new MenuButton(490, 200, 200, 50, "Exit", menuFont);
+    MenuButton* resume = new MenuButton(490, 50, 200, 50, "Resume", menuFont);
+    MenuButton* backToMenu = new MenuButton(490, 200, 200, 50, "Menu", menuFont);
+    std::vector <MenuButton*> mainMenuButtons;
+    std::vector <MenuButton*> menuButtons;
+    mainMenuButtons.push_back(play);
+    mainMenuButtons.push_back(hallOfFame);
+    mainMenuButtons.push_back(exit);
+    menuButtons.push_back(resume);
+    menuButtons.push_back(backToMenu);
 
 
-    while (handler.isRunning){
+    while (menuHandler.isRunning){       // Main Menu
         //std::cout << "bottom: (" << player.getHitbox().getBottomRightX() << "," << player.getHitbox().getBottomRightY() << " Top: (" << player.getHitbox().getTopLeftX() << ", " << player.getHitbox().getTopLeftY() << ") " << std::endl;
         
-     
+        if (menuHandler.inMainMenu) {
 
-            if (handler.inMenu) {
-                al_wait_for_event(event_queue, &event);
-                
-                handler.changeMenuButton(menuButtons, event);
-                handler.checkCloseTab(event);
-                handler.chooseMenuButton(menuButtons[handler.getCurrentHover()], event);
-                handler.switchScreen(menuButtons);
+            al_wait_for_event(event_queue, &event);
+            if (mainMenu.getCurrentHover() == 0) {
+                play->isHovered = true;
+            }
+            handler.checkCloseTab(event, menuHandler);
+            mainMenu.changeMenuButton(mainMenuButtons, event);
+            mainMenu.chooseMenuButton(mainMenuButtons[mainMenu.getCurrentHover()], event);
+            mainMenu.switchScreen(mainMenuButtons, menuHandler);
+            if (al_get_timer_count(timer) > 0) {
+                al_set_timer_count(timer, 0);
+                if (al_is_event_queue_empty(event_queue)) {
+                    al_clear_to_color(al_map_rgb(20, 20, 20));
+                    play->draw();
+                    hallOfFame->draw();
+                    exit->draw();
+                }
+            }
+        }
+
+        else if (menuHandler.inMenu) {          // Menu
+            al_wait_for_event(event_queue, &event);
+            if (menuHandler.getCurrentHover() == 0) {
+                resume->isHovered = true;
+            }
+            menuHandler.changeMenuButton(menuButtons, event);
+            handler.checkCloseTab(event, menuHandler);
+            menuHandler.chooseMenuButton(menuButtons[menuHandler.getCurrentHover()], event);
+            menuHandler.switchScreen(menuButtons);
+            
                 if (al_get_timer_count(timer) > 0) {
                     al_set_timer_count(timer, 0);
                     if (al_is_event_queue_empty(event_queue)) {
                         al_clear_to_color(al_map_rgb(20, 20, 20));
-                        cout << handler.getCurrentHover() << endl;
-                        handler.changeMenuButton(menuButtons, event);
-                        handler.chooseMenuButton(menuButtons[handler.getCurrentHover()], event);
-                        handler.switchScreen(menuButtons);
-                        play->draw();
-                        exit->draw();
-                        
-                        if (!handler.isFirstBoot) {
+
+                        if (!menuHandler.isFirstBoot) {
                             player.update();
                             for (int i = 0; i < currentEnemies.size(); i++) {
                                 currentEnemies[i]->draw();
                             }
 
                         }
-                        
+                        resume->draw();
+                        backToMenu->draw();
+
                     }
                 }
-            }
-            else if(handler.inEndless) {
+        }
+            else if (menuHandler.inHallOfFame) {
                 al_wait_for_event(event_queue, &event);
-               
+                handler.checkCloseTab(event, menuHandler);
+                mainMenu.backToMenu(event, menuHandler);
+                 
                 
-
-                
-                handler.readMovementKeys(event);    // registers pressed keys and passes it to movePlayer
-                handler.checkPlayerShoot(event, player, gunTicker);  //checks if the mouse is pressed and makes the player shoot
-                handler.checkCloseTab(event);
                 if (al_get_timer_count(timer) > 0) {
                     al_set_timer_count(timer, 0);
                     if (al_is_event_queue_empty(event_queue)) {
                         al_clear_to_color(al_map_rgb(20, 20, 20));
+                        al_draw_circle(600, 300, 50, al_map_rgb(22, 52, 90), 5);
+                    }
+                }
+                
+            
+
+
+            }
+            else if(menuHandler.inEndless) {
+                
+                al_wait_for_event(event_queue, &event);
+                
+                handler.readMovementKeys(event);    // registers pressed keys and passes it to movePlayer
+                handler.checkPlayerShoot(event, player, gunTicker);  //checks if the mouse is pressed and makes the player shoot
+                handler.checkCloseTab(event, menuHandler);
+                menuHandler.backToMenu(event);
+                if (al_get_timer_count(timer) > 0) {
+                    al_set_timer_count(timer, 0);
+                    if (al_is_event_queue_empty(event_queue)) {
+                        al_clear_to_color(al_map_rgb(20, 20, 20));
+                        //score.display();
                         player.update(); // updates the player sprite           
                         movePlayer(player);        // moves player according to pressed keys
                         universalTicker.ticker();
-                        universalTicker.checkTick();
+                        universalTicker.checkTick();    
                         gunTicker.ticker();
                         if (universalTicker.getTick() == 16) {
                             cycles += 1;
 
                         if (cycles == 1) {
-                            int enemy_spawn_count = rand() % 5 + 5;
+                            
+                            int enemy_spawn_count = ((rand() % (int) round(score.difficultyRatio)*2) + 1);
+                           
                             for (int i = 0; i < enemy_spawn_count; i++) {
-                                Enemy* newenemy = new Enemy(1250, rand() % 700, 5 + rand() % 2, 5 + rand() % 2);
+                                Enemy* newenemy = new Enemy(1250, rand() % 700, score.difficultyRatio * 4, score.difficultyRatio * 4);
                                 currentEnemies.push_back(newenemy);
 
                             }
@@ -173,11 +227,11 @@ int main(){
                         }
 
                         }
-                        move.randomMover(universalTicker);
+                        
                         for (int i = 0; i < currentEnemies.size(); i++) {
                             currentEnemies[i]->draw();
-                            
-                            currentEnemies[i]->move(move.dx, move.dy);
+                            move.randomMover(*currentEnemies[i],universalTicker);
+                            currentEnemies[i]->move(currentEnemies[i]->dx, currentEnemies[i]->dy);
                         }
                         if (universalTicker.getTick() == 128) {
 

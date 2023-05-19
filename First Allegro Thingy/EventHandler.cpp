@@ -1,4 +1,5 @@
 #include "EventHandler.h"
+
 #include <allegro5/allegro.h>
 
 #include "Player.h"
@@ -7,71 +8,7 @@ extern bool key_right;
 extern bool key_up;
 extern bool key_down;
 
-int EventHandler::getCurrentHover() {
-    return currentHover;
-}
-void EventHandler::backToMenu(ALLEGRO_EVENT event)
-{
-    if (event.type == ALLEGRO_EVENT_KEY_DOWN) {
-        if (event.keyboard.keycode == ALLEGRO_KEY_ESCAPE) {
-            inMenu = true;
-            inEndless = false;
 
-        }
-    }
-}
-void EventHandler::test(Menu* menuButton, ALLEGRO_EVENT& event) {
-    if (event.type == ALLEGRO_EVENT_KEY_DOWN) {
-        if (event.keyboard.keycode == ALLEGRO_KEY_W) {
-            al_draw_rectangle(100, 100, 200, 200, al_map_rgb(255, 255, 255), 3);
-        }
-    }
-}
-void EventHandler::changeMenuButton(std::vector <Menu*> menuButtons,ALLEGRO_EVENT&event) {
-    if (event.type == ALLEGRO_EVENT_KEY_DOWN && currentHover < menuButtons.size()){
-        if (event.keyboard.keycode == ALLEGRO_KEY_S) {
-            menuButtons[currentHover]->isHovered = false;
-            menuButtons[currentHover+1]->isHovered = true;
-            currentHover += 1;
-        }
-        
-    }
-    if (event.type == ALLEGRO_EVENT_KEY_DOWN) {
-        if (event.keyboard.keycode == ALLEGRO_KEY_W && currentHover > 0) {
-            menuButtons[currentHover]->isHovered = false;
-            menuButtons[currentHover - 1]->isHovered = true;
-            currentHover -= 1;
-        }
-        
-    }
-   
-}
-void EventHandler::chooseMenuButton(Menu* menuButton, ALLEGRO_EVENT& event) {
-
-    if (event.type == ALLEGRO_EVENT_KEY_DOWN) {
-        if (event.keyboard.keycode == ALLEGRO_KEY_SPACE) {
-            menuButton->isChoosen = true;
-        }
-    }
-
-}
-void EventHandler::switchScreen(std::vector <Menu*> menuButtons) {
-    for (int i = 0; i < menuButtons.size(); i++) {
-        if (i == menuButtons.size()-1 && menuButtons[i]->isChoosen == true) {   // Lets assume the exit button will be always the last in the vector
-            isRunning = false;
-            menuButtons[i]->isChoosen = false;
-        }
-        
-        else if (i == 0 && menuButtons[i]->isChoosen == true) {
-            inMenu = false;
-            inEndless = true;
-            menuButtons[i]->isChoosen = false;
-        }
-    }
-    
-    
-    
-}
 
 void EventHandler::readMovementKeys(ALLEGRO_EVENT& event) {
     if (event.type == ALLEGRO_EVENT_KEY_DOWN) {
@@ -107,10 +44,10 @@ void EventHandler::readMovementKeys(ALLEGRO_EVENT& event) {
         }
     }
 };
-void EventHandler::checkCloseTab(ALLEGRO_EVENT& event) {
+void EventHandler::checkCloseTab(ALLEGRO_EVENT& event, MenuHandler & menuHandler) {
 
     if (event.type == ALLEGRO_EVENT_DISPLAY_CLOSE) {
-        isRunning = false;
+        menuHandler.isRunning = false;
 
     }
 }
@@ -146,7 +83,7 @@ void EventHandler::movePlayer(Player& Player) {
 
 }
 
-EventHandler::EventHandler(bool inMenu, int currentHover): inMenu(inMenu), currentHover(currentHover),inEndless(false)
+EventHandler::EventHandler(): isRunning(true)
 {
     
 }

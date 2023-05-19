@@ -6,10 +6,12 @@ public:
 	
 	Enemy();
 	Enemy(int x, int y, int speedX,int speedY);
-	
+	float dy;
+	float dx;
 	void draw();
 	bool limit();
 private:
+	
 
 };
 

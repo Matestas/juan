@@ -19,7 +19,7 @@ public:
 	Bullet();
 	Bullet(Bullet& old);
 	~Bullet();
-	Bullet(int, int);
+	Bullet(int x, int y);
 	int getspeedX();
 	int getspeedY();
 	void setBulletImage(Bullet ID,ALLEGRO_BITMAP* image);

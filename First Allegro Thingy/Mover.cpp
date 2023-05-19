@@ -1,12 +1,12 @@
 #include "Mover.h"
-#include"Enemy.h"
+
 #define MIN_RANGE 55
 #define MAX_RANGE 125
 Mover::Mover() {
 
 }
 
-void Mover::randomMover(Ticker tick)  // Need to change to BaseEntity as argument, still dont know, if I dont figure it out I will just copy for each class
+void Mover::randomMover(Enemy& enemy,Ticker tick)  // Need to change to BaseEntity as argument, still dont know, if I dont figure it out I will just copy for each class
 {
  
 
@@ -14,8 +14,8 @@ void Mover::randomMover(Ticker tick)  // Need to change to BaseEntity as argumen
         if (tick.getTick() % TICK_INTERVAL_16 == 0) {
             float degrees = (MIN_RANGE + rand() % (MAX_RANGE - MIN_RANGE));       // give a random angle in degrees between the angles given
             float radians = degrees * DEGREE_TO_PI_RATIO;  // since math.h uses radians, convert the random angle to radians
-            dy = (cos(radians));
-            dx = (-1 * (sqrt(1 - pow(dy, 2))));
+            enemy.dy = (cos(radians));
+            enemy.dx = (-1 * (sqrt(1 - pow(enemy.dy, 2))));
         }
     //if (tick.getTick() % TICK_INTERVAL_64 == 0) {
        // return ((rand() % 7) - 3);
