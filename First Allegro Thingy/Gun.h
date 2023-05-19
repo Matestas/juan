@@ -15,9 +15,10 @@ public:
 	virtual void fire_bullet(int x, int y, Ticker tick);
 	ALLEGRO_BITMAP** getBulletImage(int i);
 	ALLEGRO_SAMPLE** getBulletSound(int i);
-	void moveBullets(std::vector<Enemy*> enemy);
+	void moveBullets();
     Bullet bullets[MAX_BULLETS];
-	void resetbullets(bool hit);
+	void resetbullets(Hitbox hit);
+	bool checkhit(Hitbox &x);
 protected:
 	float fireRate; // SHOTS FIRED
 	void loadBullets();

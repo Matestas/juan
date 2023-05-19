@@ -24,11 +24,20 @@ Player::Player(int dimX,int dimY) : BaseEntity(0, 0, dimX, dimY){
 void  Player::setShipImage(ALLEGRO_BITMAP* image) {
 	Ship = image;
 }
-void Player::checkBullets(Hitbox hit)
+void Player::checkBullets(Hitbox &hit)
 {
 	for (auto gun : guns) {
-		gun->resetbullets(gun->bullets->checkhit(hit));
+		gun->resetbullets(hit);
 	}
+}
+bool Player::checkGunHit(Hitbox &x)
+{
+	for (auto gun : guns) {
+		if (gun->checkhit(x)) {
+			return true;
+		}
+	}
+	return false;
 }
 // frame update
 void Player::draw() {
@@ -62,10 +71,10 @@ void Player::changeWeapon(int w)
 		break;
 	}
 }
-void Player::update(vector<Enemy*> enemy) {
+void Player::update() {
 	draw();
 	for (auto gun : guns) {
-		gun->moveBullets(enemy);
+		gun->moveBullets();
 	}
 
 }

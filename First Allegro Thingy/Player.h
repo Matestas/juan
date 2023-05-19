@@ -30,12 +30,13 @@ public:
 	Player(int dimX=68,int dimY=20);
 	~Player();
 	void changeWeapon(int w);
-	void update(vector<Enemy*> enemy);
+	void update();
 	ALLEGRO_BITMAP* Ship = NULL;
 	void setShipImage(ALLEGRO_BITMAP* image);
 	Gun* weaponInUse;
 	vector<Gun*> guns;
-	void checkBullets(Hitbox hit);
+	void checkBullets(Hitbox &hit);
+	bool checkGunHit(Hitbox &x);
 private:
 	int dimX;
 	int dimY;

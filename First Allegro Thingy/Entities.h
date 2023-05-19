@@ -58,8 +58,9 @@ public:
 		return y;
 	}
 	void move(const float dirX, const float dirY);
-	Hitbox getHitbox();
+	Hitbox *getHitbox();
 	bool checkiMap();
+	bool checkInside(Hitbox &a);
 };
 
 

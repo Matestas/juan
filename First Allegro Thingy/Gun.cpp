@@ -18,9 +18,9 @@ void Gun::loadBullets() {
 		this->bullets[i] = Bullet(bullets[0]);
 	}
 }
-void Gun::moveBullets(std::vector<Enemy*> enemy) {
+void Gun::moveBullets() {
 	for (int i = 0; i < MAX_BULLETS; i++) {
-		bullets[i].move(enemy);
+		bullets[i].move();
 		if (bullets[i].isMoving) {
 			bullets[i].draw();
 		}		
@@ -42,15 +42,29 @@ ALLEGRO_BITMAP** Gun::getBulletImage() {
 ALLEGRO_SAMPLE** Gun::getBulletSound() {
 	return &bulletSound;
 }
-void Gun::resetbullets(bool hit) {
+void Gun::resetbullets(Hitbox hit) {
 	for (int i = 0; i < MAX_BULLETS; i++) {
-		if (!bullets[i].checkiMap()) {
-			bullets[i].isMoving = false;
-			bullets[i].moveto(2000, 2000);
-		}
-		if (hit) {
-			bullets[i].isMoving = false;
-			bullets[i].moveto(2000, 2000);
+		if (bullets[i].isMoving) {
+			if (!bullets[i].checkiMap()) {
+				bullets[i].isMoving = false;
+				bullets[i].moveto(-1, -1);
+			}
+			if (bullets[i].checkhit(hit)) {
+				bullets[i].isMoving = false;
+				bullets[i].moveto(-1, -1);
+			}
 		}
 	}
+}
+
+bool Gun::checkhit(Hitbox &x)
+{
+	for (int i = 0; i < MAX_BULLETS; i++) {
+		if (bullets[i].isMoving) {
+			if (bullets[i].checkhit(x)) {
+				return true;
+			}
+		}
+	}
+	return false;
 }

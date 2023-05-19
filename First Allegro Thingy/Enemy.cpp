@@ -13,6 +13,7 @@
 void Enemy::draw()
 {
 	al_draw_rectangle(x, y, x + dimX, y + dimY, al_map_rgb(255, 255, 255), 5);
+	hitbox.draw();
 }
 
 

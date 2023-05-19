@@ -163,7 +163,7 @@ int main(){
                         al_clear_to_color(al_map_rgb(20, 20, 20));
 
                         if (!menuHandler.isFirstBoot) {
-                            player.update(currentEnemies);
+                            player.update();
                             for (int i = 0; i < currentEnemies.size(); i++) {
                                 currentEnemies[i]->draw();
                             }
@@ -211,7 +211,20 @@ int main(){
                         universalTicker.ticker();
                         universalTicker.checkTick();    
                         gunTicker.ticker();
-                        
+                        player.update();
+                        for (auto it = currentEnemies.begin(); it != currentEnemies.end() ;) {
+                            Enemy* enemyt = *it;
+                            
+                            if (player.checkGunHit(*enemyt->getHitbox())) {
+                                player.checkBullets(*enemyt->getHitbox());
+                                delete enemyt; // Delete the enemy object
+                                it = currentEnemies.erase(it); // Erase and get the iterator to the next element
+
+                            }
+                            else {
+                                ++it;
+                            }
+                        }
                         if (universalTicker.getTick() == 16) {
                             cycles += 1;
 
