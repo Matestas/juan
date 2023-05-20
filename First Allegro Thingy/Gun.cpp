@@ -2,16 +2,10 @@
 Gun::Gun(float fireRate,int damage, ALLEGRO_SAMPLE* bulletSound , ALLEGRO_BITMAP* bulletImage ){
 	this->fireRate = fireRate;
 	this->damage = damage;
-	this->bulletSound = bulletSound;
+	this->gunSound = bulletSound;
 	this->bulletImage = bulletImage;
-	bulletsFired = 0;
-}
 
-ALLEGRO_BITMAP** Gun::getBulletImage(int i) {
-	return bullets[i].getBulletImage();
-}
-ALLEGRO_SAMPLE** Gun::getBulletSound(int i) {
-	return bullets[i].getBulletSound();
+	bulletsFired = 0;
 }
 void Gun::loadBullets() {
 	for (int i = 1; i <= 8; i++) {
@@ -27,20 +21,25 @@ void Gun::moveBullets() {
 	}
 }
 void Gun::fire_bullet(int x, int y, Ticker tick) {
-	al_play_sample(*getBulletSound(0), 1, 0, 1, ALLEGRO_PLAYMODE_ONCE, 0);
+	al_play_sample(getGunSound(), 1, 0, 1, ALLEGRO_PLAYMODE_ONCE, 0);
 
 }
-void Gun::setBulletSound(ALLEGRO_SAMPLE* sound) {
-	bulletSound = sound;
+void Gun::setGunSound(ALLEGRO_SAMPLE* sound) {
+	gunSound = sound;
 }
 void Gun::setBulletImage(ALLEGRO_BITMAP* image) {
 	bulletImage = image;
 }
-ALLEGRO_BITMAP** Gun::getBulletImage() {
-	return &bulletImage;
+void Gun::setExplosion(ALLEGRO_BITMAP* image)
+{
+	bullets[0].explosion = image;
+
 }
-ALLEGRO_SAMPLE** Gun::getBulletSound() {
-	return &bulletSound;
+ALLEGRO_BITMAP* Gun::getBulletImage() {
+	return bulletImage;
+}
+ALLEGRO_SAMPLE* Gun::getGunSound() {
+	return gunSound;
 }
 void Gun::resetbullets(Hitbox hit) {
 	for (int i = 0; i < MAX_BULLETS; i++) {
@@ -76,4 +75,9 @@ void Gun::drawBullets()
 			bullets[i].draw();
 		}	
 	}
+}
+
+int Gun::getDamage()
+{
+	return damage;
 }

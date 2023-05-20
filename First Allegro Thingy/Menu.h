@@ -17,15 +17,15 @@ private:
 	int x;
 	int y;
 	
-	const char* text;
 
-	ALLEGRO_FONT* font;
+
+	ALLEGRO_BITMAP* buttonImage;
 public:
-	MenuButton(int x, int y, int dimX, int dimY, const char* text, ALLEGRO_FONT* font,bool isHovered = false);
+	MenuButton(int x, int y, int dimX, int dimY,ALLEGRO_BITMAP* buttonImage,bool isHovered = false);
 	void draw();
 	bool choose();
 	bool isChoosen;
 	bool isHovered;
-	ALLEGRO_FONT* getFont();
+	ALLEGRO_BITMAP* getImage();
 };
 

@@ -169,6 +169,7 @@
     <ClCompile Include="EventHandler.cpp" />
     <ClCompile Include="Gun.cpp" />
     <ClCompile Include="laser.cpp" />
+    <ClCompile Include="Loader.cpp" />
     <ClCompile Include="MachineGun.cpp" />
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="Menu.cpp" />
@@ -190,6 +191,7 @@
     <ClInclude Include="EventManager.h" />
     <ClInclude Include="Gun.h" />
     <ClInclude Include="laser.h" />
+    <ClInclude Include="Loader.h" />
     <ClInclude Include="MachineGun.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="Menu.h" />
@@ -207,12 +209,24 @@
     <ClInclude Include="Entities.h" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="bullet_sprites.png" />
+    <Image Include="EnemyShip.png" />
+    <Image Include="ExitButton.png" />
+    <Image Include="HallofFameButton.png" />
     <Image Include="juan.jpg" />
+    <Image Include="mainShipAcelerated.png" />
+    <Image Include="MainShipBackwards.png" />
     <Image Include="Main_Ship.png" />
+    <Image Include="menuButton.png" />
+    <Image Include="PlayButton.png" />
+    <Image Include="ResumeButton.png" />
   </ItemGroup>
   <ItemGroup>
     <Media Include="juan.mp3" />
     <Media Include="juanito.wav" />
+    <Media Include="LaserSound.wav" />
+    <Media Include="MachineGunSound1Shot.wav" />
+    <Media Include="ShotGunSound.wav" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="linesfortesting.txt" />

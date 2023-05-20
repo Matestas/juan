@@ -2,7 +2,7 @@
 
 
 
-MenuButton::MenuButton(int x, int y, int dimX, int dimY, const char* text, ALLEGRO_FONT* font, bool isHovered): x(x),y(y),dimX(dimX),dimY(dimY),text(text),font(font),isHovered(isHovered) {
+MenuButton::MenuButton(int x, int y, int dimX, int dimY,ALLEGRO_BITMAP* buttonImage, bool isHovered): x(x),y(y),dimX(dimX),dimY(dimY),buttonImage(buttonImage),isHovered(isHovered) {
 	isChoosen = false;
 	
 }
@@ -10,12 +10,13 @@ MenuButton::MenuButton(int x, int y, int dimX, int dimY, const char* text, ALLEG
 void MenuButton::draw(){
 	
 	if(isHovered){
-		al_draw_rectangle(x, y, x + dimX, y + dimY, al_map_rgb(255, 0, 255), 10);
-		al_draw_text(font, al_map_rgb(255, 55, 100), x , y , 0, text);
+		al_draw_rectangle(x, y, x + dimX, y + dimY, al_map_rgb(164, 32, 32), 10);
+		al_draw_bitmap(buttonImage, x, y, 0);
+		
 	}
 	if(!isHovered){
-		al_draw_filled_rectangle(x, y, x + dimX, y + dimY, al_map_rgb(50, 50, 50));
-		al_draw_text(font, al_map_rgb(255, 55, 100), x, y, 0, text);
+		al_draw_rectangle(x, y, x + dimX, y + dimY, al_map_rgb(100, 100, 100),10);
+		al_draw_bitmap(buttonImage, x, y,0);
 	}
 }
 
@@ -25,8 +26,8 @@ bool MenuButton::choose()
 	return isChoosen;
 }
 
-ALLEGRO_FONT* MenuButton::getFont()
+ALLEGRO_BITMAP* MenuButton::getImage()
 {
-	return font;
+	return buttonImage;
 }
 

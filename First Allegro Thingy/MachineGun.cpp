@@ -7,7 +7,7 @@ using namespace std;
 MachineGun::MachineGun():Gun(FIRERATE,DAMAGE) {
 }
 void MachineGun::fire_bullet(int x,int y,Ticker tick){
-    //al_play_sample(*getBulletSound(0), 1, 0, 1, ALLEGRO_PLAYMODE_ONCE, 0);
+    al_play_sample(gunSound, 1.5, 0, 1, ALLEGRO_PLAYMODE_ONCE, 0);
     if (FIRERATE < tick.getTick())
     {       
         bullets[bulletsFired].moveto(x, y);
@@ -19,7 +19,7 @@ void MachineGun::fire_bullet(int x,int y,Ticker tick){
             bulletsFired++;
         }
         tick.setTick(0);
-        std::cout << bulletsFired << std::endl;
+        //std::cout << bulletsFired << std::endl;
     }
     
 }

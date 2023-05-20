@@ -10,7 +10,7 @@ public:
 	int getTick();
 	void checkTick() {       
 		if (tick == 129) {
-			std::cout << "now" << std::endl;
+			//std::cout << "now" << std::endl;
 		}
 	}
 	void setTick(int tick);

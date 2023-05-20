@@ -32,24 +32,19 @@ void Bullet::moveto(const int dirX, const int dirY) {
 }
 
 void Bullet::draw() {
-	al_draw_rectangle(x, y, x + dimX, y + dimY, al_map_rgb(250, 250, 25), 2);
+	al_draw_filled_rectangle(x, y, x + dimX, y + dimY, al_map_rgb(72, 233, 235));
 	//al_draw_scaled_bitmap(bulletImage, 0, 0, 1083, 1060, x, y, 30, 30, 0);
-	hitbox.draw();
-}
-void Bullet::ignite() {
-	// charge animation here ( 10 frames maybe) 
-	
-	al_play_sample(bulletSound,1,0,1,ALLEGRO_PLAYMODE_ONCE,0);
 	
 }
+
 Bullet::Bullet(Bullet& old) {
 	this->x = old.x;
 	this->y = old.y;
 	this->isMoving = old.isMoving;
 	this->speedX = old.speedX;
     this->speedY = old.speedY;
-	this->bulletImage = old.bulletImage;
-	this->bulletSound = old.bulletSound;
+
+	
 }
 
 int Bullet::getspeedX() {
@@ -57,6 +52,34 @@ int Bullet::getspeedX() {
 }
 int Bullet::getspeedY() {
     return speedY;
+}
+void Bullet::explode(Ticker ticker)
+{
+	if (tick1 <= 2 && tick1 > 0) {
+		al_draw_scaled_bitmap(explosion, 0, 0, 32, 32, x, y, 15, 15, 0);
+		tick1 += 1;
+	}
+	else if (tick1 <= 4) {
+		al_draw_scaled_bitmap(explosion, 32, 0, 32, 32, x, y, 15, 15, 0);
+		tick1 += 1;
+	}
+	else if (tick1 <= 6) {
+		al_draw_scaled_bitmap(explosion, 64, 0, 32, 32, x, y, 15, 15, 0);
+		tick1 += 1;
+	}
+	else if (tick1 <= 8) {
+		al_draw_scaled_bitmap(explosion, 96, 0, 32, 32, x, y, 15, 15, 0);
+		tick1 += 1;
+	}
+	else if (tick1 <= 10) {
+		al_draw_scaled_bitmap(explosion, 128, 0, 32, 32, x, y, 15, 15, 0);
+		tick1 += 1;
+	}
+	else if (tick1 <= 12) {
+		al_draw_scaled_bitmap(explosion, 160, 0, 32, 32, x, y, 15, 15, 0);
+		tick1 += 1;
+	}
+	else if (tick1 = 0);
 }
 void Bullet::setspeed(int speedX,int speedY) {
 	this->speedX = speedX;
@@ -86,15 +109,3 @@ void Bullet::setDimensions(int x,int y){
 
 
 
-void Bullet::setBulletSound(Bullet ID,ALLEGRO_SAMPLE* sound) {
-	ID.bulletSound = sound;
-}
-void Bullet::setBulletImage(Bullet ID,ALLEGRO_BITMAP* image) {
-	ID.bulletImage = image;
-}
-ALLEGRO_BITMAP** Bullet::getBulletImage() {
-	return &bulletImage;
-}
-ALLEGRO_SAMPLE** Bullet::getBulletSound() {
-	return &bulletSound;
-}

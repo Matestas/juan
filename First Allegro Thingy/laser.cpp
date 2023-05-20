@@ -10,6 +10,7 @@ void Laser::fire_bullet(int x, int y, Ticker tick) {
     {
         bullets[bulletsFired].moveto(x, y);
         bullets[bulletsFired].isMoving = true;
+        al_play_sample(gunSound, 0.6, 0, 1, ALLEGRO_PLAYMODE_ONCE, 0);
         if (bulletsFired == MAX_BULLETS - 1) {
             bulletsFired = 0;
         }
@@ -17,6 +18,7 @@ void Laser::fire_bullet(int x, int y, Ticker tick) {
             bulletsFired++;
         }
         tick.setTick(0);
-        std::cout << bulletsFired << std::endl;
+        //std::cout << bulletsFired << std::endl;
     }
 }
+

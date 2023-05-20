@@ -18,6 +18,6 @@ void RocketLauncher::fire_bullet(int x, int y,Ticker tick) {
             bulletsFired++;
         }
         tick.setTick(0);
-        std::cout << bulletsFired << std::endl;
+        //std::cout << bulletsFired << std::endl;
     }
 }

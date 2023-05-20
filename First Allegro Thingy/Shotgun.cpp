@@ -1,5 +1,5 @@
 #include "Shotgun.h"
-#define FIRERATE 5
+#define FIRERATE 3
 #define DAMAGE 7
 #define SHOTSFIRED 3
 Shotgun::Shotgun():Gun(FIRERATE, DAMAGE) {
@@ -8,9 +8,11 @@ void Shotgun::fire_bullet(int x, int y, Ticker tick) {
     //al_play_sample(*getBulletSound(0), 1, 0, 1, ALLEGRO_PLAYMODE_ONCE, 0);
     if (FIRERATE < tick.getTick())
     {
+        al_play_sample(gunSound, 0.3, 0, 1, ALLEGRO_PLAYMODE_ONCE, 0);
         for (int i = 0; i < SHOTSFIRED ; i++ ) {
             bullets[bulletsFired].moveto(x, y);
             bullets[bulletsFired].isMoving = true;
+
             if (i == 0) {
                 bullets[bulletsFired].setspeed(10,4);
             }
@@ -30,7 +32,9 @@ void Shotgun::fire_bullet(int x, int y, Ticker tick) {
         }
         
         tick.setTick(0);
-        std::cout << bulletsFired << std::endl;
+        //std::cout << bulletsFired << std::endl;
     }
 
 }
+
+

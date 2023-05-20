@@ -35,13 +35,13 @@ bool BaseEntity::checkiMap() {
 
 bool BaseEntity::checkInside(Hitbox &a)
 {
-	// Verificar se a Hitbox1 está completamente dentro da Hitbox2
+	// Verificar se a Hitbox1 estEcompletamente dentro da Hitbox2
 	bool insideX = hitbox.getTopLeftX() >= a.getTopLeftX() && hitbox.getBottomRightX() <= a.getBottomRightX();
 	bool insideY = hitbox.getTopLeftY() >= a.getTopLeftY() && hitbox.getBottomRightY() <= a.getBottomRightY();
 	bool insideX2 = a.getTopLeftX() >= hitbox.getTopLeftX() && a.getBottomRightX() <= hitbox.getBottomRightX();
 	bool insideY2 = a.getTopLeftY() >= hitbox.getTopLeftY() && a.getBottomRightY() <= hitbox.getBottomRightY();
 
-	// Se estiver completamente dentro nas coordenadas X e Y, está dentro
+	// Se estiver completamente dentro nas coordenadas X e Y, estEdentro
 	return (insideX && insideY) || (insideX2 && insideY2);
 }
 

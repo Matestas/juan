@@ -78,6 +78,9 @@
     <ClCompile Include="Score.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Loader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Entities.h">
@@ -146,6 +149,9 @@
     <ClInclude Include="Score.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Loader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="juan.jpg">
@@ -154,12 +160,48 @@
     <Image Include="Main_Ship.png">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="mainShipAcelerated.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="MainShipBackwards.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="EnemyShip.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="bullet_sprites.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="ExitButton.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="HallofFameButton.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="menuButton.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="PlayButton.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="ResumeButton.png">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <Media Include="juanito.wav">
       <Filter>Resource Files</Filter>
     </Media>
     <Media Include="juan.mp3">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="ShotGunSound.wav">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="MachineGunSound1Shot.wav">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="LaserSound.wav">
       <Filter>Resource Files</Filter>
     </Media>
   </ItemGroup>

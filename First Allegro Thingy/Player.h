@@ -15,10 +15,7 @@
 #include "Shotgun.h"
 #include"laser.h"
 #include"Enemy.h"
-#ifndef LOADERS_H
-#define LOADERS_H
-#include "Loaders.h"
-#endif
+
 
 using namespace std;
 
@@ -28,25 +25,32 @@ class Player : public BaseEntity {
 
 public:
 	Player(int dimX=68,int dimY=20);
+	void move(const float dirX, const float dirY);
+	Player(Player& old);
 	~Player();
 	void changeWeapon(int w);
 	void update();
-	ALLEGRO_BITMAP* Ship = NULL;
-	void setShipImage(ALLEGRO_BITMAP* image);
+	void animate(const float dirX);
+	void setShip(ALLEGRO_BITMAP* image);
 	Gun* weaponInUse;
 	vector<Gun*> guns;
 	void checkBullets(Hitbox &hit);
 	bool checkGunHit(Hitbox &x);
+	void resetPlayer(Player& old);
 	void draw();
 	bool checkCollision(Hitbox& x);
+	void setPlayerImages(std::vector <ALLEGRO_BITMAP*> Ships);
 	void getDamaged() {
 		health--;
 	}
+	void setTotalExplosion(ALLEGRO_BITMAP* totalExplosion);
+	std::vector < ALLEGRO_BITMAP*> ships;
 	int health = 10;
 private:
 	int dimX;
 	int dimY;
-	
+	ALLEGRO_BITMAP* totalExplosion;
+	ALLEGRO_BITMAP* Ship = NULL;
 	MachineGun* mGun;
 	RocketLauncher* RLauncher;
 	Shotgun* shotgun; 

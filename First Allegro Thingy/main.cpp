@@ -1,7 +1,7 @@
 
 #include "Player.h"
-#include "EventManager.h"
-#include "assetLoader.h"
+
+
 #include "Enemy.h"
 #include "Mover.h"
 #include "Collision.h"
@@ -12,6 +12,7 @@
 #include "EventHandler.h"
 #include "Score.h"
 #include <cmath>
+#include "Loader.h"
 
 #define SCREEN_WIDTH 1280
 #define SCREEN_HEIGHT 720
@@ -44,19 +45,21 @@ int main(){
     al_init_font_addon();
     al_init_ttf_addon();
     
-    //Create Objects
+    //Create Example Objects or single objects
+    Loader loader;
     Map map;
-    Player* player= new Player();
-    Mover move;
+    Player playerEx;
     
-    Enemy enemyTest;
+    Mover move;
+
+    Enemy enemyEx;
     Ticker universalTicker;
     Ticker gunTicker;
     EventHandler handler;
-
     MenuHandler menuHandler;
     MainMenu mainMenu;
     std::vector <Enemy*> currentEnemies;
+
     bool isLoading = true;
 
    
@@ -65,7 +68,7 @@ int main(){
     ALLEGRO_DISPLAY* display = al_create_display(SCREEN_WIDTH, SCREEN_HEIGHT);
     al_set_window_position(display, 0, 0);
     
-    // Create font,timer and queue of events
+    // Create default font,timer and queue of events
     ALLEGRO_FONT* font = al_create_builtin_font();
     ALLEGRO_TIMER* timer = al_create_timer(0.01666);
     ALLEGRO_EVENT_QUEUE* event_queue = al_create_event_queue();
@@ -93,27 +96,50 @@ int main(){
     //Reserve Sample Capacity
     al_reserve_samples(5);
     
-    //Load Assets
-    ALLEGRO_SAMPLE* theme = load_sample("Shinji theme.mp3", "theme");
-    ALLEGRO_SAMPLE* juan = load_sample("juan.mp3", "juantheme");
+    ////Load Assets
+
+    // Load Ship Variations
+    std::vector < ALLEGRO_BITMAP* > playerShips;
+    ALLEGRO_BITMAP* normalShip = loader.load_image("Main_Ship.png", "MS");
+    ALLEGRO_BITMAP* acceleratingShip = loader.load_image("mainShipAcelerated.png", "MSA");
+    ALLEGRO_BITMAP* breakingShip = loader.load_image("MainShipBackwards.png", "MSB");
+    playerShips.push_back(normalShip);
+    playerShips.push_back(acceleratingShip);
+    playerShips.push_back(breakingShip);
+    playerEx.setPlayerImages(playerShips);
+    playerEx.setShip(playerShips[0]);
+    //Load Soundtrack
+    ALLEGRO_SAMPLE* juan = loader.load_sample("juan.mp3", "juan");
     vector <ALLEGRO_SAMPLE*> soundtrack;
-    soundtrack.push_back(theme);
     soundtrack.push_back(juan);
     ALLEGRO_SAMPLE_ID BGMid;
-    ALLEGRO_SAMPLE_ID juanId;
-    vector <ALLEGRO_SAMPLE_ID> soundIDs;
+    vector <ALLEGRO_SAMPLE_ID> soundIDs;        // used to stop tracks
     soundIDs.push_back(BGMid);
-    soundIDs.push_back(juanId);
 
-    //al_play_sample(theme, 0.1, 0, 1, ALLEGRO_PLAYMODE_LOOP, &BGMid);
+    //Load Enemy Ship
+    enemyEx.setTotalExplosion(loader.load_image("Explosion.png", "Explosion"));
+    enemyEx.setEnemyShip(loader.load_image("EnemyShip.png", "EnemyShipImage"));
+    
+    //Load Gun Sounds
+    playerEx.guns[0]->setGunSound(loader.load_sample("MachineGunSound1Shot.wav", "MachineGunSound"));                                             //MRSL
+    //playerEx.guns[1]->setGunSound(loader.load_sample("juanito.mp3", "RocketLauncherSound"));
+    playerEx.guns[2]->setGunSound(loader.load_sample("ShotGunSound.wav", "ShotGunSound"));
+    playerEx.guns[3]->setGunSound(loader.load_sample("LaserSound.wav", "LazerSound"));
+
+
+    //Create multiple objects
+    Player player(playerEx);
+
+    //Load aditional fonts
+    
     ALLEGRO_FONT* menuFont = al_load_font("Freedom-10eM.ttf", 50, 0);
     //(&player.Ship, player.getBulletImage(0), player.getBulletSound(0), NULL, NULL, NULL);
-    loadTest(*player);
-    MenuButton* play = new MenuButton(490,50, 243, 150, "Play", menuFont);
-    MenuButton* hallOfFame = new MenuButton(490, 300, 243, 150, "Hall", menuFont);
-    MenuButton* exit = new MenuButton(490,550, 243, 150, "Exit", menuFont);
-    MenuButton* resume = new MenuButton(490, 50, 243, 150, "Resume", menuFont);
-    MenuButton* backToMenu = new MenuButton(490, 200, 243, 150, "Menu", menuFont);
+    //Load Menu
+    MenuButton* play = new MenuButton(490,50, 243, 150, loader.load_image("PlayButton.png", "PlayB"));
+    MenuButton* hallOfFame = new MenuButton(490, 300, 243, 150, loader.load_image("HallofFameButton.png", "HallB"));
+    MenuButton* exit = new MenuButton(490,550, 243, 150, loader.load_image("ExitButton.png", "ExitB"));
+    MenuButton* resume = new MenuButton(490, 50, 243, 150, loader.load_image("ResumeButton.png", "ResumeB"));
+    MenuButton* backToMenu = new MenuButton(490, 250, 243, 150, loader.load_image("menuButton.png", "menuB"));
     std::vector <MenuButton*> mainMenuButtons;
     std::vector <MenuButton*> menuButtons;
     mainMenuButtons.push_back(play);
@@ -122,9 +148,11 @@ int main(){
     menuButtons.push_back(resume);
     menuButtons.push_back(backToMenu);
 
+    //Play BGM
+    al_play_sample(juan, 1, 0, 1, ALLEGRO_PLAYMODE_LOOP, &BGMid);
 
     while (menuHandler.isRunning){       // Main Menu
-        //std::cout << "bottom: (" << player.getHitbox().getBottomRightX() << "," << player.getHitbox().getBottomRightY() << " Top: (" << player.getHitbox().getTopLeftX() << ", " << player.getHitbox().getTopLeftY() << ") " << std::endl;
+       
         
         if (menuHandler.inMainMenu) {
 
@@ -163,7 +191,7 @@ int main(){
                         al_clear_to_color(al_map_rgb(20, 20, 20));
 
                         if (!menuHandler.isFirstBoot) {
-                            player->draw();
+                            player.draw();
                             for (int i = 0; i < currentEnemies.size(); i++) {
                                 currentEnemies[i]->draw();
                             }
@@ -198,7 +226,7 @@ int main(){
                 al_wait_for_event(event_queue, &event);
                 
                 handler.readMovementKeys(event);    // registers pressed keys and passes it to movePlayer
-                handler.checkPlayerShoot(event, *player, gunTicker);  //checks if the mouse is pressed and makes the player shoot
+                handler.checkPlayerShoot(event, player, gunTicker);  //checks if the mouse is pressed and makes the player shoot
                 handler.checkCloseTab(event, menuHandler);
                 menuHandler.backToMenu(event);
                 score.display();
@@ -207,30 +235,35 @@ int main(){
                     if (al_is_event_queue_empty(event_queue)) {
                         al_clear_to_color(al_map_rgb(20, 20, 20));
                         score.display();          
-                        handler.movePlayer(*player);        // moves player according to pressed keys
+                        handler.movePlayer(player);        // moves player according to pressed keys
                         universalTicker.ticker();
                         universalTicker.checkTick();    
                         gunTicker.ticker();
-                        player->update();
+                        player.update();
+                        
                         for (auto it = currentEnemies.begin(); it != currentEnemies.end() ;) {
                             Enemy* enemyt = *it;
-                            if (player->checkCollision(*enemyt->getHitbox())) {
+                            if (player.checkCollision(*enemyt->getHitbox())) {
                                 delete enemyt; // Delete the enemy object
                                 it = currentEnemies.erase(it); // Erase and get the iterator to the next element
-                                score.addScore(10);
+                               
                             }
                             else {
-                                if (player->checkGunHit(*enemyt->getHitbox())) {
-                                    player->checkBullets(*enemyt->getHitbox());
-                                    delete enemyt; // Delete the enemy object
-                                    it = currentEnemies.erase(it); // Erase and get the iterator to the next element
-                                    score.addScore(10);
+                                if (player.checkGunHit(*enemyt->getHitbox())) {
+                                    player.checkBullets(*enemyt->getHitbox());
+                                    //delete enemyt; // Delete the enemy object
+                                    
+                                    if (enemyt->getDamaged(player.weaponInUse->getDamage())) {      // 
+                                        it = currentEnemies.erase(it); // Erase and get the iterator to the next element
+                                        score.addScore(10);
+                                    }
+                                    
                                 }
                                 else {
-                                    if (enemyt->getHitbox()->getBottomRightX() < 100) {
+                                    if (enemyt->getHitbox()->getBottomRightX() <= 70) {
                                         delete enemyt; // Delete the enemy object
                                         it = currentEnemies.erase(it); // Erase and get the iterator to the next element
-                                        player->getDamaged();
+                                        player.getDamaged();
                                     }
                                     else {
                                         ++it;
@@ -247,10 +280,13 @@ int main(){
                            
                             for (int i = 0; i < enemy_spawn_count; i++) {
                                 Enemy* newenemy = new Enemy(1250, rand() % 700, score.difficultyRatio * 4, score.difficultyRatio * 4, std::time(nullptr) % 3 + 1);
+                                newenemy->setEnemyShip(enemyEx.getEnemyImage());
                                 currentEnemies.push_back(newenemy);
                                 if ((score.score % 250 == 0)&&score.score!=0) {
                                     for (int e = 0; e < 10; e++) {
                                         Enemy* newenemy = new Enemy(1250, rand() % 700, score.difficultyRatio * 4, score.difficultyRatio * 4, std::time(nullptr) % 3 + 1, 30, 30);
+                                        newenemy->setEnemyShip(enemyEx.getEnemyImage());
+                                        
                                         currentEnemies.push_back(newenemy);
                                     }
                                     
@@ -264,25 +300,24 @@ int main(){
                         for (int i = 0; i < currentEnemies.size(); i++) {
                             currentEnemies[i]->draw();
                             move.toMove(*currentEnemies[i], universalTicker);
-                            
+                           
                             currentEnemies[i]->move(currentEnemies[i]->dx, currentEnemies[i]->dy);                          
                         }
                         if (universalTicker.getTick() == 128) {
 
-                            player->changeWeapon(sw);
+                            player.changeWeapon(sw);
                             sw++;
                             sw &= 3;
                         }
-                        if (player->health <= 0) {
+                        if (player.health <= 0) {
                             menuHandler.inMainMenu = true;
                             menuHandler.inEndless = false;
-                            if (!mainMenu.restartGame()) {
-                                delete player;
-                                player = new Player();
-                                currentEnemies.clear();
-                                loadTest(*player);
-                                score.score = 0;  
-                            }
+                            
+                            player.resetPlayer(playerEx);
+                            currentEnemies.clear();
+                                
+                            score.score = 0;  
+                            
                         }
            
                         
@@ -300,7 +335,8 @@ int main(){
     al_destroy_font(font);
     al_destroy_display(display);
     al_destroy_event_queue(event_queue);
-    al_destroy_bitmap(player->Ship);
+    
+    
     
     
     return 0;

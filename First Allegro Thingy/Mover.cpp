@@ -7,7 +7,7 @@ Mover::Mover() : dx(dx), dy(dy) {
 }
 void Mover::toMove(Enemy& enemy, Ticker tick)
 {
-    std::cout << enemy.moveType << std::endl;
+    //std::cout << enemy.moveType << std::endl;
     if (enemy.moveType == 1){
         randomMover(enemy, tick);
     }

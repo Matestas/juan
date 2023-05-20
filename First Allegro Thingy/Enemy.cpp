@@ -12,8 +12,9 @@
 
 void Enemy::draw()
 {
-	al_draw_rectangle(x, y, x + dimX, y + dimY, al_map_rgb(255, 255, 255), 5);
-	hitbox.draw();
+	al_draw_scaled_bitmap(enemyShip, 7, 6, 15, 12, x, y, dimX, dimY, ALLEGRO_FLIP_HORIZONTAL);
+	
+
 }
 
 
@@ -28,13 +29,38 @@ bool Enemy::limit()
 	return false;
 }
 
+void Enemy::setEnemyShip(ALLEGRO_BITMAP* enemyShip)
+{
+	this->enemyShip = enemyShip;
+}
+
+
+
+ALLEGRO_BITMAP* Enemy::getEnemyImage()
+{
+	return enemyShip;
+}
+
 Enemy::Enemy(): BaseEntity(1250,360,20,20)
 {
 
 }
-Enemy::Enemy(int x, int y, int speedX,int speedY, int moveType,int dimX,int dimY) : BaseEntity(x, y,dimX,dimY,speedX,speedY), moveType(moveType)
+ALLEGRO_BITMAP* Enemy::getTotalExplosion()
 {
+	return totalExplosion;
+}
+
+void Enemy::setTotalExplosion(ALLEGRO_BITMAP* totalExplosion)
+{
+	this->totalExplosion = totalExplosion;
+}
+
+Enemy::Enemy(int x, int y, int speedX,int speedY, int moveType,int dimX,int dimY,int health) : BaseEntity(x, y,dimX,dimY,speedX,speedY), moveType(moveType)
+{
+	this->health = health;
 	dx = 0;
+	enemyShip = NULL;
+	totalExplosion = NULL;
 	dy = 0;
 	int randomTo2 = rand() % 2 + 1;
 	if (randomTo2 == 1) {
