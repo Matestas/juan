@@ -24,9 +24,6 @@ public:
 	void randomMover(Enemy& enemy, Ticker tick);
 	void linearMover(Enemy& enemy, Ticker tick);
 
-	//void linearMover();
-	//void curvedMover();
-	//void trackedMover(Enemy& enemy, Player& player);
 private:
 
 };

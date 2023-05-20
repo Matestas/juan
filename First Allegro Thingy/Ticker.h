@@ -5,11 +5,12 @@ class Ticker
 public:
 	Ticker() {
 		tick = 0;
+		cycle = 0;
 	}
 	void ticker();
 	int getTick();
 	int getCycle();
-	void checkTick() {       
+	void checkTick() {       //test function
 		if (tick == 129) {
 			//std::cout << "now" << std::endl;
 		}

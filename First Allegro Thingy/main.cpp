@@ -27,14 +27,14 @@ bool key_up= false;
 bool key_down= false;
 
 void resetGame(MenuHandler &menuHandler,Player &df,Player &nw,vector<Enemy*> &enemies,Score &score,EventHandler &handler) {
-    menuHandler.inMainMenu = true;
-    menuHandler.inEndless = false;
-    handler.resetKeys();
+    menuHandler.inMainMenu = true; //goes to main menu in the next cycle
+    menuHandler.inEndless = false; //exit endless
+    handler.resetKeys(); //resets movement keys
 
-    nw.resetPlayer(df);
-    enemies.clear();
+    nw.resetPlayer(df); //resets the player
+    enemies.clear(); //deletes all the enemies
 
-    score.score = 0;
+    score.score = 0; //resets the score
     
 }
 
@@ -125,7 +125,7 @@ int main(){
     playerEx.setShip(playerShips[0]);
     ALLEGRO_BITMAP* onHitExplosion = loader.load_image("OnHitExplosion.png", "HitExplosion");
 
-    for (auto gun : playerEx.guns) {
+    for (auto gun : playerEx.guns) {//loads esplosion pngs
         gun->setExplosion(onHitExplosion);
         gun->loadBullets();
     }
@@ -144,7 +144,7 @@ int main(){
 
     //Load Enemy Ship
     
-    enemyEx.setTotalExplosion(loader.load_image("Explosion.png", "Explosion"));
+    
     enemyEx.setEnemyShip(loader.load_image("EnemyShip.png", "EnemyShipImage"));
     
     //Load Gun Sounds
@@ -162,16 +162,16 @@ int main(){
     ALLEGRO_FONT* menuFont = al_load_font("Freedom-10eM.ttf", 50, 0);
     
     ALLEGRO_FONT* HallofFameFont = al_load_font("Freedom-10eM.ttf", 70, 0);
-    //(&player.Ship, player.getBulletImage(0), player.getBulletSound(0), NULL, NULL, NULL);
+
     //Load Menu
-    MenuButton* play = new MenuButton(490,50, 243, 150, loader.load_image("PlayButton.png", "PlayB"));
+    MenuButton* play = new MenuButton(490,50, 243, 150, loader.load_image("PlayButton.png", "PlayB"));//creates the buttons
     MenuButton* hallOfFame = new MenuButton(490, 300, 243, 150, loader.load_image("HallofFameButton.png", "HallB"));
     MenuButton* exit = new MenuButton(490,550, 243, 150, loader.load_image("ExitButton.png", "ExitB"));
     MenuButton* resume = new MenuButton(490, 50, 243, 150, loader.load_image("ResumeButton.png", "ResumeB"));
     MenuButton* backToMenu = new MenuButton(490, 250, 243, 150, loader.load_image("menuButton.png", "menuB"));
     std::vector <MenuButton*> mainMenuButtons;
     std::vector <MenuButton*> menuButtons;
-    mainMenuButtons.push_back(play);
+    mainMenuButtons.push_back(play);//adds the buttons to the vector
     mainMenuButtons.push_back(hallOfFame);
     mainMenuButtons.push_back(exit);
     menuButtons.push_back(resume);
@@ -180,23 +180,23 @@ int main(){
     //Play BGM
     al_play_sample(juan, 1, 0, 1, ALLEGRO_PLAYMODE_LOOP, &BGMid);
 
-    while (menuHandler.isRunning){       // Main Menu
-        if (menuHandler.inMainMenu == true) {
-            resetGame(menuHandler, playerEx, player, currentEnemies, score, handler);
+    while (menuHandler.isRunning){       
+        if (menuHandler.inMainMenu == true){ // Enters Main Menu
+            resetGame(menuHandler, playerEx, player, currentEnemies, score, handler); //resets the game
         }
-        if (menuHandler.inMainMenu) {
+        if (menuHandler.inMainMenu) {// Enters Main Menu
 
             al_wait_for_event(event_queue, &event);
-            if (mainMenu.getCurrentHover() == 0) {
+            if (mainMenu.getCurrentHover() == 0) {//gets the hovered button
                 play->isHovered = true;
             }
             handler.checkCloseTab(event, menuHandler);
-            mainMenu.changeMenuButton(mainMenuButtons, event);
-            mainMenu.chooseMenuButton(mainMenuButtons[mainMenu.getCurrentHover()], event);
-            mainMenu.switchScreen(mainMenuButtons, menuHandler);
+            mainMenu.changeMenuButton(mainMenuButtons, event); //changes hovered menu button if the key is pressed
+            mainMenu.chooseMenuButton(mainMenuButtons[mainMenu.getCurrentHover()], event); //presses the button to switch the screen
+            mainMenu.switchScreen(mainMenuButtons, menuHandler); //enters other mode
             if (al_get_timer_count(timer) > 0) {
                 al_set_timer_count(timer, 0);
-                if (al_is_event_queue_empty(event_queue)) {
+                if (al_is_event_queue_empty(event_queue)) {//draws buttons
                     al_clear_to_color(al_map_rgb(20, 20, 20));
                     play->draw();
                     hallOfFame->draw();
@@ -205,12 +205,12 @@ int main(){
             }
         }
 
-        else if (menuHandler.inMenu) {          // Menu
+        else if (menuHandler.inMenu) {          // enters Pause Menu 
             al_wait_for_event(event_queue, &event);
             if (menuHandler.getCurrentHover() == 0) {
                 resume->isHovered = true;
             }
-            menuHandler.changeMenuButton(menuButtons, event);
+            menuHandler.changeMenuButton(menuButtons, event);//draws the menu
             handler.checkCloseTab(event, menuHandler);
             menuHandler.chooseMenuButton(menuButtons[menuHandler.getCurrentHover()], event);
             menuHandler.switchScreen(menuButtons);
@@ -220,7 +220,7 @@ int main(){
                     if (al_is_event_queue_empty(event_queue)) {
                         al_clear_to_color(al_map_rgb(20, 20, 20));
 
-                        if (!menuHandler.isFirstBoot) {
+                        if (!menuHandler.isFirstBoot) { //draws the game in the background
                             player.draw();
                             for (int i = 0; i < currentEnemies.size(); i++) {
                                 currentEnemies[i]->draw();
@@ -233,7 +233,7 @@ int main(){
                     }
                 }
         }
-            else if (menuHandler.inHallOfFame) {
+            else if (menuHandler.inHallOfFame) {    //enters hall of fame
                 al_wait_for_event(event_queue, &event);
                 handler.checkCloseTab(event, menuHandler);
                 mainMenu.backToMenu(event, menuHandler);
@@ -241,7 +241,7 @@ int main(){
                 
                 if (al_get_timer_count(timer) > 0) {
                     al_set_timer_count(timer, 0);
-                    if (al_is_event_queue_empty(event_queue)) {
+                    if (al_is_event_queue_empty(event_queue)) { //menu drawing
                         al_clear_to_color(al_map_rgb(20, 20, 20));
                         al_draw_rectangle(240, 40,1040, 125, al_map_rgb(192, 26, 26), 5);
                         al_draw_text(numberFont, al_map_rgb(224, 168, 63), 460, 200 , ALLEGRO_ALIGN_CENTER, "1");
@@ -255,7 +255,7 @@ int main(){
                         al_draw_text(menuFont, al_map_rgb(60, 50, 40), 520, 443, ALLEGRO_ALIGN_CENTER, "th");
                         al_draw_text(menuFont, al_map_rgb(60, 50, 40), 520, 523, ALLEGRO_ALIGN_CENTER, "th");
                         al_draw_text(HallofFameFont, al_map_rgb(192,26,26), 640, 50, ALLEGRO_ALIGN_CENTER, "HALL OF FAME");
-                        for (int i = 0; i < halloffame.getScores().size() && i < 5; i++) {
+                        for (int i = 0; i < halloffame.getScores().size() && i < 5; i++) { //displays the best 5 scores
                             ALLEGRO_COLOR color= al_map_rgb(60, 50, 40);
                             if(i == 0) {
                                 color = al_map_rgb(224, 168, 63);
@@ -270,7 +270,7 @@ int main(){
                             
                             std::string strScore = std::to_string(halloffame.getScores()[i]);		//converts the int to string 
                             const char *charScore = strScore.c_str();
-                            al_draw_text(numberFont, color, 640, 200+ i * 80, ALLEGRO_ALIGN_CENTER, charScore);
+                            al_draw_text(numberFont, color, 640, 200+ i * 80, ALLEGRO_ALIGN_CENTER, charScore);  //displays the scores
                             
                         }
                     }
@@ -280,51 +280,49 @@ int main(){
 
 
             }
-            else if(menuHandler.inEndless) {
+            else if(menuHandler.inEndless) { //enters endless game mode
                 
                 al_wait_for_event(event_queue, &event);
                 
                 handler.readMovementKeys(event);    // registers pressed keys and passes it to movePlayer
                 handler.checkPlayerShoot(event, player, gunTicker);  //checks if the mouse is pressed and makes the player shoot
-                handler.checkCloseTab(event, menuHandler);
-                handler.readWeaponChangeKeys(event, player);
-                menuHandler.backToMenu(event);
-                score.display();
+                handler.checkCloseTab(event, menuHandler);  //checks if the tab has been closed
+                handler.readWeaponChangeKeys(event, player);  //changes the weapon acording to the key pressed
+                menuHandler.backToMenu(event);   //checks if the menu key is pressed
                 if (al_get_timer_count(timer) > 0) {
                     al_set_timer_count(timer, 0);
                     if (al_is_event_queue_empty(event_queue)) {
                         al_clear_to_color(al_map_rgb(20, 20, 20));
-                        score.display();          
+                        score.display();          //displays the current score
                         handler.movePlayer(player);        // moves player according to pressed keys
-                        universalTicker.ticker();
-                        universalTicker.checkTick();    
-                        gunTicker.ticker();
-                        player.update();
+                        universalTicker.ticker();           //ticks the universal ticker 
+                        universalTicker.checkTick();     //test function
+                        gunTicker.ticker(); //ticks the ticker for the guns
+                        player.update();  //updates the player and his bullets
                         
                        
                         
                         for (auto it = currentEnemies.begin(); it != currentEnemies.end() ;) {
                             Enemy* enemyt = *it;
-                            if (player.checkCollision(*enemyt->getHitbox())) {
-                                delete enemyt; // Delete the enemy object
-                                it = currentEnemies.erase(it); // Erase and get the iterator to the next element
+                            if (player.checkCollision(*enemyt->getHitbox())) { //checks player colision with enemies and if true damages player
+                                delete enemyt; 
+                                it = currentEnemies.erase(it); 
                                 score.addScore(10);
                             }
                             else {
-                                if (player.checkGunHit(*enemyt->getHitbox())) {
-                                    player.checkBullets(*enemyt->getHitbox());
-                                    //delete enemyt; // Delete the enemy object
+                                if (player.checkGunHit(*enemyt->getHitbox())) { //checks bullet hits
+                                    player.checkBullets(*enemyt->getHitbox()); 
                                     
-                                    if (enemyt->getDamaged(player.weaponInUse->getDamage())) {      // 
-                                        it = currentEnemies.erase(it); // Erase and get the iterator to the next element
+                                    if (enemyt->getDamaged(player.weaponInUse->getDamage())) {      // damages the enemy
+                                        it = currentEnemies.erase(it); 
                                         score.addScore(10);
                                     }
                                     
                                 }
                                 else {
-                                    if (enemyt->getHitbox()->getBottomRightX() <= 70) {
-                                        delete enemyt; // Delete the enemy object
-                                        it = currentEnemies.erase(it); // Erase and get the iterator to the next element
+                                    if (enemyt->getHitbox()->getBottomRightX() <= 70) { //checks the position and deletes the enemy when beyond a certain line and if true damages the player
+                                        delete enemyt; 
+                                        it = currentEnemies.erase(it); 
                                         player.getDamaged();
                                     }
                                     else {
@@ -333,18 +331,18 @@ int main(){
                                 }
                             }
                         }
-                        if (universalTicker.getTick() == 16) {
+                        if (universalTicker.getTick() == 16) { //sets the cycle for the enemy spawns
                             cycles += 1;
 
                         if (cycles == 1) {
                             
                             int enemy_spawn_count = ((rand() % (int) round(score.difficultyRatio)*2) + 1);
                            
-                            for (int i = 0; i < enemy_spawn_count; i++) {
+                            for (int i = 0; i < enemy_spawn_count; i++) { //spawns enemies
                                 Enemy* newenemy = new Enemy(1250, rand() % 700, score.difficultyRatio * 4, score.difficultyRatio * 4, std::time(nullptr) % 3 + 1);
                                 newenemy->setEnemyShip(enemyEx.getEnemyImage());
                                 currentEnemies.push_back(newenemy);
-                                if ((score.score % 250 == 0)&&score.score!=0) {
+                                if ((score.score % 250 == 0)&&score.score!=0) { //spawns boss waves
                                     for (int e = 0; e < 6*score.difficultyRatio; e++) {
                                         Enemy* newenemy = new Enemy(1250, rand() % 700, score.difficultyRatio * 4, score.difficultyRatio * 4, std::time(nullptr) % 3 + 1, 30, 30,10);
                                         newenemy->setEnemyShip(enemyEx.getEnemyImage());
@@ -359,23 +357,23 @@ int main(){
 
                         }
                         
-                        for (int i = 0; i < currentEnemies.size(); i++) {
+                        for (int i = 0; i < currentEnemies.size(); i++) {   //moves the enemies
                             currentEnemies[i]->draw();
                             move.toMove(*currentEnemies[i], universalTicker);
                            
                             currentEnemies[i]->move(currentEnemies[i]->dx, currentEnemies[i]->dy);                          
                         }
 
-                        if (player.health <= 0) {
+                        if (player.health <= 0) {   //resets the game when the player dies
                             halloffame.addHScore(score.score);
                             halloffame.writeFile();
                             resetGame(menuHandler, playerEx, player, currentEnemies, score,handler);
                             
                         }
                         
-                        for (auto gun : player.guns)
+                        for (auto gun : player.guns)    
                             for (int i = 0; i < 30; i++) {
-                                gun->bullets[i].explode();
+                                gun->bullets[i].explode();  //shows the explosion when it its an enemy
                         };                       
                 }
 
@@ -387,7 +385,7 @@ int main(){
         
     
 
-    al_destroy_font(font);
+    al_destroy_font(font);      //destroys the current display and everithing drawn with it
     al_destroy_display(display);
     al_destroy_event_queue(event_queue);
     

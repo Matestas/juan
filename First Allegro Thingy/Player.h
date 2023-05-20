@@ -43,13 +43,11 @@ public:
 	void getDamaged() {
 		health-=1;
 	}
-	void setTotalExplosion(ALLEGRO_BITMAP* totalExplosion);
 	std::vector < ALLEGRO_BITMAP*> ships;
 	int health;
 private:
 	int dimX;
 	int dimY;
-	ALLEGRO_BITMAP* totalExplosion;
 	ALLEGRO_BITMAP* Ship = NULL;
 	MachineGun* mGun;
 	RocketLauncher* RLauncher;

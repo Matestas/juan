@@ -52,7 +52,7 @@ Player::Player(Player& old) //copy constructor
 	this->Ship = old.Ship;
 	this->hitbox = old.hitbox;
 	this->ships = old.ships;
-	this->totalExplosion = old.totalExplosion;
+	
 	
 }
 void Player::resetPlayer(Player& old){		//coppies the default player to the current player
@@ -71,12 +71,9 @@ void Player::resetPlayer(Player& old){		//coppies the default player to the curr
 	this->health = old.health;
 	this->speedBoost = old.speedBoost;
 	this->hitbox = old.hitbox;
-	this->totalExplosion = old.totalExplosion;
+
 }
-void Player::setTotalExplosion(ALLEGRO_BITMAP* totalExplosion)
-{
-	this->totalExplosion = totalExplosion;		//sets the explosion png
-}
+
 
 
 
@@ -134,19 +131,14 @@ void Player::changeWeapon(int w)
 	{
 	case 0:
 		weaponInUse = laser;
-		std::cout << "laser";
+
 		break;
 	case 1:
 		weaponInUse = mGun;
-		std::cout << "mgun";
+
 		break;
 	case 2:
 		weaponInUse = shotgun;
-		std::cout << "shotgun";
-		break;
-	case 3:
-		weaponInUse = RLauncher;
-		std::cout << "Rlauncher";
 		break;
 	}
 }

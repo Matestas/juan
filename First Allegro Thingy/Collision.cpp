@@ -3,6 +3,7 @@
 
 bool Hitbox::operator==(Hitbox &t)
 {
+	// Check if the boxes are colliding along the x-axis
 	bool x_colliding = (topLeftX <= t.bottomRightX) && (bottomRightX >= t.topLeftX);
 
 	// Check if the boxes are colliding along the y-axis
@@ -13,7 +14,7 @@ bool Hitbox::operator==(Hitbox &t)
 }
 
 void Hitbox::move(int xcoord, int ycoord) {
-	this->topLeftX = xcoord;
+	this->topLeftX = xcoord;//moves hitbox
 	this->topLeftY = ycoord;
     
 	bottomRightX = xcoord + dimX;     
@@ -22,10 +23,10 @@ void Hitbox::move(int xcoord, int ycoord) {
 
 void Hitbox::draw()
 {
-	al_draw_rectangle(topLeftX, topLeftY, bottomRightX,bottomRightY, al_map_rgb(250, 25, 25), 2);
+	al_draw_rectangle(topLeftX, topLeftY, bottomRightX,bottomRightY, al_map_rgb(250, 25, 25), 2);//test function
 }
 
-Hitbox::Hitbox(int topLeftX, int dimX, int topLeftY, int dimY)
+Hitbox::Hitbox(int topLeftX, int dimX, int topLeftY, int dimY) //base Constructor
 {
 	
 	this->bottomRightX = topLeftX+dimX;
