@@ -18,6 +18,7 @@ Player::Player(int dimX,int dimY) : BaseEntity(0, 0, dimX, dimY){
 	guns.push_back(shotgun);
 	guns.push_back(laser);
 	weaponInUse = laser;
+	health = 10;
 
 }
 void Player::move(const float dirX, const float dirY) {
@@ -46,7 +47,7 @@ Player::Player(Player& old)
 	this->RLauncher = old.RLauncher;
 	this->guns = old.guns;
 	this->weaponInUse = old.weaponInUse;
-	this->health = old.health;
+	this->health = 10;
 	this->speedBoost = old.speedBoost;
 	this->Ship = old.Ship;
 	this->hitbox = old.hitbox;

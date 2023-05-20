@@ -1,6 +1,6 @@
 
 #include "Player.h"
-
+#include"HallOfFame.h"
 
 #include "Enemy.h"
 #include "Mover.h"
@@ -24,7 +24,17 @@ bool key_right= false;
 bool key_up= false;
 bool key_down= false;
 
+void resetGame(MenuHandler &menuHandler,Player &df,Player &nw,vector<Enemy*> &enemies,Score &score,EventHandler &handler) {
+    menuHandler.inMainMenu = true;
+    menuHandler.inEndless = false;
+    handler.resetKeys();
 
+    nw.resetPlayer(df);
+    enemies.clear();
+
+    score.score = 0;
+    
+}
 
 
 typedef struct ALLEGRO_MOUSE_STATE ALLEGRO_MOUSE_STATE;
@@ -58,6 +68,7 @@ int main(){
     EventHandler handler;
     MenuHandler menuHandler;
     MainMenu mainMenu;
+    HallOfFame halloffame;
     std::vector <Enemy*> currentEnemies;
 
     bool isLoading = true;
@@ -95,7 +106,8 @@ int main(){
    
     //Reserve Sample Capacity
     al_reserve_samples(5);
-    
+    //Read Hall of Fame
+    halloffame.readFile();
     ////Load Assets
 
     // Load Ship Variations
@@ -228,6 +240,7 @@ int main(){
                 handler.readMovementKeys(event);    // registers pressed keys and passes it to movePlayer
                 handler.checkPlayerShoot(event, player, gunTicker);  //checks if the mouse is pressed and makes the player shoot
                 handler.checkCloseTab(event, menuHandler);
+                handler.readWeaponChangeKeys(event, player);
                 menuHandler.backToMenu(event);
                 score.display();
                 if (al_get_timer_count(timer) > 0) {
@@ -246,7 +259,7 @@ int main(){
                             if (player.checkCollision(*enemyt->getHitbox())) {
                                 delete enemyt; // Delete the enemy object
                                 it = currentEnemies.erase(it); // Erase and get the iterator to the next element
-                               
+                                score.addScore(10);
                             }
                             else {
                                 if (player.checkGunHit(*enemyt->getHitbox())) {
@@ -283,7 +296,7 @@ int main(){
                                 newenemy->setEnemyShip(enemyEx.getEnemyImage());
                                 currentEnemies.push_back(newenemy);
                                 if ((score.score % 250 == 0)&&score.score!=0) {
-                                    for (int e = 0; e < 10; e++) {
+                                    for (int e = 0; e < 10*score.difficultyRatio; e++) {
                                         Enemy* newenemy = new Enemy(1250, rand() % 700, score.difficultyRatio * 4, score.difficultyRatio * 4, std::time(nullptr) % 3 + 1, 30, 30);
                                         newenemy->setEnemyShip(enemyEx.getEnemyImage());
                                         
@@ -303,20 +316,11 @@ int main(){
                            
                             currentEnemies[i]->move(currentEnemies[i]->dx, currentEnemies[i]->dy);                          
                         }
-                        if (universalTicker.getTick() == 128) {
 
-                            player.changeWeapon(sw);
-                            sw++;
-                            sw &= 3;
-                        }
                         if (player.health <= 0) {
-                            menuHandler.inMainMenu = true;
-                            menuHandler.inEndless = false;
-                            
-                            player.resetPlayer(playerEx);
-                            currentEnemies.clear();
-                                
-                            score.score = 0;  
+                            halloffame.addHScore(score.score);
+                            halloffame.writeFile();
+                            resetGame(menuHandler, playerEx, player, currentEnemies, score,handler);
                             
                         }
            

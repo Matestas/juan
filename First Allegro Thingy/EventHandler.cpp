@@ -83,6 +83,35 @@ void EventHandler::movePlayer(Player& Player) {
 
 }
 
+void EventHandler::resetKeys()
+{
+    key_down = false;
+    key_left = false;
+    key_right = false;
+    key_up = false;
+}
+
+void EventHandler::readWeaponChangeKeys(ALLEGRO_EVENT& event,Player& player)
+{
+    if (event.type == ALLEGRO_EVENT_KEY_DOWN) {
+        switch (event.keyboard.keycode) {
+        case ALLEGRO_KEY_1:
+            player.changeWeapon(0);
+            break;
+        case ALLEGRO_KEY_2:
+            player.changeWeapon(1);
+            break;
+        case ALLEGRO_KEY_3:
+            player.changeWeapon(2);
+            break;
+        case ALLEGRO_KEY_4:
+            player.changeWeapon(3);
+            break;
+        }
+    }
+
+}
+
 EventHandler::EventHandler(): isRunning(true)
 {
     
