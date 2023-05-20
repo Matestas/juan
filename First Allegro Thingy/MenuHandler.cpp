@@ -127,6 +127,7 @@ bool MainMenu::backToMenu(ALLEGRO_EVENT& event, MenuHandler&menuhandler)
             menuhandler.inHallOfFame = false;
             menuhandler.inMainMenu = true;
             isFirstBoot = false;
+            menuhandler.isFirstBoot = true;
             currentHover = 0;
             return true;
         }

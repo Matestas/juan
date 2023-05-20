@@ -81,6 +81,9 @@
     <ClCompile Include="Loader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="HallOfFame.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Entities.h">
@@ -152,6 +155,9 @@
     <ClInclude Include="Loader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="HallOfFame.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="juan.jpg">
@@ -185,6 +191,12 @@
       <Filter>Resource Files</Filter>
     </Image>
     <Image Include="ResumeButton.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="OnHitExplosion.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Explosion.png">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>

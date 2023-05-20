@@ -57,6 +57,12 @@ public:
 	int getY() {
 		return y;
 	}
+	int getDimX() {
+		return dimX;
+	}
+	int getDimY() {
+		return dimY;
+	}
 	void move(const float dirX, const float dirY);
 	Hitbox *getHitbox();
 	bool checkiMap();

@@ -41,11 +41,11 @@ public:
 	bool checkCollision(Hitbox& x);
 	void setPlayerImages(std::vector <ALLEGRO_BITMAP*> Ships);
 	void getDamaged() {
-		health--;
+		health-=1;
 	}
 	void setTotalExplosion(ALLEGRO_BITMAP* totalExplosion);
 	std::vector < ALLEGRO_BITMAP*> ships;
-	int health = 10;
+	int health;
 private:
 	int dimX;
 	int dimY;

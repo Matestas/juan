@@ -4,11 +4,12 @@ Gun::Gun(float fireRate,int damage, ALLEGRO_SAMPLE* bulletSound , ALLEGRO_BITMAP
 	this->damage = damage;
 	this->gunSound = bulletSound;
 	this->bulletImage = bulletImage;
-
+	
 	bulletsFired = 0;
+	
 }
 void Gun::loadBullets() {
-	for (int i = 1; i <= 8; i++) {
+	for (int i = 1; i <= 29 ; i++) {
 		this->bullets[i] = Bullet(bullets[0]);
 	}
 }
@@ -61,6 +62,10 @@ bool Gun::checkhit(Hitbox &x)
 	for (int i = 0; i < MAX_BULLETS; i++) {
 		if (bullets[i].isMoving) {
 			if (bullets[i].checkhit(x)) {
+				bullets[i].hitSpotX = bullets[i].getX() + bullets[i].getDimX();
+				bullets[i].hitSpotY = bullets[i].getY();
+				bullets[i].ticker.ticker();
+				bullets[i].explode();
 				return true;
 			}
 		}

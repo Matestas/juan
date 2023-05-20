@@ -21,13 +21,15 @@ public:
 	Bullet(int x, int y);
 	int getspeedX();
 	int getspeedY();
-	void explode(Ticker ticker);
+	void explode();
 	
 	void move();  // moves when isMoving
 	void moveto(const int, const int);
 	ALLEGRO_BITMAP* explosion;   // cada explosao [32,32]
+	int hitSpotX;
+	int hitSpotY;
 
-	int tick1 =0;
+	Ticker ticker;
 	bool checkhit(Hitbox &x); // check if hits enemy
 	void setspeed(int,int);
 	void setDimensions(int,int);

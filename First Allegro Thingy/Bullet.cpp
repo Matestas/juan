@@ -9,6 +9,7 @@ Bullet::Bullet(int x, int y) {
 	this->speedX = 20;
 	this->speedY = 0;
 	isMoving = false;
+	
 }
 Bullet::Bullet():BaseEntity(2000,2000,10,5,10,0) {
 	isMoving = false;
@@ -43,6 +44,11 @@ Bullet::Bullet(Bullet& old) {
 	this->isMoving = old.isMoving;
 	this->speedX = old.speedX;
     this->speedY = old.speedY;
+	this->explosion = old.explosion;
+	this->hitbox = old.hitbox;
+	this->dimX = old.dimX;
+	this->dimY = old.dimY;
+	
 
 	
 }
@@ -53,33 +59,42 @@ int Bullet::getspeedX() {
 int Bullet::getspeedY() {
     return speedY;
 }
-void Bullet::explode(Ticker ticker)
+
+void Bullet::explode()
 {
-	if (tick1 <= 2 && tick1 > 0) {
-		al_draw_scaled_bitmap(explosion, 0, 0, 32, 32, x, y, 15, 15, 0);
-		tick1 += 1;
+	if (ticker.getTick() > 0) {
+		
+		if (ticker.getTick() <= 5) {
+			al_draw_scaled_bitmap(explosion, 0, 0, 32, 32, hitSpotX, hitSpotY, 18, 18, 0);
+			ticker.ticker();
+		}
+		else if (ticker.getTick() <= 2 ) {
+			al_draw_scaled_bitmap(explosion, 32, 0, 32, 32, hitSpotX, hitSpotY, 18, 18, 0);
+			ticker.ticker();
+		}
+		else if (ticker.getTick() <= 4 ) {
+			al_draw_scaled_bitmap(explosion, 64, 0, 32, 32, hitSpotX, hitSpotY, 18, 18, 0);
+			ticker.ticker();
+		}
+		else if (ticker.getTick() <= 8 ) {
+			al_draw_scaled_bitmap(explosion, 96, 0, 32, 32, hitSpotX, hitSpotY, 18, 18, 0);
+			ticker.ticker();
+			
+		}
+		else if (ticker.getTick() <= 10 ) {
+			al_draw_scaled_bitmap(explosion, 128, 0, 32, 32, hitSpotX, hitSpotY, 18, 18, 0);
+			ticker.ticker();
+		}
+		else if (ticker.getTick() <= 15 ) {
+			al_draw_scaled_bitmap(explosion,162, 0, 32, 32, hitSpotX, hitSpotY, 18, 18, 0);
+			ticker.ticker();
+		}
+		else {
+			ticker.setTick(0);
+			hitSpotX = -100;
+			hitSpotY = -100;
+		};
 	}
-	else if (tick1 <= 4) {
-		al_draw_scaled_bitmap(explosion, 32, 0, 32, 32, x, y, 15, 15, 0);
-		tick1 += 1;
-	}
-	else if (tick1 <= 6) {
-		al_draw_scaled_bitmap(explosion, 64, 0, 32, 32, x, y, 15, 15, 0);
-		tick1 += 1;
-	}
-	else if (tick1 <= 8) {
-		al_draw_scaled_bitmap(explosion, 96, 0, 32, 32, x, y, 15, 15, 0);
-		tick1 += 1;
-	}
-	else if (tick1 <= 10) {
-		al_draw_scaled_bitmap(explosion, 128, 0, 32, 32, x, y, 15, 15, 0);
-		tick1 += 1;
-	}
-	else if (tick1 <= 12) {
-		al_draw_scaled_bitmap(explosion, 160, 0, 32, 32, x, y, 15, 15, 0);
-		tick1 += 1;
-	}
-	else if (tick1 = 0);
 }
 void Bullet::setspeed(int speedX,int speedY) {
 	this->speedX = speedX;

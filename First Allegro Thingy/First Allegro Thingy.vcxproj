@@ -168,6 +168,7 @@
     <ClCompile Include="Entities.cpp" />
     <ClCompile Include="EventHandler.cpp" />
     <ClCompile Include="Gun.cpp" />
+    <ClCompile Include="HallOfFame.cpp" />
     <ClCompile Include="laser.cpp" />
     <ClCompile Include="Loader.cpp" />
     <ClCompile Include="MachineGun.cpp" />
@@ -190,6 +191,7 @@
     <ClInclude Include="EventHandler.h" />
     <ClInclude Include="EventManager.h" />
     <ClInclude Include="Gun.h" />
+    <ClInclude Include="HallOfFame.h" />
     <ClInclude Include="laser.h" />
     <ClInclude Include="Loader.h" />
     <ClInclude Include="MachineGun.h" />
@@ -212,12 +214,14 @@
     <Image Include="bullet_sprites.png" />
     <Image Include="EnemyShip.png" />
     <Image Include="ExitButton.png" />
+    <Image Include="Explosion.png" />
     <Image Include="HallofFameButton.png" />
     <Image Include="juan.jpg" />
     <Image Include="mainShipAcelerated.png" />
     <Image Include="MainShipBackwards.png" />
     <Image Include="Main_Ship.png" />
     <Image Include="menuButton.png" />
+    <Image Include="OnHitExplosion.png" />
     <Image Include="PlayButton.png" />
     <Image Include="ResumeButton.png" />
   </ItemGroup>
