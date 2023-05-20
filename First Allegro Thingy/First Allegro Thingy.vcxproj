@@ -168,6 +168,7 @@
     <ClCompile Include="Entities.cpp" />
     <ClCompile Include="EventHandler.cpp" />
     <ClCompile Include="Gun.cpp" />
+    <ClCompile Include="HallOfFame.cpp" />
     <ClCompile Include="laser.cpp" />
     <ClCompile Include="Loader.cpp" />
     <ClCompile Include="MachineGun.cpp" />
@@ -190,6 +191,7 @@
     <ClInclude Include="EventHandler.h" />
     <ClInclude Include="EventManager.h" />
     <ClInclude Include="Gun.h" />
+    <ClInclude Include="HallOfFame.h" />
     <ClInclude Include="laser.h" />
     <ClInclude Include="Loader.h" />
     <ClInclude Include="MachineGun.h" />

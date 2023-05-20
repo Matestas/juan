@@ -12,6 +12,8 @@ public:
 	void readMovementKeys(ALLEGRO_EVENT& event);
 	void checkCloseTab(ALLEGRO_EVENT& event, MenuHandler& menuHandler);
 	void movePlayer(Player& Player);
+	void resetKeys();
+	void readWeaponChangeKeys(ALLEGRO_EVENT& event, Player& player);
 
 
 	
