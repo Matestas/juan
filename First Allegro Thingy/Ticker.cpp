@@ -2,7 +2,7 @@
 
 void Ticker::ticker()
 {
-	if (tick <= 128) {
+	if (tick <= 128) {		//adds 1 to the tick or adds to the cycle
 		tick += 1;
 	}
 	else {
@@ -13,20 +13,20 @@ void Ticker::ticker()
 
 int Ticker::getTick()
 {
-	return tick;
+	return tick;	//returns the tick
 }
 
 int Ticker::getCycle()
 {
-	return cycle;
+	return cycle;  //returns cycle
 }
 
 void Ticker::setTick(int tick)
 {
-	this->tick = tick;
+	this->tick = tick;	//sets the tick
 }
 void Ticker::setCycle(int cycle)
 {
-	this->cycle = cycle;
+	this->cycle = cycle;	//sets the cicle the tick is in
 }
 ;

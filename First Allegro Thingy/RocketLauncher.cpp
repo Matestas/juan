@@ -5,8 +5,7 @@
 RocketLauncher::RocketLauncher():Gun(FIRERATE, DAMAGE){
 
 }
-void RocketLauncher::fire_bullet(int x, int y,Ticker tick) {
-    //al_play_sample(*getBulletSound(0), 1, 0, 1, ALLEGRO_PLAYMODE_ONCE, 0);
+void RocketLauncher::fire_bullet(int x, int y,Ticker tick) {        //not yet finished
     if (FIRERATE < tick.getTick())
     {
         bullets[bulletsFired].moveto(x, y);
@@ -18,6 +17,5 @@ void RocketLauncher::fire_bullet(int x, int y,Ticker tick) {
             bulletsFired++;
         }
         tick.setTick(0);
-        //std::cout << bulletsFired << std::endl;
     }
 }

@@ -54,13 +54,7 @@
     <ClCompile Include="Mover.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Spawner.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Ticker.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Bot.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="laser.cpp">
@@ -113,9 +107,6 @@
     <ClInclude Include="Shotgun.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="EventManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Enemy.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -128,13 +119,7 @@
     <ClInclude Include="Mover.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Spawner.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Ticker.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Bot.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="laser.h">
@@ -218,6 +203,11 @@
     </Media>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="linesfortesting.txt" />
+    <Text Include="linesfortesting.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="HallOfFame.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
   </ItemGroup>
 </Project>

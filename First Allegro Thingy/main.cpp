@@ -13,6 +13,8 @@
 #include "Score.h"
 #include <cmath>
 #include "Loader.h"
+#include <string>
+#include <cstring>
 
 #define SCREEN_WIDTH 1280
 #define SCREEN_HEIGHT 720
@@ -83,8 +85,9 @@ int main(){
     ALLEGRO_FONT* font = al_create_builtin_font();
     ALLEGRO_TIMER* timer = al_create_timer(0.01666);
     ALLEGRO_EVENT_QUEUE* event_queue = al_create_event_queue();
+    ALLEGRO_FONT* numberFont = al_load_font("SuPostcode-VGeLe.ttf", 50, 0);
     //Create Score object now since it needed the font to load
-    Score score(font);
+    Score score(numberFont);
     
     //Register possible events
     al_register_event_source(event_queue, al_get_display_event_source(display));
@@ -157,6 +160,8 @@ int main(){
     //Load aditional fonts
     
     ALLEGRO_FONT* menuFont = al_load_font("Freedom-10eM.ttf", 50, 0);
+    
+    ALLEGRO_FONT* HallofFameFont = al_load_font("Freedom-10eM.ttf", 70, 0);
     //(&player.Ship, player.getBulletImage(0), player.getBulletSound(0), NULL, NULL, NULL);
     //Load Menu
     MenuButton* play = new MenuButton(490,50, 243, 150, loader.load_image("PlayButton.png", "PlayB"));
@@ -176,7 +181,9 @@ int main(){
     al_play_sample(juan, 1, 0, 1, ALLEGRO_PLAYMODE_LOOP, &BGMid);
 
     while (menuHandler.isRunning){       // Main Menu
-        
+        if (menuHandler.inMainMenu == true) {
+            resetGame(menuHandler, playerEx, player, currentEnemies, score, handler);
+        }
         if (menuHandler.inMainMenu) {
 
             al_wait_for_event(event_queue, &event);
@@ -236,7 +243,36 @@ int main(){
                     al_set_timer_count(timer, 0);
                     if (al_is_event_queue_empty(event_queue)) {
                         al_clear_to_color(al_map_rgb(20, 20, 20));
-                        al_draw_circle(600, 300, 50, al_map_rgb(22, 52, 90), 5);
+                        al_draw_rectangle(240, 40,1040, 125, al_map_rgb(192, 26, 26), 5);
+                        al_draw_text(numberFont, al_map_rgb(224, 168, 63), 460, 200 , ALLEGRO_ALIGN_CENTER, "1");
+                        al_draw_text(numberFont, al_map_rgb(156, 149, 143), 460, 280, ALLEGRO_ALIGN_CENTER, "2");
+                        al_draw_text(numberFont, al_map_rgb(163, 96, 57), 460, 360, ALLEGRO_ALIGN_CENTER, "3");
+                        al_draw_text(numberFont, al_map_rgb(60, 50, 40), 460, 440, ALLEGRO_ALIGN_CENTER, "4");
+                        al_draw_text(numberFont, al_map_rgb(60, 50, 40), 460, 520, ALLEGRO_ALIGN_CENTER, "5");
+                        al_draw_text(menuFont, al_map_rgb(224, 168, 63), 520, 203, ALLEGRO_ALIGN_CENTER, "st");
+                        al_draw_text(menuFont, al_map_rgb(156, 149, 143), 520, 283, ALLEGRO_ALIGN_CENTER, "nd");
+                        al_draw_text(menuFont, al_map_rgb(163, 96, 57), 520, 363, ALLEGRO_ALIGN_CENTER, "rd");
+                        al_draw_text(menuFont, al_map_rgb(60, 50, 40), 520, 443, ALLEGRO_ALIGN_CENTER, "th");
+                        al_draw_text(menuFont, al_map_rgb(60, 50, 40), 520, 523, ALLEGRO_ALIGN_CENTER, "th");
+                        al_draw_text(HallofFameFont, al_map_rgb(192,26,26), 640, 50, ALLEGRO_ALIGN_CENTER, "HALL OF FAME");
+                        for (int i = 0; i < halloffame.getScores().size() && i < 5; i++) {
+                            ALLEGRO_COLOR color= al_map_rgb(60, 50, 40);
+                            if(i == 0) {
+                                color = al_map_rgb(224, 168, 63);
+                            }
+                            if (i == 1) {
+                                color = al_map_rgb(156, 149, 143);
+                            }
+                            if (i == 2) {
+                                color = al_map_rgb(163, 96, 57);
+                            }
+                           
+                            
+                            std::string strScore = std::to_string(halloffame.getScores()[i]);		//converts the int to string 
+                            const char *charScore = strScore.c_str();
+                            al_draw_text(numberFont, color, 640, 200+ i * 80, ALLEGRO_ALIGN_CENTER, charScore);
+                            
+                        }
                     }
                 }
                 
@@ -264,6 +300,7 @@ int main(){
                         universalTicker.checkTick();    
                         gunTicker.ticker();
                         player.update();
+                        
                        
                         
                         for (auto it = currentEnemies.begin(); it != currentEnemies.end() ;) {
@@ -308,8 +345,8 @@ int main(){
                                 newenemy->setEnemyShip(enemyEx.getEnemyImage());
                                 currentEnemies.push_back(newenemy);
                                 if ((score.score % 250 == 0)&&score.score!=0) {
-                                    for (int e = 0; e < 10*score.difficultyRatio; e++) {
-                                        Enemy* newenemy = new Enemy(1250, rand() % 700, score.difficultyRatio * 4, score.difficultyRatio * 4, std::time(nullptr) % 3 + 1, 30, 30);
+                                    for (int e = 0; e < 6*score.difficultyRatio; e++) {
+                                        Enemy* newenemy = new Enemy(1250, rand() % 700, score.difficultyRatio * 4, score.difficultyRatio * 4, std::time(nullptr) % 3 + 1, 30, 30,10);
                                         newenemy->setEnemyShip(enemyEx.getEnemyImage());
                                         
                                         currentEnemies.push_back(newenemy);
@@ -335,16 +372,11 @@ int main(){
                             resetGame(menuHandler, playerEx, player, currentEnemies, score,handler);
                             
                         }
-                        if (menuHandler.backToMenu(event)) {
-                            resetGame(menuHandler, playerEx, player, currentEnemies, score, handler);
-                        }
+                        
                         for (auto gun : player.guns)
                             for (int i = 0; i < 30; i++) {
                                 gun->bullets[i].explode();
-                            };
-                        
-
-
+                        };                       
                 }
 
             }

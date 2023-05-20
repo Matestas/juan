@@ -6,7 +6,7 @@ using namespace std;
 class HallOfFame
 {
 private:
-	vector<int>score;
+	vector<int>scores;
 public:
 	void readFile();
 	void addHScore(int);

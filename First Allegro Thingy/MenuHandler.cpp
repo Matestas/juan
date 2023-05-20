@@ -1,6 +1,6 @@
 #include "MenuHandler.h"
 
-MenuHandler::MenuHandler() {
+MenuHandler::MenuHandler() { //initializes the variables that control the menus
     inMenu = false;
     currentHover = 0;
     inEndless = false;
@@ -13,12 +13,12 @@ MenuHandler::MenuHandler() {
 }
 
 int MenuHandler::getCurrentHover() {
-    return currentHover;
+    return currentHover; //returns the button that is hovered
 }
 bool MenuHandler::backToMenu(ALLEGRO_EVENT& event)
 {
     if (event.type == ALLEGRO_EVENT_KEY_DOWN) {
-        if (event.keyboard.keycode == ALLEGRO_KEY_ESCAPE) {
+        if (event.keyboard.keycode == ALLEGRO_KEY_ESCAPE) { //gets back to the menu
             inEndless = false;
             inMenu = true;
             currentHover = 0;
@@ -28,7 +28,7 @@ bool MenuHandler::backToMenu(ALLEGRO_EVENT& event)
    }
     return false;
 }
-void MenuHandler::test(MenuButton* menuButton, ALLEGRO_EVENT& event) {
+void MenuHandler::test(MenuButton* menuButton, ALLEGRO_EVENT& event) { //test function
     if (event.type == ALLEGRO_EVENT_KEY_DOWN) {
         if (event.keyboard.keycode == ALLEGRO_KEY_W) {
             al_draw_rectangle(100, 100, 200, 200, al_map_rgb(255, 255, 255), 3);
@@ -37,10 +37,10 @@ void MenuHandler::test(MenuButton* menuButton, ALLEGRO_EVENT& event) {
 }
 void MenuHandler::setCurrentHover(int currentHover)
 {
-    this->currentHover = currentHover;
+    this->currentHover = currentHover;  //sets the button that is hovered
 }
 void MenuHandler::changeMenuButton(std::vector <MenuButton*> menuButtons, ALLEGRO_EVENT& event) {
-    if (event.type == ALLEGRO_EVENT_KEY_DOWN && currentHover < menuButtons.size()-1) {
+    if (event.type == ALLEGRO_EVENT_KEY_DOWN && currentHover < menuButtons.size()-1) {  //changes the button that is hovered
         if (event.keyboard.keycode == ALLEGRO_KEY_S) {
             menuButtons[currentHover]->isHovered = false;
             menuButtons[currentHover + 1]->isHovered = true;
@@ -49,7 +49,7 @@ void MenuHandler::changeMenuButton(std::vector <MenuButton*> menuButtons, ALLEGR
         }
 
     }
-    if (event.type == ALLEGRO_EVENT_KEY_DOWN) {
+    if (event.type == ALLEGRO_EVENT_KEY_DOWN) {             //changes the button that is hovered
         if (event.keyboard.keycode == ALLEGRO_KEY_W && currentHover > 0) {
             menuButtons[currentHover]->isHovered = false;
             menuButtons[currentHover - 1]->isHovered = true;
@@ -61,7 +61,7 @@ void MenuHandler::changeMenuButton(std::vector <MenuButton*> menuButtons, ALLEGR
 }
 void MenuHandler::chooseMenuButton(MenuButton* menuButton, ALLEGRO_EVENT& event) {
 
-    if (event.type == ALLEGRO_EVENT_KEY_DOWN) {
+    if (event.type == ALLEGRO_EVENT_KEY_DOWN) {         //choses the button
         if (event.keyboard.keycode == ALLEGRO_KEY_SPACE) {
             menuButton->isChoosen = true;
         }

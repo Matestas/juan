@@ -6,7 +6,7 @@ void HallOfFame::readFile()
     if (inputFile.is_open()) {
         int readNumber;
         while (inputFile >> readNumber) {
-            score.push_back(readNumber);
+            scores.push_back(readNumber);
         }
     }
         inputFile.close();
@@ -15,20 +15,20 @@ void HallOfFame::readFile()
 
 void HallOfFame::addHScore(int sc)
 {
-    score.push_back(sc);
-    sort(score.begin(), score.end(),greater<int>()); 
+    scores.push_back(sc);
+    sort(scores.begin(), scores.end(),greater<int>()); 
 }
 
 vector<int> HallOfFame::getScores()
 {
-    return score;
+    return scores;
 }
 
 void HallOfFame::writeFile()
 {
     std::ofstream outputFile("HallOfFame.txt");
     if (outputFile.is_open()) {
-        for (int sc : score) {
+        for (int sc : scores) {
             outputFile << sc << endl;
         }
     }
