@@ -9,7 +9,7 @@ public:
 	void ticker();
 	int getTick();
 	int getCycle();
-	void checkTick() {       
+	void checkTick() {       //test function
 		if (tick == 129) {
 			//std::cout << "now" << std::endl;
 		}

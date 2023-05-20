@@ -196,7 +196,6 @@
     <ClInclude Include="MenuHandler.h" />
     <ClInclude Include="Mover.h" />
     <ClInclude Include="Player.h" />
-    <ClInclude Include="Loaders.h" />
     <ClInclude Include="RocketLauncher.h" />
     <ClInclude Include="Score.h" />
     <ClInclude Include="Shotgun.h" />

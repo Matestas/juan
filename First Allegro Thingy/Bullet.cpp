@@ -11,7 +11,7 @@ Bullet::Bullet(int x, int y) {
 	isMoving = false;
 	
 }
-Bullet::Bullet():BaseEntity(2000,2000,10,5,10,0) {
+Bullet::Bullet():BaseEntity(2000,2000,10,5,10,0) { //bullet constructor
 	isMoving = false;
 	speedX = 20;
 	speedY = 0;
@@ -19,7 +19,7 @@ Bullet::Bullet():BaseEntity(2000,2000,10,5,10,0) {
 Bullet::~Bullet() {
 	
 }
-void Bullet::move() {
+void Bullet::move() {//moves bullet
 	if (isMoving) {
 		this->y += speedY;
 		this->x += speedX;
@@ -27,18 +27,17 @@ void Bullet::move() {
 	}
 	
 }
-void Bullet::moveto(const int dirX, const int dirY) {
+void Bullet::moveto(const int dirX, const int dirY) {// moves bullet to a point
 	this->x = (dirX+60);
     this->y = (dirY);
 }
 
 void Bullet::draw() {
-	al_draw_filled_rectangle(x, y, x + dimX, y + dimY, al_map_rgb(72, 233, 235));
-	//al_draw_scaled_bitmap(bulletImage, 0, 0, 1083, 1060, x, y, 30, 30, 0);
+	al_draw_filled_rectangle(x, y, x + dimX, y + dimY, al_map_rgb(72, 233, 235)); //draws bullet
 	
 }
 
-Bullet::Bullet(Bullet& old) {
+Bullet::Bullet(Bullet& old) {//copy constructor
 	this->x = old.x;
 	this->y = old.y;
 	this->isMoving = old.isMoving;
@@ -62,7 +61,7 @@ int Bullet::getspeedY() {
 
 void Bullet::explode()
 {
-	if (ticker.getTick() > 0) {
+	if (ticker.getTick() > 0) {//shows explosion
 		
 		if (ticker.getTick() <= 5) {
 			al_draw_scaled_bitmap(explosion, 0, 0, 32, 32, hitSpotX, hitSpotY, 18, 18, 0);
@@ -101,12 +100,12 @@ void Bullet::setspeed(int speedX,int speedY) {
 	this->speedY = speedY;
 }
 bool Bullet::checkhit(Hitbox &x) {
-	if (hitbox == x) {
+	if (hitbox == x) { //checks hit
 		isMoving = false;
 		return true;	
 	}
 	else {
-		if(checkInside(x)){
+		if(checkInside(x)){ //checks inside 
 			isMoving = false;
 			return true;		
 		}

@@ -12,7 +12,7 @@ extern bool key_down;
 
 void EventHandler::readMovementKeys(ALLEGRO_EVENT& event) {
     if (event.type == ALLEGRO_EVENT_KEY_DOWN) {
-        switch (event.keyboard.keycode) {
+        switch (event.keyboard.keycode) { //reads movement keys
         case ALLEGRO_KEY_A:
             key_left = true;
             break;
@@ -46,12 +46,12 @@ void EventHandler::readMovementKeys(ALLEGRO_EVENT& event) {
 };
 void EventHandler::checkCloseTab(ALLEGRO_EVENT& event, MenuHandler & menuHandler) {
 
-    if (event.type == ALLEGRO_EVENT_DISPLAY_CLOSE) {
+    if (event.type == ALLEGRO_EVENT_DISPLAY_CLOSE) { //checks if the window was closed
         menuHandler.isRunning = false;
 
     }
 }
-void EventHandler::movePlayer(Player& Player) {
+void EventHandler::movePlayer(Player& Player) { //moves the player accordind to the key
     if (key_left && key_up) {
         Player.move(-0.7071, -0.7071);
     }
@@ -83,7 +83,7 @@ void EventHandler::movePlayer(Player& Player) {
 
 }
 
-void EventHandler::resetKeys()
+void EventHandler::resetKeys() //resets the keys
 {
     key_down = false;
     key_left = false;
@@ -93,7 +93,7 @@ void EventHandler::resetKeys()
 
 void EventHandler::readWeaponChangeKeys(ALLEGRO_EVENT& event,Player& player)
 {
-    if (event.type == ALLEGRO_EVENT_KEY_DOWN) {
+    if (event.type == ALLEGRO_EVENT_KEY_DOWN) {//changes the wepon acording to the key
         switch (event.keyboard.keycode) {
         case ALLEGRO_KEY_1:
             player.changeWeapon(0);

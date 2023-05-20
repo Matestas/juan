@@ -14,9 +14,9 @@ public:
 	int moveType;
 	void setEnemyShip(ALLEGRO_BITMAP* enemyShip);
 	bool getDamaged(int damage) {
-		health-= damage;
+		health-= damage; //reduces health
 		if (health <= 0) {
-			delete this;
+			delete this;//deletes this object
 			return true;
 		}
 		return false;

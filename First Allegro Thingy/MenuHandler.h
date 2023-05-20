@@ -29,7 +29,7 @@ protected:
 class MainMenu : public MenuHandler {
 
 public:
-	MainMenu(){
+	MainMenu(){//default constructor
 		this->inMenu = false;
 		this->inEndless = false;
 		this->inMainMenu = true;

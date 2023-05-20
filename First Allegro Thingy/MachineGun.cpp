@@ -7,19 +7,18 @@ using namespace std;
 MachineGun::MachineGun():Gun(FIRERATE,DAMAGE) {
 }
 void MachineGun::fire_bullet(int x,int y,Ticker tick){
-    al_play_sample(gunSound, 1.5, 0, 1, ALLEGRO_PLAYMODE_ONCE, 0);
-    if (FIRERATE < tick.getTick())
+    al_play_sample(gunSound, 1.5, 0, 1, ALLEGRO_PLAYMODE_ONCE, 0); //plays the gun noise
+    if (FIRERATE < tick.getTick()) //checks if it can fire again
     {       
-        bullets[bulletsFired].moveto(x, y);
+        bullets[bulletsFired].moveto(x, y); //moves the bullets to the player
         bullets[bulletsFired].isMoving = true;
-        if (bulletsFired == MAX_BULLETS-1) {
+        if (bulletsFired == MAX_BULLETS-1) { //resets the bullets fired when it its the maximum
             bulletsFired = 0;
         }
         else {
             bulletsFired++;
         }
-        tick.setTick(0);
-        //std::cout << bulletsFired << std::endl;
+        tick.setTick(0);  //resets the gun tick
     }
     
 }
